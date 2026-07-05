@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Китай на двоих — 10 дней · медовый месяц · 1–10 января 2027</title>
-<meta name="description" content="Личный гид по зимнему Китаю: Пекин, Харбин, Шанхай, жирафы Chimelong и Гуанчжоу. Конструктор маршрута, бюджет, деньги, связь, ловушки.">
+<title>Китай на двоих — Новый год · 1–10 января 2027</title>
+<meta name="description" content="Личный гид: зимний Пекин, Гарри Поттер в Universal, Шанхай Дисней, жирафы Chimelong и опция — ледовый Харбин. Конструктор маршрута, бюджет, деньги, связь, ловушки.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Prata&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap&subset=cyrillic" rel="stylesheet">
@@ -12,7 +12,7 @@
 :root{
   --ink:#1D2126; --dim:#6E6C66; --paper:#FAF8F3; --card:#FFFFFF; --line:#E7E1D5;
   --lacquer:#B3271E;      /* Пекин */
-  --ice:#2E86AB;          /* Харбин */
+  --iceblue:#2E7FB8;      /* Харбин */
   --shanghai:#2F4FBF;     /* Шанхай */
   --amber:#C07A1D;        /* Гуанчжоу / жирафы */
   --jade:#1E7F6B; --gold:#C9A227;
@@ -39,9 +39,9 @@ nav{position:sticky;top:0;z-index:50;background:rgba(250,248,243,.92);backdrop-f
 
 /* ---------- HERO ---------- */
 header{position:relative;color:#fff;overflow:hidden}
-header .bg{position:absolute;inset:0;background:#1a2330}
-header .bg img{width:100%;height:100%;object-fit:cover;opacity:.85}
-header .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,18,28,.3) 0%,rgba(12,18,28,.55) 60%,rgba(12,18,28,.85) 100%)}
+header .bg{position:absolute;inset:0;background:#22303c}
+header .bg img{width:100%;height:100%;object-fit:cover;opacity:.9}
+header .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,24,32,.3) 0%,rgba(16,24,32,.55) 60%,rgba(16,24,32,.85) 100%)}
 .hero{position:relative;padding:88px 18px 46px;max-width:780px;margin:0 auto}
 .hero .eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#F5D57A;font-weight:600}
 .hero h1{font-size:clamp(38px,9vw,64px);margin:12px 0 14px;text-shadow:0 2px 20px rgba(0,0,0,.4)}
@@ -49,6 +49,7 @@ header .bg::after{content:"";position:absolute;inset:0;background:linear-gradien
 .route-line{display:flex;flex-wrap:wrap;gap:6px 10px;margin-top:20px;font-family:'IBM Plex Mono',monospace;font-size:13.5px;color:#fff}
 .route-line b{font-weight:600;padding:4px 10px;border-radius:8px;background:rgba(255,255,255,.14);backdrop-filter:blur(4px)}
 .route-line span{align-self:center;color:#F5D57A}
+.route-line b.opt{opacity:.75;border:1px dashed rgba(255,255,255,.5)}
 
 /* ---------- SECTIONS ---------- */
 section{padding:44px 0 8px}
@@ -81,7 +82,7 @@ tr:last-child td{border-bottom:none}
 .note{border-left:4px solid var(--gold);background:#FBF4E0;padding:12px 14px;border-radius:0 10px 10px 0;font-size:14.5px;margin:14px 0}
 .danger{border-left-color:var(--lacquer);background:#FBEAE8}
 .good{border-left-color:var(--jade);background:#E9F4EF}
-.cold{border-left-color:var(--ice);background:#E8F2F8}
+.cold{border-left-color:var(--iceblue);background:#E8F2F9}
 ul.tick{list-style:none;margin:10px 0}
 ul.tick li{padding:4px 0 4px 26px;position:relative}
 ul.tick li::before{content:"—";position:absolute;left:4px;color:var(--gold);font-weight:700}
@@ -91,7 +92,7 @@ ul.tick li::before{content:"—";position:absolute;left:4px;color:var(--gold);fo
 .btn.solid{background:var(--ink);color:#fff}
 .btn.solid:hover{background:#000;color:#fff}
 
-/* ---------- ROUTE BUILDER (signature) ---------- */
+/* ---------- ROUTE BUILDER ---------- */
 #builder .tickets{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:640px){#builder .tickets{grid-template-columns:1fr}}
 .ticket{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px 16px 16px 26px;overflow:hidden;transition:opacity .2s}
@@ -132,10 +133,10 @@ ul.tick li::before{content:"—";position:absolute;left:4px;color:var(--gold);fo
 .day .date{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--dim)}
 .leg{display:flex;align-items:center;gap:10px;margin:2px 0 18px 14px;color:var(--dim);font-size:13.5px}
 .leg .ic{width:34px;height:34px;border-radius:50%;border:1.5px dashed var(--gold);display:flex;align-items:center;justify-content:center;background:var(--card);flex:0 0 auto}
-.budget-pill{margin-top:22px;padding:18px;border-radius:var(--r);background:linear-gradient(135deg,#1A2330,#2E86AB);color:#fff}
+.budget-pill{margin-top:22px;padding:18px;border-radius:var(--r);background:linear-gradient(135deg,#1D2C4B,#2E7FB8);color:#fff}
 .budget-pill .sum{font-family:'IBM Plex Mono',monospace;font-size:clamp(22px,5vw,30px);font-weight:600;margin-top:4px}
-.budget-pill small{color:#CFE4F0;display:block;margin-top:6px;font-size:12.5px}
-.rate-row{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;color:#CFE4F0}
+.budget-pill small{color:#CFE0F0;display:block;margin-top:6px;font-size:12.5px}
+.rate-row{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;color:#CFE0F0}
 .rate-row input{width:64px;font:inherit;font-family:'IBM Plex Mono',monospace;padding:5px 8px;border-radius:8px;border:none;text-align:center}
 
 /* ---------- HOTELS ---------- */
@@ -174,27 +175,27 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
 <body>
 
 <header>
-  <div class="bg"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Hall%20of%20Supreme%20Harmony%20in%20snow%20(20220318153307).jpg?width=1600" alt="Запретный город под снегом" loading="eager" onerror="this.style.display='none'"></div>
+  <div class="bg"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Forbidden%20City%20after%20snow%20(20200106114845).jpg?width=1600" alt="Запретный город в снегу" loading="eager" onerror="this.style.display='none'"></div>
   <div class="hero">
-    <div class="eyebrow">Медовый месяц · 10 дней · 1–10 января 2027</div>
-    <h1>Зимний Китай на двоих</h1>
-    <p>Новый год в небе, утро 1 января — в Пекине. Запретный город под снегом, Хогвартс, каток на Хоухае, неон Шанхая, жирафы с ладони и димсамы Гуанчжоу на десерт. Опция для смелых — ледяные дворцы Харбина.</p>
+    <div class="eyebrow">Новогодние каникулы · 10 дней · 1–10 января 2027</div>
+    <h1>Китай на двоих. Зимняя серия</h1>
+    <p>Запретный город в снегу, Хогвартс с горячим сливочным пивом, неон Шанхая, жирафы с ладони — и финал в тёплом Гуанчжоу при +18°. Пляж в этот раз за Турцией, у Китая — культура и шопинг.</p>
     <div class="route-line">
       <b style="background:rgba(179,39,30,.75)">Пекин</b><span>→</span>
-      <b style="background:rgba(46,134,171,.7)">Харбин*</b><span>→</span>
+      <b class="opt" style="background:rgba(46,127,184,.55)">Харбин*</b><span>→</span>
       <b style="background:rgba(47,79,191,.75)">Шанхай</b><span>→</span>
-      <b style="background:rgba(192,122,29,.8)">Гуанчжоу + жирафы</b>
+      <b style="background:rgba(192,122,29,.8)">Гуанчжоу · жирафы</b>
     </div>
   </div>
 </header>
 
 <nav aria-label="Разделы гида"><div class="chips">
-  <a class="chip" href="#when">Когда и что ждать</a>
+  <a class="chip" href="#when">Январь</a>
   <a class="chip" href="#builder">Конструктор маршрута</a>
   <a class="chip" href="#beijing">Пекин</a>
   <a class="chip" href="#harbin">Харбин</a>
   <a class="chip" href="#shanghai">Шанхай</a>
-  <a class="chip" href="#guangzhou">Гуанчжоу</a>
+  <a class="chip" href="#guangzhou">Гуанчжоу и жирафы</a>
   <a class="chip" href="#trains">Поезда</a>
   <a class="chip" href="#money">Деньги</a>
   <a class="chip" href="#connect">Связь</a>
@@ -209,30 +210,27 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
 <!-- ================= WHEN ================= -->
 <section id="when">
   <div class="sec-head"><div class="bar" style="background:var(--gold)"></div><h2>Январь в Китае: что вас ждёт</h2></div>
-  <p class="lead">Даты 1–10 января — удачные: китайский Новый год только 6 февраля, а массовая миграция чуньюнь стартует ближе к 20-м числам. Страна свободна. Теперь про погоду — честно.</p>
+  <p class="lead">Даты 1–10 января выбраны удачно — объясняю, где повезло, и единственное место, где надо схитрить с расписанием.</p>
 
   <div class="card">
     <div class="tbl-scroll"><table>
-      <tr><th>Город</th><th>Днём / ночью</th><th>Каково это</th></tr>
-      <tr><td><b>Пекин</b></td><td class="num">−2…+4° / −10…−6°</td><td>Сухой солнечный мороз — переносится легче московского. Возможны дни со смогом</td></tr>
-      <tr><td><b>Харбин*</b></td><td class="num">−15…−20° / до −30°</td><td>Настоящая Сибирь. Ради этого и едут: лёд не тает, фестиваль сияет</td></tr>
-      <tr><td><b>Шанхай</b></td><td class="num">+4…+9° / 0…+4°</td><td>Влажная промозглость, изредка дождь. Слои + непродуваемая куртка</td></tr>
-      <tr><td><b>Гуанчжоу</b></td><td class="num">+14…+20°</td><td>«Разморозка» в финале маршрута: лёгкая куртка, зелень, цветы</td></tr>
+      <tr><th>Город</th><th>Погода в начале января</th><th>Как это ощущается</th></tr>
+      <tr><td><b>Пекин</b></td><td class="num">−9…+2°, сухо, солнечно</td><td>Морозная Москва без слякоти. Озёра замерзают — коньки в центре города. Запретный город в снегу — джекпот для фото</td></tr>
+      <tr><td><b>Харбин*</b></td><td class="num">−24…−12°</td><td>Сибирь. Ради ледового фестиваля — оно того стоит (опция в конструкторе)</td></tr>
+      <tr><td><b>Шанхай</b></td><td class="num">+2…+9°, сыро</td><td>Промозгло, как Питер в ноябре. Пуховик + шарф, и город прекрасен</td></tr>
+      <tr><td><b>Гуанчжоу</b></td><td class="num">+11…+18°, сухо</td><td>Расстёгиваем куртки. Финал маршрута в тепле — не случайность, а план</td></tr>
     </table></div>
-    <ul class="tick">
-      <li><b>Световой день короткий:</b> в Пекине рассвет ~7:35, закат ~17:00. Всё уличное — в первой половине дня, вечера — под еду, катки и подсветку.</li>
-      <li><b>1–3 января — государственные выходные КНР:</b> в Запретном городе и парках чуть больше местных. С 4 января — просторно, это самый низкий сезон в году: отели и билеты дешевле.</li>
-      <li>Маршрут построен «по градуснику»: с севера на юг, от −5 к +18. С каждым переездом теплее — психологически гениальная траектория.</li>
-    </ul>
   </div>
 
-  <div class="note cold"><b>Ради честности:</b> Санья в январе — это +25° и пик пляжного сезона, «слишком холодно» там не бывает. Но раз море закрыто Турцией — правильно едем за настоящей китайской зимой: снег на золотых крышах, пар над хого и ледяные замки. Такого Китая летом не существует.</div>
+  <div class="note"><b>1–3 января — государственные выходные в Китае.</b> Парки и главные музеи в эти дни штурмует вся страна. Поэтому маршрут построен хитро: на праздники — прогулки, стена и коньки, а Universal и Дисней поставлены на будни после 4 января, когда очереди тают. Не переставляй их на 1–3 число.</div>
+  <div class="note good"><b>Где повезло.</b> Китайский Новый год в 2027-м — 6 февраля: великая миграция чуньюнь начнётся через две недели после вашего отъезда. Поезда и билеты — без ажиотажа. Бонус: январь — низкий сезон для отелей, цены на 10–20% мягче осенних.</div>
+  <div class="note cold"><b>К слову о Санье:</b> там в январе +24…27 и высокий сезон — «холодно» на Хайнане не бывает. Но раз пляж закрывает Турция в сентябре — освободившуюся неделю честно отдаём культуре, шопингу и одной ледяной авантюре ниже.</div>
 </section>
 
 <!-- ================= BUILDER ================= -->
 <section id="builder">
-  <div class="sec-head"><div class="bar" style="background:linear-gradient(90deg,var(--lacquer),var(--ice),var(--shanghai),var(--amber))"></div><h2>Конструктор маршрута</h2></div>
-  <p class="lead">Включай и выключай города, крути дни — план и бюджет пересобираются сами. Харбин выключен по умолчанию: это опция для смелых, включи — и конструктор перестроит всё под него. Выбор сохраняется в браузере.</p>
+  <div class="sec-head"><div class="bar" style="background:linear-gradient(90deg,var(--lacquer),var(--iceblue),var(--shanghai),var(--amber))"></div><h2>Конструктор маршрута</h2></div>
+  <p class="lead">Включай и выключай города, крути дни — план и бюджет пересобираются сами. Харбин выключен по умолчанию: это ледяная авантюра для смелых. Выбор сохраняется в браузере.</p>
 
   <div class="date-row">
     <label for="startDate"><b>Старт поездки:</b></label>
@@ -248,7 +246,7 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
   <div id="itin"></div>
 
   <div class="budget-pill">
-    <div style="font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#CFE4F0">Оценка бюджета на двоих под выбранный маршрут</div>
+    <div style="font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#CFE0F0">Оценка бюджета на двоих под выбранный маршрут</div>
     <div class="sum" id="budgetOut">—</div>
     <small id="budgetDetail"></small>
     <div class="rate-row"><span>Курс юаня:</span><input type="number" id="rateInput" value="13" min="8" max="25" step="0.5"> <span>₽ за ¥1 · перелёты из Москвы считаются в ₽ отдельно</span></div>
@@ -258,27 +256,26 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
 <!-- ================= BEIJING ================= -->
 <section id="beijing">
   <div class="sec-head"><div class="bar" style="background:var(--lacquer)"></div><h2>Пекин — 4 дня зимней империи</h2></div>
-  <p class="lead">Прилетаете сюда из Москвы (прямые ~7 ч 40 мин: Аэрофлот, Air China). Зимой Пекин — лучшая версия себя: снег на крышах Запретного города, пустая Стена и каток на замёрзшем озере.</p>
+  <p class="lead">Прилетаете из Москвы (прямые ~7,5 ч: Аэрофлот SU204, Air China). Мороз тут сухой и солнечный, столица зимой — это коньки на озёрах, пар над хого и стена без туристов.</p>
 
-  <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/The%20Mutianyu%20section%20of%20the%20Great%20Wall%20of%20China.jpg?width=1200" alt="Великая Китайская стена, участок Мутяньюй" onerror="this.closest('.ph').style.display='none'"><figcaption>Мутяньюй: зимой на этих башнях вы будете почти одни</figcaption></figure>
+  <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/The%20Mutianyu%20section%20of%20the%20Great%20Wall%20of%20China.jpg?width=1200" alt="Великая Китайская стена, участок Мутяньюй" onerror="this.closest('.ph').style.display='none'"><figcaption>Мутяньюй: зимой — та же стена с открыток, только без толп</figcaption></figure>
 
   <h3>Что обязательно</h3>
   <div class="card">
-    <p><b>Запретный город.</b> Билеты <span class="num">¥40</span> (зимний тариф) продаются ровно за 7 дней в 8:00 по Пекину (3:00 мск — будильник!) в официальном WeChat-миниаппе «故宫博物院» по номеру загранпаспорта. В январе ажиотаж ниже, но 1–3 числа — праздники, бронь всё равно нужна. Понедельник — выходной. После — холм Цзиншань (<span class="num">¥2</span>): вид на заснеженные золотые крыши, лучшая фотография поездки.</p>
-    <p><b>Великая стена — Мутяньюй,</b> не Бадалин. Зимой это чит-код: толп нет вообще, воздух прозрачный, фото — космос. Канатка работает в обе стороны, <b>тобогган-спуск зимой закрыт</b> (лёд). Билет + канатка ≈ <span class="num">¥160/чел</span>. Заказной трансфер туда-обратно <span class="num">¥600–800 за машину</span> через Trip.com/отель. Выезд в 8:00, наверху −5…−8° и ветер — термос с чаем и перчатки обязательны. К 15:30 вы в городе — вечером хого.</p>
-    <p><b>Каток на Хоухае</b> — главный зимний аттракцион города: когда лёд встаёт (обычно с конца декабря), на озере открывают прокат коньков и знаменитых <b>ледовых велосипедов</b> (<span class="num">¥60–80/час</span>). Романтика уровня «фото на заставку». Вокруг — бары Шичахая.</p>
-    <p><b>Храм Неба</b> утром (<span class="num">¥28</span> зимой): дедушки с тайцзи и каллиграфией водой никуда не деваются даже в мороз. <b>Хутуны</b> Наньлогусян — на вечер после Стены.</p>
+    <p><b>Запретный город в снегу.</b> Билеты <span class="num">¥60</span> продаются ровно за 7 дней в 8:00 по Пекину (3:00 мск — будильник!) в официальном WeChat-миниаппе «故宫博物院» по номеру загранпаспорта. На 2 января будет праздничный спрос — ловите в момент открытия продаж 26 декабря. Понедельник — выходной (учтено в плане). После дворца — парк Цзиншань (<span class="num">¥2</span>): вид на заснеженные золотые крыши, лучшая фототочка города.</p>
+    <p><b>Коньки на Хоухае.</b> С конца декабря озёра Шичахай официально замерзают и превращаются в главный зимний аттракцион пекинцев: коньки, ледовые велосипеды и санки-кресла прямо на озере, прокат <span class="num">¥60–80</span>. Встретить так первый вечер — идеально.</p>
+    <p><b>Великая стена — только Мутяньюй,</b> не Бадалин. Зимой почти пусто; если выпал снег — кадры на всю жизнь. Канатка работает круглый год, а вот тобоган-спуск в гололёд закрывают — тогда вниз тоже канаткой. Билет + канатка ≈ <span class="num">¥140–180/чел</span>. Заказной трансфер туда-обратно <span class="num">¥600–800 за машину</span> (Trip.com или через отель), выезд в 7:30. Одевайтесь как на лыжи: наверху ветер.</p>
+    <p><b>Храм Неба</b> утром (<span class="num">¥34</span>): дедушки с тайцзи и каллиграфией водой на плитке никуда не деваются даже в −5. <b>Хутуны</b> Наньлогусян — на вечер, с бататом в сахаре из уличной жаровни.</p>
   </div>
 
   <h3>Universal Beijing: Гарри Поттер в снегу</h3>
-  <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Universal%20Studios%20Beijing%20globe%20square%20(20210907121340).jpg?width=1200" alt="Universal Beijing Resort" onerror="this.closest('.ph').style.display='none'"><figcaption>Universal Beijing — полноценный Хогсмид, зимой ещё и заснеженный по-настоящему</figcaption></figure>
+  <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Universal%20Studios%20Beijing%20globe%20square%20(20210907121340).jpg?width=1200" alt="Universal Beijing Resort" onerror="this.closest('.ph').style.display='none'"><figcaption>Universal Beijing — полноценный Хогсмид, зимой он ещё атмосфернее</figcaption></figure>
   <div class="card">
-    <p>Отдельного парка Гарри Поттера в Китае нет, но в Universal Beijing — полноценная <b>The Wizarding World of Harry Potter</b>: Хогсмид (который зимой выглядит ровно как в фильмах — снег настоящий), замок с Forbidden Journey, сливочное пиво, палочки у Олливандера.</p>
+    <p>Отдельного парка Гарри Поттера в Китае нет, но в Universal Beijing — полноценная <b>The Wizarding World of Harry Potter</b>: Хогсмид (который и задуман заснеженным — январь его лучший сезон), замок с Forbidden Journey, <b>горячее</b> сливочное пиво и палочки у Олливандера. Плюс Трансформеры, Кунг-фу Панда и Джурассик.</p>
     <ul class="tick">
-      <li>Январь — низкий сезон: билет <span class="num">≈ ¥418–528</span>, очереди минимальные. Покупка: официальное приложение Universal Beijing Resort или Trip.com.</li>
-      <li>Зимние часы короче (примерно 10:00–19:00) — приезжайте к открытию, сверьте расписание в приложении.</li>
-      <li>Ключевые аттракционы (Forbidden Journey, Трансформеры) — в помещении, греться есть где. Часть уличных горок при сильном ветре ставят на паузу — это нормально.</li>
-      <li>Одевайтесь как на прогулку, а не как в парк: весь день на улице при −3°.</li>
+      <li>Билет датированный: <span class="num">≈ ¥418–638</span> — январские будни после праздников идут по нижней границе сетки. Официальное приложение Universal Beijing Resort или Trip.com.</li>
+      <li><b>Ставим парк на понедельник 4 января</b> — праздники закончились, очереди минимальные за весь год. Express Pass не понадобится.</li>
+      <li>Зимой день короче: парк работает примерно 10:00–19:00 — приезжайте к открытию. Много открытых зон: термобельё под джинсы.</li>
       <li>Метро 7/1 до станции Universal Resort, ~50 мин от центра.</li>
     </ul>
     <div class="link-row"><a class="btn" href="https://www.universalbeijingresort.com/en" target="_blank" rel="noopener">Официальный сайт Universal Beijing</a></div>
@@ -286,73 +283,62 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
 
   <h3>Еда: сезон утки и хого</h3>
   <div class="card">
-    <p><b>Утка по-пекински:</b> Siji Minfu (四季民福) у восточных ворот Запретного города — лучший баланс цены и качества, утка <span class="num">¥238–288</span>, ужин на двоих <span class="num">¥350–450</span>. Очередь всегда: приходите к 16:30 или берите номерок. Da Dong — премиальный вариант (<span class="num">¥600–800</span> на двоих) — на медовый месяц имеет право.</p>
-    <p><b>Хого (китайский самовар)</b> — то, ради чего стоило приехать зимой: кипящий котёл, тарелки мяса и всего на свете. <b>Dong Lai Shun</b> — столетний пекинский бренд с бараниной (<span class="num">¥250–350</span> на двоих), <b>Haidilao</b> — сетевой хит с шоу-сервисом и танцем лапши. После дня на морозе — терапия.</p>
+    <p><b>Siji Minfu (四季民福)</b> у восточных ворот Запретного города — лучший баланс цены и качества, утка <span class="num">¥238–288</span>, ужин на двоих <span class="num">¥350–450</span>. Очередь всегда: приходите к 16:30 либо возьмите номерок и гуляйте. <b>Da Dong</b> — модно-премиально, счёт <span class="num">¥600–800</span> на двоих. И главное зимнее: <b>хого</b> — котёл-самовар с бульоном, в котором варишь всё подряд. Старопекинский медный вариант — сеть <b>Juqi (局气)</b> или любое место с очередью из местных; ужин <span class="num">¥200–350</span> на двоих. После −9° на улице это счастье в чистом виде.</p>
   </div>
 
-  <h3>Если дней пять: культурный бонус</h3>
-  <div class="card">
-    <p>Добавь день в конструкторе — и получишь: <b>Ламаистский храм Юнхэгун</b> (<span class="num">¥25</span>, действующий, дым благовоний на морозе — кино), арт-квартал <b>798</b> (галереи, кофе, стрит-арт в бывших заводах) и <b>Летний дворец</b> с замёрзшим озером Куньмин, по которому зимой открывают каток прямо у мраморной ладьи.</p>
-  </div>
-
-  <h3>Где жить (январь — низкий сезон, цены приятные)</h3>
+  <h3>Где жить</h3>
   <div class="card">
     <div class="hotel"><div><div class="nm">Hotel Kapok Forbidden City</div><div class="ds">4★, 10 минут пешком до Запретного города, дизайнерский, тихий</div></div><div class="pr">¥500–750 / ночь</div></div>
-    <div class="hotel"><div><div class="nm">Pentahotel Beijing</div><div class="ds">4★ у метро Chongwenmen, 2 остановки до центра, большие тёплые номера</div></div><div class="pr">¥450–650</div></div>
-    <div class="hotel"><div><div class="nm">The Emperor Qianmen</div><div class="ds">Бутик в хутуне, терраса на крыше — романтика для молодожёнов</div></div><div class="pr">¥650–900</div></div>
-    <p style="margin-top:10px;font-size:14px;color:var(--dim)">Апартаменты не советую: хозяин обязан регистрировать иностранцев в полиции за 24 ч, мало кто это делает. Отель регистрирует автоматически. Бронь — Trip.com или Ostrovok (принимает российские карты).</p>
+    <div class="hotel"><div><div class="nm">Pentahotel Beijing</div><div class="ds">4★ у станции Chongwenmen, 2 остановки до центра, большие номера</div></div><div class="pr">¥450–650</div></div>
+    <div class="hotel"><div><div class="nm">The Emperor Qianmen</div><div class="ds">Бутик в хутуне с террасой на крыше — романтика для молодожёнов</div></div><div class="pr">¥650–900</div></div>
+    <p style="margin-top:10px;font-size:14px;color:var(--dim)">Январь — низкий сезон: цены мягче октябрьских на 10–20%. Апартаменты не советую: хозяин обязан регистрировать иностранцев в полиции за 24 ч, отель делает это автоматически. Бронь — Trip.com или Ostrovok (принимает российские карты).</p>
   </div>
 </section>
 
 <!-- ================= HARBIN ================= -->
 <section id="harbin">
-  <div class="sec-head"><div class="bar" style="background:var(--ice)"></div><h2>Харбин — опция для смелых</h2></div>
-  <p class="lead">Вы будете в Китае в единственный сезон, когда работает главное зимнее чудо страны. Два дня, −20°, и воспоминание на всю жизнь. Включается в конструкторе — маршрут перестроится сам.</p>
+  <div class="sec-head"><div class="bar" style="background:var(--iceblue)"></div><h2>Харбин — ледяная авантюра (опция)</h2></div>
+  <p class="lead">Мой козырь для новогоднего Китая. В 4,5 часах поезда от Пекина в первых числах января открывается крупнейший в мире ледовый фестиваль. Включается тумблером в конструкторе — заберёт 2 дня.</p>
 
-  <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Harbin%20Ice%20Festival.jpg?width=1200" alt="Ледяные дворцы фестиваля в Харбине" onerror="this.closest('.ph').style.display='none'"><figcaption>Harbin Ice and Snow World: дворцы в натуральную величину изо льда Сунгари</figcaption></figure>
+  <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Harbin%20Ice%20Festival.jpg?width=1200" alt="Ледовые дворцы фестиваля в Харбине" onerror="this.closest('.ph').style.display='none'"><figcaption>Harbin Ice and Snow World: дворцы в натуральную величину изо льда Сунгари</figcaption></figure>
 
   <div class="card">
-    <p><b>Harbin Ice and Snow World (哈尔滨冰雪大世界)</b> — город из ледяных дворцов, замков и горок с подсветкой изнутри. Официальное открытие сезона — как раз конец декабря, к вашим датам всё сияет. Билет <span class="num">≈ ¥328/чел</span> (Trip.com или WeChat). Идти к 15:00: застаёте и день, и главное — включение подсветки в сумерках. Внутри есть тёплые павильоны для отогрева.</p>
-    <p><b>Сан-Айленд (Sun Island)</b> — выставка гигантских снежных скульптур через реку, <span class="num">≈ ¥240/чел</span>, дневная программа второго дня.</p>
-    <p><b>Русский Харбин</b> — отдельный вайб для вас двоих: пешеходная Чжунъян-стрит с архитектурой начала XX века, собор Святой Софии, «русский хлеб» лебa и колбаса hongchang в местных лавках. Город построили строители КВЖД — читается до сих пор.</p>
-    <ul class="tick">
-      <li><b>Как добраться:</b> поезд-пуля Пекин → Харбин 4 ч 40 мин – 5 ч 30 мин, <span class="num">¥430–540</span> второй класс, либо перелёт 2 ч. Дальше по маршруту — перелёт Харбин → Шанхай ~3 ч.</li>
-      <li><b>Экипировка:</b> −20…−25° вечером — не шутка: термобельё, пуховик, тёплая обувь на толстой подошве, балаклава/шарф на лицо. Всё можно докупить на месте дёшево. Телефон держите во внутреннем кармане — батареи мрут на морозе.</li>
-      <li><b>Отель:</b> берите в центре у Чжунъян-стрит (до фестиваля 15–20 мин на DiDi): например, <b>Songhuajiang Gloria Plaza</b> или <b>Ibis Harbin Sophia Church</b>, <span class="num">¥350–700/ночь</span>. Фестивальные даты бронируются раньше остального маршрута!</li>
-    </ul>
+    <p><b>Ice and Snow World (冰雪大世界)</b> — город из ледяных дворцов, горок и замков с подсветкой изнутри; официальное открытие сезона — конец декабря, к вашим датам всё сияет. Билет <span class="num">≈ ¥300–330</span>, брать на Trip.com. Приезжайте к 15:00: застанете лёд при свете и главное — включение подсветки в сумерках.</p>
+    <p><b>Плюс к фестивалю:</b> Центральная улица (中央大街) — «русский Арбат» с домами модерна, Софийский собор, мороженое Modern на морозе (местная традиция со столетним стажем) и снежные скульптуры Солнечного острова (<span class="num">¥240–330</span>).</p>
+    <p><b>Логистика:</b> поезд-пуля Пекин → Харбин 4 ч 40 мин, <span class="num">¥541</span> второй класс — ещё одна галочка в «покататься на скоростных поездах», причём по снежной Маньчжурии. Обратно не возвращаемся: прямой перелёт Харбин → Шанхай ~3 ч. Отели у Центральной улицы: <span class="num">¥400–700/ночь</span> (Ibis Harbin Central Street, Holiday Inn City Centre).</p>
+    <div class="note cold"><b>Честно про −25°.</b> Это другой уровень холода: нужны совсем тёплая обувь, балаклава/шарф на лицо и химические грелки в перчатки (продаются на каждом углу, ¥2–5). Телефон на морозе садится за час — держите во внутреннем кармане. Если сомневаетесь в экипировке — пуховики и штаны докупаются в Харбине дёшево и на месте.</div>
   </div>
-  <div class="note cold"><b>Честный трейд-офф:</b> Харбин заберёт 2 дня (по умолчанию — один пекинский и один шанхайский) и добавит ≈ 50–90 тыс ₽ к бюджету. Взамен — самое небанальное, что можно привезти из зимнего Китая. Если холод пугает — просто не включайте, маршрут прекрасен и без него.</div>
 </section>
 
 <!-- ================= SHANGHAI ================= -->
 <section id="shanghai">
-  <div class="sec-head"><div class="bar" style="background:var(--shanghai)"></div><h2>Шанхай — 3 дня будущего</h2></div>
-  <p class="lead">Из Пекина — 4,5 часа на поезде-пуле. Здесь Дисней, набережная Бунд, сяолунбао и главный шопинг поездки: январь — сезон тотальных распродаж.</p>
+  <div class="sec-head"><div class="bar" style="background:var(--shanghai)"></div><h2>Шанхай — 3 дня неона и распродаж</h2></div>
+  <p class="lead">Из Пекина — 4,5 часа на «Фусине». Зимний Шанхай промозглый, но именно в январе тут лучший Дисней года и сезон скидок.</p>
 
-  <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Pudong%20Shanghai%20November%202017%20HDR%20panorama.jpg?width=1200" alt="Небоскрёбы Пудуна вечером" onerror="this.closest('.ph').style.display='none'"><figcaption>Пудун с набережной Бунд — выходить к 18:30, подсветку гасят ~22:00</figcaption></figure>
+  <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Pudong%20Shanghai%20November%202017%20HDR%20panorama.jpg?width=1200" alt="Небоскрёбы Пудуна вечером" onerror="this.closest('.ph').style.display='none'"><figcaption>Пудун с набережной Бунд: зимний воздух прозрачнее — неон чётче</figcaption></figure>
 
-  <h3>Shanghai Disneyland зимой — лайфхак, а не компромисс</h3>
+  <h3>Shanghai Disneyland без нервов</h3>
   <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Shanghai%20Disneyland%20Castle%20Night.jpg?width=1200" alt="Замок Shanghai Disneyland" onerror="this.closest('.ph').style.display='none'"><figcaption>Самый большой замок из всех Диснейлендов мира</figcaption></figure>
   <div class="card">
     <ul class="tick">
-      <li>Январь после 3-го числа — самые низкие очереди в году. Билет датированный <span class="num">¥475–599</span> (будни — нижняя граница). Официальное приложение Shanghai Disney Resort или Trip.com, паспортные данные обязательны.</li>
-      <li>Стратегия: к открытию → сразу <b>Zootopia</b> → <b>TRON Lightcycle</b> (лучшая горка парка, разгон в темноте). Premier Access на TRON (<span class="num">¥120–160</span>) в январский будень чаще всего не нужен — очереди короткие.</li>
-      <li>+5° на улице: тёплая куртка, перчатки — и парк ваш. Салют над замком — время смотрите в приложении, зимой раньше (~19:30–20:00).</li>
-      <li>Метро 11 прямо до парка, ~1 ч от центра.</li>
+      <li>Билет датированный <span class="num">¥475–599</span> в январские будни — нижние тарифы сетки. Официальное приложение Shanghai Disney Resort или Trip.com. Паспортные данные обязательны.</li>
+      <li><b>Будний день после 4 января — самые короткие очереди года.</b> Стратегия: к открытию → сразу <b>Zootopia</b> → <b>TRON Lightcycle</b> (лучшая горка парка). Premier Access <span class="num">¥120–160/аттракцион</span> при январских очередях, скорее всего, не понадобится — а на TRON можно взять ради второго круга.</li>
+      <li>Зимой салют и шоу у замка раньше — около 19:30–20:00, время в приложении. До салюта не уходить.</li>
+      <li>Новогоднее оформление парка обычно держат до китайского НГ — вам достанется.</li>
+      <li>Метро 11 прямо до парка, ~1 ч от центра. Одевайтесь тепло: ветер с моря.</li>
     </ul>
     <div class="link-row"><a class="btn" href="https://www.shanghaidisneyresort.com/en/" target="_blank" rel="noopener">Официальный сайт Disney Shanghai</a></div>
   </div>
 
   <h3>Город</h3>
   <div class="card">
-    <p><b>Бунд</b> вечером — обязательная романтика: колониальные фасады против неона Пудуна. Речной круиз по Хуанпу <span class="num">¥120/чел</span>, 50 минут — берите после заката и одевайтесь: на воде ветрено. <b>Shanghai Tower</b>, смотровая на 118 этаже (<span class="num">¥199</span>) — тёплый способ увидеть город сверху, зимний воздух прозрачнее летнего. <b>Сад Юй</b> (<span class="num">¥30</span> зимой) + чайная Huxinting — к 9:00. <b>Французская концессия</b>: улицы Wukang и Anfu — платаны, кофейни, винтаж. Полдня на <b>Чжуцзяцзяо</b> — водный городок на 17-й линии метро: зимой без толп он наконец похож на себя настоящего.</p>
-    <p><b>Сяолунбао:</b> Jia Jia Tang Bao (佳家汤包) — легендарная забегаловка, корзинка <span class="num">¥25–40</span>, горячий бульон внутри пельменя — идеальная зимняя еда; Din Tai Fung — «парадный» вариант в моллах.</p>
-    <p>Если дней четыре: <b>Шанхайский музей</b> (бесплатно, бронь в WeChat за пару дней) — бронза и фарфор мирового уровня, плюс креативный квартал <b>Тяньцзыфан</b>.</p>
+    <p><b>Бунд</b> вечером — обязательная романтика: колониальные фасады против неона Пудуна, зимой воздух прозрачный и огни особенно чёткие. Речной круиз по Хуанпу <span class="num">¥120/чел</span>, 50 минут, на верхней палубе выдают пледы — берите после заката. <b>Shanghai Tower</b>, смотровая на 118 этаже (<span class="num">¥199</span>) — самый быстрый лифт мира; зимой видимость лучшая в году. <b>Сад Юй</b> (<span class="num">¥40</span>) к 9:00 — а к середине января там уже начинают собирать гигантские фонари к празднику фонарей: бонус-декорации. <b>Французская концессия</b>: улицы Wukang и Anfu — кофейни, винтаж, неспешность. Полдня на <b>Чжуцзяцзяо</b> — водный городок на 17-й линии метро: зимой без толп вообще, лодка <span class="num">¥80–150</span>.</p>
+    <p><b>Сяолунбао:</b> Jia Jia Tang Bao (佳家汤包) — легендарная забегаловка, корзинка <span class="num">¥25–40</span>; Din Tai Fung — «парадный» вариант в моллах. Горячий бульон внутри пельменя в +4° снаружи — идеальная механика.</p>
   </div>
 
-  <h3>Шопинг: январь — месяц распродаж</h3>
+  <h3>Шопинг — январь ваш союзник</h3>
   <div class="card">
-    <p>Между западным Новым годом и китайским (6 февраля) моллы устраивают двойной сезон скидок — «double festival sales». <b>Nanjing Road</b> — витринная миля (и место обитания «чайных» разводил — см. Ловушки). Серьёзные покупки: моллы <b>IAPM</b> и <b>Plaza 66</b>, молодёжные бренды — <b>TX Huaihai</b>. Флагманы <b>Huawei</b> (Nanjing East) и <b>Xiaomi</b> — техника дешевле российских цен, витрины сами по себе аттракцион. Чай в подарки — сеть <b>Tenfu Tea</b> с дегустацией, без разводов. Во многих ТЦ — моментальный tax refund для иностранцев (11% при чеке от <span class="num">¥200</span>), стойка Tax Free, нужен паспорт.</p>
+    <p>Январь в Китае — сезон зимних распродаж перед китайским Новым годом: моллы вешают «-30…-70%» задолго до праздника. Маршрут: <b>IAPM</b> и <b>Plaza 66</b> — люкс и премиум, <b>TX Huaihai</b> — молодёжные бренды и стритвир, <b>Nanjing Road</b> — витринная миля (и место обитания «чайных» разводил — см. Ловушки). Флагманы <b>Huawei</b> (Nanjing East) и <b>Xiaomi</b> — техника дешевле российских цен, витрины сами по себе аттракцион. Чай без разводов — сеть <b>Tenfu Tea</b> с дегустацией. Во многих ТЦ — моментальный tax refund для иностранцев (11% при чеке от <span class="num">¥200</span>): ищите стойку Tax Free, нужен паспорт.</p>
   </div>
 
   <h3>Где жить</h3>
@@ -365,38 +351,43 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
 
 <!-- ================= GUANGZHOU ================= -->
 <section id="guangzhou">
-  <div class="sec-head"><div class="bar" style="background:var(--amber)"></div><h2>Гуанчжоу — жирафы и димсамы</h2></div>
-  <p class="lead">Финал маршрута и «разморозка»: +18°, зелень, лучшая еда страны — и твоя главная необычная галочка. Отсюда же прямой рейс домой.</p>
+  <div class="sec-head"><div class="bar" style="background:var(--amber)"></div><h2>Гуанчжоу — жирафы и +18° на финал</h2></div>
+  <p class="lead">Перелёт из Шанхая 2 ч 15 мин — и вы из зимы в субтропиках. Здесь кульминация: кормление жирафов, вечерний цирк, кантонские димсамы — и прямой рейс домой.</p>
 
   <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Giraffe%20feeding,%20Tanzania.jpg?width=1200" alt="Кормление жирафа с руки" onerror="this.closest('.ph').style.display='none'"><figcaption>В Chimelong Safari жирафов кормят листьями с платформы — морда окажется вот так же близко</figcaption></figure>
 
-  <h3>День жирафов</h3>
   <div class="card">
-    <p><b>Chimelong Safari Park</b> — крупнейший сафари-парк Азии: больше 40 жирафов, платформа кормления (веник листьев <span class="num">¥30–50</span> — и морда с полуметровым языком тянется прямо к вам), сафари-поезд через вольеры, панды. Билет <span class="num">≈ ¥300/чел</span>, Trip.com или официальный WeChat. Январь для парка комфортен: +15–18°, животные активны.</p>
-    <p><b>Ночевать — в Chimelong Hotel:</b> сафари-тематика, во внутреннем дворе живут белые тигры и фламинго, до парка — шаттл. Номер <span class="num">¥1300–2000</span>. Дороже городского отеля, но «проснулись — за окном Африка» того стоит. Бюджетнее — Panda Hotel рядом (<span class="num">¥800–1100</span>).</p>
-    <p style="font-size:14px;color:var(--dim)">Честно: отеля формата кенийского Giraffe Manor — где жираф суёт голову в окно номера — в Китае со стабильной работой нет. Chimelong — самый надёжный способ получить «свидание с жирафом» без риска, что место окажется закрытым.</p>
+    <p><b>Chimelong Safari Park</b> — крупнейший сафари-парк Азии: больше 40 жирафов, платформа кормления (веник листьев <span class="num">¥30–50</span>), сафари-поезд через вольеры, панды, коалы. Билет <span class="num">≈ ¥300/чел</span>, брать на Trip.com или в официальном WeChat. Январские +15…18° — комфортнее для прогулки по парку, чем летние +35, и звери активнее.</p>
+    <p><b>Вечером — Chimelong International Circus:</b> цирковое шоу мирового уровня на 8000 мест, билеты <span class="num">¥280–400</span>. Идеальная связка с сафари-днём.</p>
+    <p><b>Ночевать — в Chimelong Hotel:</b> сафари-тематика, во внутреннем дворе живут белые тигры и фламинго, до парка и цирка — шаттл. Номер <span class="num">¥1200–1800</span> (январь мягче октября). Бюджетнее — Panda Hotel рядом (<span class="num">¥700–1000</span>).</p>
+    <p style="font-size:14px;color:var(--dim)">Честно: отеля формата кенийского Giraffe Manor — где жираф суёт голову в окно номера — в Китае со стабильной работой нет. Chimelong — самый надёжный способ получить «свидание с жирафом»: кормление гарантировано в часы работы парка.</p>
   </div>
 
-  <h3>День кантонской культуры</h3>
-  <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Canton%20Tower%20at%20night%20Guangzhou%202024%20dllu.jpg?width=1200" alt="Кантонская башня ночью" onerror="this.closest('.ph').style.display='none'"><figcaption>Кантонская башня — «тонкая талия» Гуанчжоу, вечером переливается всеми цветами</figcaption></figure>
+  <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Canton%20Tower%20at%20night%20Guangzhou%202024%20dllu.jpg?width=1200" alt="Телебашня Canton Tower ночью" onerror="this.closest('.ph').style.display='none'"><figcaption>Canton Tower: подсветка включается с закатом — в январе это ~18:00</figcaption></figure>
+
+  <h3>Город на день-полтора</h3>
   <div class="card">
-    <p>Гуанчжоу — гастрономическая столица Китая, и пропустить <b>димсам-обед</b> здесь — преступление. <b>Tao Tao Ju (陶陶居)</b> — институция с 1880 года: хар гау, сиу май, пирожки с ананасовой корочкой, обед на двоих <span class="num">¥150–250</span>. Альтернатива подемократичнее — сеть <b>Dian Dou De (点都德)</b>.</p>
-    <p><b>Остров Шамянь</b> — бывшая европейская концессия: колониальные особняки, платаны, тишина — лучшая прогулка после обеда. <b>Юнцин Фан</b> — отреставрированный старый квартал с крафтовыми лавками. Вечером — <b>Кантонская башня</b>: смотровая <span class="num">¥150–228</span>, либо просто вид на неё с набережной Жемчужной реки — бесплатно и не хуже. Шопинг-финал — пешеходная <b>Бэйцзин-роуд</b>.</p>
-    <p><b>Домой:</b> у China Southern прямой рейс Гуанчжоу → Москва (~10 ч 30 мин), обычно ночной — день 10 остаётся полноценным.</p>
-    <div class="link-row"><a class="btn" href="https://www.chimelong.com/gz/" target="_blank" rel="noopener">Chimelong — оф. сайт</a><a class="btn" href="https://ru.trip.com" target="_blank" rel="noopener">Билеты и отели на Trip.com</a></div>
+    <ul class="tick">
+      <li><b>Остров Шамянь</b> — бывший колониальный квартал: платаны, особняки, набережная Жемчужной реки. Лучшая неспешная прогулка юга.</li>
+      <li><b>Canton Tower</b> — смотровая <span class="num">¥228</span>, для смелых — колесо обозрения из капсул прямо на макушке башни (<span class="num">¥298</span>). Идти к закату.</li>
+      <li><b>Утренний чай «юм ча»</b> — кантонский ритуал: тележки с димсамами, час-полтора неспешного завтрака. Классика: <b>Diandude (点都德)</b> или столетний <b>Taotaoju (陶陶居)</b>, на двоих <span class="num">¥120–200</span>. Это и есть «проникнуться культурой» в гастрономической форме.</li>
+      <li><b>Шопинг:</b> пешеходная Beijing Road, моллы кластера Tianhe (Taikoo Hui, Grandview). Те же предновогодние скидки, что и в Шанхае.</li>
+      <li>Домой — прямым рейсом China Southern Гуанчжоу → Москва (~10,5 ч), без пересадок.</li>
+    </ul>
+    <div class="link-row"><a class="btn" href="https://www.chimelong.com/gz/" target="_blank" rel="noopener">Chimelong — оф. сайт</a><a class="btn" href="https://www.trip.com" target="_blank" rel="noopener">Билеты и отель на Trip.com</a></div>
   </div>
 </section>
 
 <!-- ================= TRAINS ================= -->
 <section id="trains">
   <div class="sec-head"><div class="bar" style="background:var(--lacquer)"></div><h2>Скоростные поезда</h2></div>
-  <p class="lead">Пекин → Шанхай на «Фусине» — 1318 км за 4,5 часа, 350 км/ч за окном заснеженных равнин. Не транспорт — аттракцион, который ты и просил.</p>
+  <p class="lead">Пекин → Шанхай на «Фусине» — 1318 км за 4,5 часа, 350 км/ч за окном. Это не транспорт, это аттракцион, который ты и просил. С Харбином в маршруте поездов будет два.</p>
 
   <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Shanghai%20Hongqiao%20Railway%20Station%20platform%20with%20the%20Fuxing%20train%20(left).jpg?width=1200" alt="Поезд Fuxing на платформе вокзала Шанхай-Хунцяо" onerror="this.closest('.ph').style.display='none'"><figcaption>Fuxing CR400 — «пуля» Пекин → Шанхай каждые 10–20 минут</figcaption></figure>
 
   <div class="card">
     <div class="tbl-scroll"><table>
-      <tr><th>Класс</th><th>Цена / чел</th><th>Что это</th></tr>
+      <tr><th>Класс (Пекин → Шанхай)</th><th>Цена / чел</th><th>Что это</th></tr>
       <tr><td>Второй (2nd)</td><td class="num">¥553–662 ≈ 7 200–8 600 ₽</td><td>Как «Сапсан»-эконом, 3+2 кресла. Нормально</td></tr>
       <tr><td>Первый (1st)</td><td class="num">¥933–1060</td><td>2+2, шире, тише. Золотая середина</td></tr>
       <tr><td>Бизнес</td><td class="num">¥1750–2320</td><td>Капсулы-кровати как бизнес в самолёте, еда, свой вагон. Один раз на медовый месяц — оправдано: вау-эффект полный</td></tr>
@@ -404,14 +395,15 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
     <ul class="tick">
       <li>Продажи открываются за <b>15 дней</b>. Покупка: официальное приложение <b>12306</b> (есть английский, регистрация по загранпаспорту) или Trip.com с комиссией ~¥30–40, зато оплата привычнее.</li>
       <li>Билет «записан» на паспорт — на турникете просто прикладываешь загран. Приезжать за 40 минут: досмотр как в аэропорту.</li>
-      <li>Берите места у окна (ряд A/F) и рейс на ~9–10 утра: день в Шанхае остаётся целым.</li>
-      <li>Включили Харбин? Пекин → Харбин — тоже «Фусин»: 4 ч 40 мин – 5 ч 30 мин, <span class="num">¥430–540</span> второй класс. Из окна — всё белее и белее.</li>
+      <li>Берите места у окна и рейс на ~9–10 утра: день в Шанхае остаётся целым.</li>
+      <li>С опцией Харбина добавляется участок Пекин → Харбин: 4 ч 40 мин, <span class="num">¥541</span> второй класс, за окном — снежная Маньчжурия.</li>
+      <li>Хочется ещё рельсов вместо перелёта? Шанхай → Гуанчжоу тоже ходит «пуля»: ~7 ч, <span class="num">¥793</span> второй класс, вокзалы в центре городов. Дневной переезд с пейзажами — законная альтернатива самолёту.</li>
     </ul>
     <div class="link-row"><a class="btn" href="https://www.12306.cn/en/" target="_blank" rel="noopener">12306 — официальные билеты</a><a class="btn" href="https://www.trip.com/trains/" target="_blank" rel="noopener">Trip.com Trains</a></div>
   </div>
 
   <div class="card">
-    <p><b>Бонус-аттракцион: шанхайский маглев.</b> Поезд на магнитной подушке из аэропорта Пудун — 30 км за 7,5 минут, в отдельные слоты разгоняется до 430 км/ч (обычно 300). Билет <span class="num">¥50</span>. Даже если не по пути — съездить туда-обратно ради табло скорости стоит того.</p>
+    <p><b>Бонус-аттракцион: шанхайский маглев.</b> Поезд на магнитной подушке из аэропорта Пудун — 30 км за 7,5 минут, в отдельные слоты разгоняется до 430 км/ч (обычно 300). Билет <span class="num">¥50</span> (¥40 при авиабилете за тот же день). Даже если он не по пути — съездить туда-обратно ради табло скорости стоит того.</p>
   </div>
 </section>
 
@@ -423,7 +415,7 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
   <div class="card">
     <p><b>1. Виза не нужна.</b> Между Россией и Китаем действует взаимный безвиз — до 30 дней по загранпаспорту (действителен 6+ месяцев на дату въезда). На границе могут спросить обратные билеты и брони отелей — держи распечатки. Регистрацию по месту пребывания делает отель автоматически при заселении.</p>
     <p><b>2. Российские Visa и Mastercard в Китае мертвы.</b> Основа платежей в стране — QR-коды <b>Alipay</b> и <b>WeChat Pay</b>. Alipay ставится до вылета, регистрируется по номеру телефона и загранпаспорту.</p>
-    <p><b>3. Карта UnionPay российского банка</b> — ключ к Alipay и банкоматам. Список банков, чьи карты реально работают в Китае, плавает из-за санкций — <b>проверь за 2–3 недели до вылета</b> в актуальных ветках форума Винского и телеграм-чатах «Китай для своих». Привязываешь UnionPay к Alipay → платишь QR-кодом везде, от метро до уличной лапши. Ей же снимаешь наличные в ATM Bank of China / ICBC.</p>
+    <p><b>3. Карта UnionPay российского банка</b> — ключ к Alipay и банкоматам. Список банков, чьи карты реально работают в Китае, плавает из-за санкций — <b>проверь за 2–3 недели до вылета</b> в актуальных ветках форума Винского и телеграм-чатах о Китае. Привязываешь UnionPay к Alipay → платишь QR-кодом везде, от метро до уличной лапши. Ей же снимаешь наличные в ATM Bank of China / ICBC.</p>
     <p><b>4. Наличные — подушка безопасности.</b> Купи <span class="num">¥4000–6000</span> в Москве заранее (Сбер/ВТБ меняют рубли на юани, заказывай в отделение) + возьми запас в долларах — их меняют в любом Bank of China по паспорту. Наличные юани обязаны принимать везде по закону, но у мелких торговцев может не быть сдачи с ¥100.</p>
     <p><b>5. Брони из России:</b> отели — <b>Ostrovok</b> и <b>Яндекс Путешествия</b> (принимают российские карты) либо Trip.com (UnionPay); авиабилеты — <b>Aviasales</b> через агентства с оплатой российскими картами.</p>
   </div>
@@ -432,14 +424,14 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
   <div class="tbl-scroll"><table>
     <tr><th>Ситуация</th><th>Способ</th></tr>
     <tr><td>Рестораны, магазины, метро, такси DiDi, парки</td><td><span class="badge b-qr">QR · Alipay</span></td></tr>
-    <tr><td>Моллы на распродажах, отели на месте</td><td><span class="badge b-up">UnionPay</span> <span class="badge b-qr">QR · Alipay</span></td></tr>
+    <tr><td>Моллы, отели на месте, tax free</td><td><span class="badge b-up">UnionPay</span> <span class="badge b-qr">QR · Alipay</span></td></tr>
     <tr><td>Уличные рынки, мелкие лавки, храмовые свечи</td><td><span class="badge b-cash">наличные ¥</span></td></tr>
     <tr><td>Депозиты в части отелей</td><td><span class="badge b-up">UnionPay</span> <span class="badge b-cash">наличные ¥</span></td></tr>
     <tr><td>Отели и билеты заранее из России</td><td><span class="badge b-ru">росс. карта онлайн · Ostrovok / Aviasales / Яндекс</span></td></tr>
     <tr><td>Чаевые</td><td>В Китае не приняты — вообще. Не оставляйте</td></tr>
   </table></div>
 
-  <div class="note danger"><b>Запасной план, если UnionPay откажет:</b> наличные + просьба к любому продавцу «проведи мне QR — отдам наличкой» работает в 100% мелких мест. И держите ¥500 «неприкосновенных» в разных карманах.</div>
+  <div class="note danger"><b>Запасной план, если UnionPay откажет:</b> наличные + просьба к любому продавцу «помоги, оплачу тебе наличкой — проведи мне QR» работает в 100% мелких мест. И держите ¥500 «неприкосновенных» в разных карманах.</div>
 </section>
 
 <!-- ================= CONNECT ================= -->
@@ -448,7 +440,7 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
   <p class="lead">В Китае заблокированы Google, Instagram, WhatsApp и половина привычного интернета. Обходится это одним правильным решением до вылета.</p>
 
   <div class="card">
-    <p><b>Решение №1 — туристический eSIM (Airalo, Nomad, Yesim).</b> Их китайские тарифы маршрутизируют трафик через Гонконг/Сингапур — <b>весь ваш интернет работает без VPN:</b> карты грузятся, Telegram и Instagram живут, банк-клиенты открываются. 10–20 ГБ ≈ <span class="num">$12–25</span>. Купить и установить профиль <b>строго до вылета</b> (для установки нужен интернет), включить по прилёте. На двоих — два eSIM + раздача как резерв.</p>
+    <p><b>Решение №1 — туристический eSIM (Airalo, Nomad, Yesim).</b> Их китайские тарифы маршрутизируют трафик через Гонконг/Сингапур — <b>весь ваш интернет работает без VPN:</b> Google-карты грузятся, Telegram и Instagram живут, банк-клиенты открываются. 10–20 ГБ ≈ <span class="num">$12–25</span>. Купить и установить профиль <b>строго до вылета</b> (для установки нужен интернет), включить по прилёте. На двоих берите два eSIM + раздача как резерв.</p>
     <p><b>Решение №2 — местная SIM China Unicom</b> в аэропорту по паспорту: дешёвый безлимит, но с Великим файрволом — без VPN половина телефона умрёт. VPN, если нужен, ставится тоже до вылета, и ни один не гарантирован. Для первой поездки — eSIM, точка.</p>
     <div class="link-row"><a class="btn" href="https://www.airalo.com" target="_blank" rel="noopener">Airalo</a><a class="btn" href="https://www.getnomad.app" target="_blank" rel="noopener">Nomad</a><a class="btn" href="https://yesim.app" target="_blank" rel="noopener">Yesim</a></div>
   </div>
@@ -471,26 +463,26 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
 <!-- ================= BUDGET ================= -->
 <section id="budget">
   <div class="sec-head"><div class="bar" style="background:var(--jade)"></div><h2>Бюджет: детальная раскладка</h2></div>
-  <p class="lead">Вилки на двоих, курс ¥1 ≈ 13 ₽ (поменяй в конструкторе — всё пересчитается). Итог под твой маршрут считается в конструкторе выше. Новогодние перелёты — пик цен, поэтому их берём раньше всего.</p>
+  <p class="lead">Вилки на двоих, курс ¥1 ≈ 13 ₽ (поменяй в конструкторе — всё пересчитается). Итог под твой маршрут считается в конструкторе выше.</p>
 
   <div class="tbl-scroll"><table>
     <tr><th>Статья</th><th>Вилка на двоих</th><th>Оплата</th></tr>
-    <tr><td>Перелёты Москва → Пекин + Гуанчжоу → Москва (open-jaw, новогодний пик)</td><td class="num">110 000–170 000 ₽</td><td><span class="badge b-ru">росс. карта · Aviasales</span></td></tr>
-    <tr><td>Поезд Пекин → Шанхай (2-й / 1-й класс)</td><td class="num">¥1 106–2 120 ≈ 14–28 т.₽</td><td><span class="badge b-up">UnionPay</span> <span class="badge b-ru">Trip.com</span></td></tr>
+    <tr><td>Перелёты Москва → Пекин + Гуанчжоу → Москва (open-jaw, новогодний пик)</td><td class="num">100 000–150 000 ₽</td><td><span class="badge b-ru">росс. карта · Aviasales</span></td></tr>
     <tr><td>Перелёт Шанхай → Гуанчжоу</td><td class="num">¥1 400–2 600 ≈ 18–34 т.₽</td><td><span class="badge b-ru">Trip.com / Aviasales</span></td></tr>
-    <tr><td>Отели: Пекин 4 ночи (4★, низкий сезон)</td><td class="num">¥1 800–3 000</td><td><span class="badge b-ru">Ostrovok</span></td></tr>
+    <tr><td>Поезд Пекин → Шанхай (2-й / 1-й класс)</td><td class="num">¥1 106–2 120 ≈ 14–28 т.₽</td><td><span class="badge b-up">UnionPay</span> <span class="badge b-ru">Trip.com</span></td></tr>
+    <tr><td>Отели: Пекин 4 ночи (4★)</td><td class="num">¥2 000–3 000</td><td><span class="badge b-ru">Ostrovok</span></td></tr>
     <tr><td>Отели: Шанхай 3 ночи (4★)</td><td class="num">¥1 650–2 700</td><td><span class="badge b-ru">Ostrovok</span></td></tr>
-    <tr><td>Отели Гуанчжоу: Chimelong (жирафы) + городская ночь</td><td class="num">¥1 700–2 700</td><td><span class="badge b-ru">Trip.com</span></td></tr>
-    <tr><td>Еда: от лапши и сяолунбао до утки и хого</td><td class="num">¥400–700 / день</td><td><span class="badge b-qr">QR</span> <span class="badge b-cash">нал</span></td></tr>
-    <tr><td>Билеты: Universal + Disney + Chimelong Safari</td><td class="num">¥2 800–3 900</td><td><span class="badge b-qr">QR</span> <span class="badge b-ru">Trip.com</span></td></tr>
-    <tr><td>Экскурсии: Стена, Запретный город, смотровые, круиз, каток</td><td class="num">¥1 400–2 200</td><td><span class="badge b-qr">QR</span> <span class="badge b-cash">нал</span></td></tr>
-    <tr><td>Такси DiDi + метро на всю поездку</td><td class="num">¥900–1 600</td><td><span class="badge b-qr">QR · Alipay</span></td></tr>
+    <tr><td>Гуанчжоу: город 1–2 ночи + Chimelong Hotel 1 ночь</td><td class="num">¥2 200–3 400</td><td><span class="badge b-ru">Trip.com</span></td></tr>
+    <tr><td>Еда: от лапши и хого до утки и димсамов</td><td class="num">¥400–700 / день</td><td><span class="badge b-qr">QR</span> <span class="badge b-cash">нал</span></td></tr>
+    <tr><td>Парки: Universal + Disney + Chimelong Safari + цирк</td><td class="num">¥3 400–4 800</td><td><span class="badge b-qr">QR</span> <span class="badge b-ru">Trip.com</span></td></tr>
+    <tr><td>Экскурсии: Стена, Запретный город, коньки, башни, круиз</td><td class="num">¥1 600–2 400</td><td><span class="badge b-qr">QR</span> <span class="badge b-cash">нал</span></td></tr>
+    <tr><td>Такси DiDi + метро на всю поездку</td><td class="num">¥1 000–1 800</td><td><span class="badge b-qr">QR · Alipay</span></td></tr>
     <tr><td>eSIM ×2 + страховка ×2</td><td class="num">6 000–12 000 ₽</td><td><span class="badge b-ru">росс. карта</span></td></tr>
-    <tr><td>Опция «Харбин»: поезд + отель 2 ночи + фестиваль</td><td class="num">+ ¥3 500–6 500 ≈ +50–90 т.₽</td><td><span class="badge b-ru">Trip.com</span> <span class="badge b-qr">QR</span></td></tr>
+    <tr><td>Опция Харбин: поезд + перелёт в Шанхай + отель + фестиваль</td><td class="num">+ ¥4 500–7 000 ≈ +58–90 т.₽</td><td><span class="badge b-ru">Trip.com</span> <span class="badge b-qr">QR</span></td></tr>
     <tr><td>Шопинг и сувениры (январские распродажи!)</td><td class="num">по аппетиту: 0–100 000 ₽+</td><td><span class="badge b-up">UnionPay</span> <span class="badge b-cash">нал</span></td></tr>
   </table></div>
 
-  <div class="note good"><b>Итого реалистично: 340 000–540 000 ₽ на двоих</b> за 10 дней со всеми перелётами и обоими парками — без шопинга и без Харбина. С Харбином (за счёт сокращения Пекина и Шанхая на день) — ориентир 370 000–580 000 ₽. Где сокращать без боли: второй класс поезда вместо бизнеса (−35 т.₽), 3★ вместо 4★ (−20 т.₽), Panda Hotel вместо Chimelong Hotel (−8 т.₽). Где не экономить: eSIM, Мутяньюй вместо «дешёвого тура на Бадалин», тёплая одежда.</div>
+  <div class="note good"><b>Итого реалистично: 360 000–530 000 ₽ на двоих</b> за 10 дней со всеми перелётами и тремя парками — без шопинга и Харбина. Где сокращать без боли: второй класс поезда вместо бизнеса (−35 т.₽), Panda Hotel вместо Chimelong Hotel (−8 т.₽), 3★ в Пекине (−10 т.₽). Где не экономить: eSIM, Мутяньюй вместо «дешёвого тура на Бадалин», билеты в парки только датированные официальные.</div>
 </section>
 
 <!-- ================= TRAPS ================= -->
@@ -500,16 +492,16 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
 
   <div class="trap"><b>«Чайная церемония»</b> — классика Нанкинской улицы и Тяньаньмэнь. Милые «студенты» предлагают попрактиковать английский и зовут на чай — счёт окажется <span class="num">¥2000–5000</span>. Правило: в Китае незнакомцы не зовут туристов в конкретное заведение. Улыбка, «бу яо» (不要 — не надо), идём дальше.</div>
   <div class="trap"><b>«Выставка молодых художников»</b> — тот же сценарий у музеев: заманивают на «бесплатную галерею», выйти без купленной за бешеные деньги мазни морально тяжело.</div>
-  <div class="trap"><b>Рикши в хутунах</b> — договорились «за 50», в конце оказывается «50 с человека и за каждые 10 минут», итог ¥500. Только пешком (хутуны прекрасны пешком) или официальные туры с фиксированным чеком.</div>
+  <div class="trap"><b>Рикши в хутунах</b> — договорились «за 50», в конце оказывается «50 с человека и за каждые 10 минут», итог ¥500. Только официальные туры с фиксированным чеком или пешком (хутуны прекрасны пешком).</div>
   <div class="trap"><b>«Taxi? Taxi?» в аэропортах и у вокзалов</b> — зазывалы без счётчика возят по тройному тарифу. Только стойка официального такси или DiDi из Alipay: цена видна до посадки.</div>
   <div class="trap"><b>«Дешёвый тур на Великую стену»</b> за ¥100 — это Бадалин с обязательными заездами на «нефритовую фабрику» и «музей жемчуга» на 2 часа торговой обработки. Мутяньюй своим ходом дороже, но день остаётся вашим.</div>
-  <div class="note">Мелочь, но полезно: цены на рынках завышены ×3–5 — торг уместен и ожидаем (калькулятор в руки). «Монах», надевающий на запястье браслет-«подарок», потребует пожертвование — руки в карманы.</div>
+  <div class="note">Мелочь, но полезно: цены на рынках завышены ×3–5 — торг уместен и ожидаем (калькулятор в руки). «Монах», надевающий на запястье браслет-«подарок», потребует пожертвование — руки в карманы. Зимнее: у катков и фестивалей не берите «билеты с рук» — только кассы и QR.</div>
 </section>
 
 <!-- ================= PACK ================= -->
 <section id="pack">
   <div class="sec-head"><div class="bar" style="background:var(--jade)"></div><h2>Чек-лист сборов: зимняя версия</h2></div>
-  <p class="lead">Отмечай — прогресс сохраняется в браузере. Пункты со звёздочкой критичны именно для зимнего Китая.</p>
+  <p class="lead">Отмечай — прогресс сохраняется в браузере. Пункты со звёздочкой критичны именно для этой поездки.</p>
   <div class="card">
     <div class="progress"><i id="pbar"></i></div>
     <div class="mono" id="ptext" style="font-size:12.5px;color:var(--dim)">0 из 0</div>
@@ -521,16 +513,17 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
 <!-- ================= BOOK ================= -->
 <section id="book">
   <div class="sec-head"><div class="bar" style="background:var(--amber)"></div><h2>Календарь бронирований</h2></div>
-  <p class="lead">Новогодние вылеты из Москвы — самые дорогие даты года и разбираются первыми. Отсчёт — от старта 1 января 2027.</p>
+  <p class="lead">Что и когда покупать, чтобы не переплатить на новогоднем пике. Отсчёт — от старта 1 января.</p>
   <div class="tbl-scroll"><table>
     <tr><th>Когда</th><th>Что сделать</th></tr>
-    <tr><td class="num">Сейчас (лето)</td><td>Зафиксировать даты. Открыть карту UnionPay в работающем банке (проверить актуальный список). Завести Alipay и WeChat, привязать загранпаспорта</td></tr>
-    <tr><td class="num">Август–сентябрь</td><td>⚠ Авиабилеты open-jaw: Москва → Пекин (вылет 31.12 вечером) и Гуанчжоу → Москва (10.01). Новогодний пик: каждый месяц промедления = +10–20% к цене</td></tr>
-    <tr><td class="num">Октябрь–ноябрь</td><td>Отели Пекина, Шанхая, Chimelong Hotel (номера с видом на сафари уходят рано). Если включили Харбин — его отель бронировать первым: фестивальный спрос. Перелёт Шанхай → Гуанчжоу. Страховка</td></tr>
-    <tr><td class="num">Середина декабря</td><td>eSIM купить и установить профили. Датированные билеты Universal и Disney. Перепроверить статус UnionPay-карты</td></tr>
-    <tr><td class="num">За 15 дней до поезда</td><td>Открылась продажа на Пекин → Шанхай (и Пекин → Харбин) — брать сразу: новогодняя неделя выкупается быстро (12306 / Trip.com)</td></tr>
-    <tr><td class="num">Ровно за 7 дней</td><td>⏰ 3:00 мск — билеты в Запретный город на нужную дату в WeChat-миниаппе. Будильник обязателен</td></tr>
-    <tr><td class="num">29–30 декабря</td><td>Наличные юани. Офлайн-карты Amap и офлайн-пакеты переводчиков. Скрины адресов отелей иероглифами. Распечатки броней и обратных билетов для границы</td></tr>
+    <tr><td class="num">Сейчас (лето)</td><td>Зафиксировать даты и состав маршрута (Харбин: да/нет). Открыть карту UnionPay в работающем банке. Завести Alipay и WeChat, привязать загранпаспорта</td></tr>
+    <tr><td class="num">Сентябрь–октябрь<br>(за 3 мес)</td><td>Авиабилеты open-jaw: Москва → Пекин и Гуанчжоу → Москва на Aviasales. Новогодние вылеты дорожают быстрее всего — чем раньше, тем дешевле</td></tr>
+    <tr><td class="num">Ноябрь<br>(за 1,5–2 мес)</td><td>Все отели: Пекин, Шанхай, Гуанчжоу + Chimelong Hotel (номера с видом на сафари уходят рано). Перелёт Шанхай → Гуанчжоу (и Харбин → Шанхай, если летите). Страховка</td></tr>
+    <tr><td class="num">Начало декабря</td><td>eSIM купить и установить профили. Перепроверить статус UnionPay-карты в свежих ветках форумов</td></tr>
+    <tr><td class="num">Середина декабря<br>(за 2–3 недели)</td><td>Датированные билеты: Universal на 4 января, Disney на будний день 6–7 января, Chimelong Safari и цирк</td></tr>
+    <tr><td class="num">С 18–21 декабря<br>(за 15 дней)</td><td>Открываются продажи на поезда — брать сразу: Пекин → Шанхай (и Пекин → Харбин, если опция включена)</td></tr>
+    <tr><td class="num">26 декабря, 3:00 мск</td><td>⏰ Билеты в Запретный город на 2 января в WeChat-миниаппе — праздничный спрос, ловить в момент открытия. Будильник обязателен</td></tr>
+    <tr><td class="num">29–31 декабря</td><td>Наличные юани. Офлайн-карты Amap и офлайн-пакеты переводчиков. Скрины адресов отелей иероглифами. Распечатки броней и обратных билетов для границы</td></tr>
   </table></div>
 
   <div class="link-row" style="margin:18px 0 6px">
@@ -547,8 +540,8 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
 </div><!-- /wrap -->
 
 <footer><div class="wrap">
-  <p>Гайд собран под конкретную пару и конкретные даты. Цены — ориентиры января 2027, вилки специально даны с запасом; всё перепроверяй при бронировании. Зимние часы парков и катков сверяй в официальных приложениях за неделю до визита.</p>
-  <p class="updated" style="margin-top:8px">Обновлено: июль 2026 · версия «Зима» · сделано с заботой о двух туристах 🧣🧤</p>
+  <p>Гайд собран под конкретную пару и конкретные даты 1–10 января 2027. Цены — ориентиры, вилки специально даны с запасом; всё перепроверяй при бронировании. Новогодние тарифы парков и авиа плавают — датированные билеты фиксируют цену.</p>
+  <p class="updated" style="margin-top:8px">Обновлено: июль 2026 · зимняя редакция · сделано с заботой о двух туристах 🧣🧤</p>
 </div></footer>
 
 <script>
@@ -560,74 +553,68 @@ var store={get:function(k){try{return JSON.parse(localStorage.getItem(k))}catch(
 /* ---------- route model ---------- */
 var TOTAL=10;
 var MODULES=[
- {id:"beijing",name:"Пекин",sub:"Стена · Запретный город · Universal · каток",color:"var(--lacquer)",key:"ПЕК",min:3,max:5,def:4,
-  hotel:[450,750],daily:[500,750],fixed:[2000,2700]},
- {id:"harbin",name:"Харбин",sub:"Ледовый фестиваль · русский город · −20°",color:"var(--ice)",key:"ХАР",min:1,max:2,def:2,
-  hotel:[350,700],daily:[450,650],fixed:[1150,1550]},
+ {id:"beijing",name:"Пекин",sub:"Стена · дворец в снегу · Universal (Гарри Поттер) · коньки",color:"var(--lacquer)",key:"ПЕК",min:3,max:5,def:4,
+  hotel:[500,850],daily:[500,750],fixed:[2300,3000]},
+ {id:"harbin",name:"Харбин",sub:"Ледовый фестиваль · «русский Арбат» · −25°",color:"var(--iceblue)",key:"ХАР",min:2,max:3,def:2,opt:true,
+  hotel:[400,700],daily:[400,650],fixed:[1100,1500]},
  {id:"shanghai",name:"Шанхай",sub:"Disney · Бунд · распродажи · маглев",color:"var(--shanghai)",key:"ШАН",min:2,max:4,def:3,
-  hotel:[550,850],daily:[500,800],fixed:[1900,2500]},
- {id:"guangzhou",name:"Гуанчжоу",sub:"Жирафы Chimelong · димсамы · +18°",color:"var(--amber)",key:"ГУА",min:1,max:3,def:2,
-  hotel:[900,1600],daily:[400,650],fixed:[1000,1400]}
+  hotel:[550,900],daily:[500,800],fixed:[2000,2600]},
+ {id:"guangzhou",name:"Гуанчжоу · жирафы",sub:"Chimelong Safari · цирк · димсамы · +18°",color:"var(--amber)",key:"ГУА",min:2,max:4,def:3,
+  hotel:[750,1200],daily:[450,700],fixed:[1500,2000]}
 ];
 var LEGS={
- "beijing-harbin":{t:"🚄",txt:"Поезд-пуля Пекин → Харбин · 4 ч 40 мин – 5 ч 30 мин · ¥430–540/чел (или перелёт 2 ч)",cost:[900,1500]},
- "beijing-shanghai":{t:"🚄",txt:"Поезд-пуля Пекин → Шанхай · 4 ч 30 мин · ¥553–1060/чел",cost:[1106,2120]},
- "beijing-guangzhou":{t:"✈️",txt:"Перелёт Пекин → Гуанчжоу · 3 ч 15 мин",cost:[1600,3000]},
- "harbin-shanghai":{t:"✈️",txt:"Перелёт Харбин → Шанхай · 3 ч",cost:[1500,2800]},
- "harbin-guangzhou":{t:"✈️",txt:"Перелёт Харбин → Гуанчжоу · ~4 ч 30 мин",cost:[1900,3400]},
- "shanghai-guangzhou":{t:"✈️",txt:"Перелёт Шанхай → Гуанчжоу · 2 ч 15 мин",cost:[1400,2600]}
+ "beijing-harbin":{t:"🚄",txt:"Поезд-пуля Пекин → Харбин · 4 ч 40 мин · ¥541/чел, за окном снежная Маньчжурия",cost:[1082,1400]},
+ "harbin-shanghai":{t:"✈️",txt:"Перелёт Харбин → Шанхай · ~3 ч",cost:[1800,3200]},
+ "harbin-guangzhou":{t:"✈️",txt:"Перелёт Харбин → Гуанчжоу · ~4 ч 20 мин",cost:[2200,3800]},
+ "beijing-shanghai":{t:"🚄",txt:"Поезд-пуля Пекин → Шанхай · 4 ч 30 мин · ¥553–1060/чел (бизнес ¥1750+)",cost:[1106,2120]},
+ "beijing-guangzhou":{t:"✈️",txt:"Перелёт Пекин → Гуанчжоу · ~3 ч 20 мин",cost:[1800,3200]},
+ "shanghai-guangzhou":{t:"✈️",txt:"Перелёт Шанхай → Гуанчжоу · 2 ч 15 мин (или поезд-пуля ~7 ч, ¥793)",cost:[1400,2600]}
 };
-var ARRIVE={
- beijing:"Москва → Пекин, прямой ~7 ч 40 мин. При старте 1 января: вылет 31 декабря вечером — Новый год встречаете в небе 🥂",
- harbin:"Москва → Харбин (обычно через Пекин), суммарно ~11 ч",
- shanghai:"Москва → Шанхай, прямой ~9 ч",
- guangzhou:"Москва → Гуанчжоу, прямой China Southern ~10 ч"};
-var DEPART={
- guangzhou:"Гуанчжоу → Москва, прямой China Southern ~10 ч 30 мин (обычно ночной — день остаётся целым)",
- shanghai:"Шанхай → Москва, прямой ~9 ч 30 мин",
- beijing:"Пекин → Москва, прямой ~8 ч",
- harbin:"Харбин → Москва, через Пекин ~11 ч"};
 var PLANS={
  beijing:{
-  3:["Прилёт утром, заселение → первая лапша → вечером Хоухай: каток на замёрзшем озере и ледовые велосипеды",
-     "Запретный город в снегу (бронь ровно за 7 дней!) → Тяньаньмэнь → закат с холма Цзиншань → утка в Siji Minfu",
-     "Universal Beijing: Хогсмид в настоящем снегу, Forbidden Journey. ⚠ При 3 днях Стена не влезает — добавь день"],
-  4:["Прилёт утром, заселение → первая лапша → вечером Хоухай: каток на замёрзшем озере и ледовые велосипеды",
-     "Запретный город в снегу (бронь ровно за 7 дней!) → Тяньаньмэнь → закат с холма Цзиншань → утка в Siji Minfu",
-     "Великая стена, Мутяньюй: пустые башни, канатка в обе стороны (выезд 8:00) → вечером хого в Dong Lai Shun",
-     "Universal Beijing: Хогсмид в настоящем снегу, замок, Forbidden Journey — весь день в парке"],
-  5:["Прилёт утром, заселение → первая лапша → вечером Хоухай: каток и ледовые велосипеды",
-     "Запретный город в снегу (бронь за 7 дней!) → Тяньаньмэнь → закат с холма Цзиншань → утка в Siji Minfu",
-     "Великая стена, Мутяньюй (выезд 8:00) → вечером хутуны Наньлогусян и хого",
-     "Ламаистский храм Юнхэгун → арт-квартал 798 → Летний дворец: каток на льду озера Куньмин",
-     "Universal Beijing — весь день до вечернего шоу"]},
+  3:["Прилёт, заселение. Вечером — замёрзшие озёра Хоухай: коньки и ледовые велосипеды прямо на озере (прокат ¥60–80), горячий тан-ху-лу в руку",
+     "Запретный город в снегу (бронь за 7 дней!) → Тяньаньмэнь → закат в парке Цзиншань → согревающая утка в Siji Minfu",
+     "Universal Beijing: Хогсмид, замок, горячее сливочное пиво. Стоит в будни после 3 января — очередей нет. ⚠ При 3 днях Стена не влезает — добавь день"],
+  4:["Прилёт, заселение. Вечером — замёрзшие озёра Хоухай: коньки и ледовые велосипеды прямо на озере (прокат ¥60–80), горячий тан-ху-лу в руку",
+     "Запретный город в снегу (бронь за 7 дней!) → Тяньаньмэнь → закат в парке Цзиншань → утка в Siji Minfu",
+     "Великая стена Мутяньюй: зимой без толп, если повезёт — в снегу (выезд 7:30, одеться как на лыжи) → вечером хутуны Наньлогусян и хого",
+     "Universal Beijing: Хогсмид, Forbidden Journey, горячее сливочное пиво — весь день, парк в будни пуст"],
+  5:["Прилёт, заселение. Вечером — Хоухай: коньки на замёрзшем озере, тан-ху-лу",
+     "Запретный город в снегу (бронь за 7 дней!) → Тяньаньмэнь → закат в парке Цзиншань → утка в Siji Minfu",
+     "Великая стена Мутяньюй (выезд 7:30) → вечером хутуны Наньлогусян и хого",
+     "Universal Beijing — весь день, парк в будни пуст",
+     "Храм Неба утром (тайцзи не отменяет мороз) → Летний дворец у льда озера Куньмин → прощальный вечер у Хоухай"]},
  harbin:{
-  1:["Собор Святой Софии и Чжунъян-стрит днём («русский Харбин») → Harbin Ice and Snow World вечером: ледяные дворцы в полной подсветке"],
-  2:["Чжунъян-стрит и собор Святой Софии → горячие пельмени и «русский хлеб» лебa → к 15:00 в Harbin Ice and Snow World: день + включение подсветки",
-     "Снежные гиганты Сан-Айленда → прощальный глинтвейн на Чжунъян-стрит → вечером дальше по маршруту"]},
+  2:["Центральная улица — «русский Арбат»: дома модерна, Софийский собор, мороженое Modern на морозе (местная традиция) → к 15:00 в Ice and Snow World: город изо льда, подсветку включают в сумерках",
+     "Солнечный остров: гигантские снежные скульптуры → обед: харбинские пельмени и красная колбаса → перелёт дальше по маршруту"],
+  3:["Центральная улица: дома модерна, Софийский собор, мороженое на морозе → к 15:00 в Ice and Snow World: подсветка в сумерках — главное зрелище зимы",
+     "Парк сибирских тигров или неспешный день: кофейни в особняках Центральной, фотопрогулка по льду Сунгари",
+     "Солнечный остров: снежные скульптуры → пельмени и красная колбаса → перелёт дальше по маршруту"]},
  shanghai:{
-  2:["Заселение → сад Юй и сяолунбао в Jia Jia Tang Bao → вечером Бунд: подсветка Пудуна и круиз по Хуанпу",
-     "Shanghai Disneyland: к открытию → Zootopia → TRON → вечерний салют над замком"],
-  3:["Заселение → сад Юй и сяолунбао в Jia Jia Tang Bao → вечером Бунд: подсветка Пудуна и круиз по Хуанпу",
-     "Shanghai Disneyland: к открытию → Zootopia → TRON → вечерний салют над замком",
-     "Французская концессия (Wukang Rd) → январские распродажи: IAPM, флагманы Huawei/Xiaomi → смотровая Shanghai Tower → маглев на скорость"],
-  4:["Заселение → сад Юй и сяолунбао → вечером Бунд и круиз по Хуанпу",
-     "Shanghai Disneyland: к открытию → Zootopia → TRON → салют",
-     "Французская концессия → распродажи: IAPM, TX Huaihai, флагманы техники → Shanghai Tower → маглев",
-     "Шанхайский музей (бронь в WeChat, бесплатно) → Тяньцзыфан → полдня в зимне-тихом Чжуцзяцзяо"]},
+  2:["Сад Юй + сяолунбао в Jia Jia Tang Bao → вечером Бунд: зимний воздух прозрачнее, неон чётче; круиз по Хуанпу с пледом",
+     "Shanghai Disneyland: к открытию → Zootopia → TRON → вечерний салют (~19:30). Январские будни — самые короткие очереди года"],
+  3:["Сад Юй + сяолунбао в Jia Jia Tang Bao → вечером Бунд и круиз по Хуанпу с пледом",
+     "Shanghai Disneyland: к открытию → Zootopia → TRON → салют (~19:30). Будний день — очередей почти нет",
+     "Французская концессия (Wukang Rd): платаны и кофейни → большой шопинг: IAPM, TX Huaihai, флагманы Huawei/Xiaomi, январские скидки → смотровая Shanghai Tower → по желанию маглев на скорость"],
+  4:["Сад Юй + сяолунбао в Jia Jia Tang Bao → вечером Бунд и круиз по Хуанпу с пледом",
+     "Shanghai Disneyland: весь день до салюта — январские будни, парк ваш",
+     "Французская концессия → большой шопинг: IAPM, TX Huaihai, флагманы техники, распродажи → Shanghai Tower",
+     "Полдня водный городок Чжуцзяцзяо (зимой без толп совсем) → вечером маглев на скорость и прощание с Бундом"]},
  guangzhou:{
-  1:["Chimelong Safari с открытия: жирафы с ладони, сафари-поезд, панды → Кантонская башня по пути в аэропорт"],
-  2:["Chimelong Safari: платформа кормления жирафов, сафари-поезд, панды → ночь в Chimelong Hotel среди белых тигров",
-     "Остров Шамянь → димсам-обед в Tao Tao Ju → Кантонская башня на закате → вечером в аэропорт"],
-  3:["Chimelong Safari: жирафы, сафари-поезд, панды → ночь в Chimelong Hotel среди белых тигров",
-     "Остров Шамянь → димсам-обед в Tao Tao Ju → квартал Юнцин Фан → Кантонская башня на закате",
-     "Академия клана Чэнь → шопинг на Бэйцзин-роуд → прощальный ужин кантонской кухни → вечером в аэропорт"]}
+  2:["Chimelong Safari: платформа кормления жирафов, сафари-поезд, панды → вечером Международный цирк Chimelong → ночь в сафари-отеле среди белых тигров",
+     "Утренний чай с димсамами по-кантонски → остров Шамянь → Canton Tower на закате → ночной вылет домой"],
+  3:["Заселение → остров Шамянь: колониальный квартал у Жемчужной реки, +18° после севера → вечером Canton Tower (закат ~18:00, смотровая или капсулы-колесо на макушке)",
+     "Chimelong Safari весь день: жирафы с ладони, панды, сафари-поезд → вечером Международный цирк Chimelong → ночь в Chimelong Hotel",
+     "Утренний чай «юм ча» с димсамами (Diandude / Taotaoju) → шопинг: Beijing Road или моллы Tianhe → вылет в Москву"],
+  4:["Заселение → остров Шамянь → вечером Canton Tower (закат ~18:00)",
+     "Chimelong Safari весь день: жирафы, панды, сафари-поезд → вечером цирк Chimelong → ночь в Chimelong Hotel",
+     "Парк Юэсю и мемориал Сунь Ятсена → академия клана Чэнь (кантонская резьба) → вечером набережная Жемчужной реки",
+     "Утренний чай «юм ча» с димсамами → финальный шопинг: Beijing Road, Taikoo Hui → вылет в Москву"]}
 };
 
-var DEFAULTS={days:{beijing:4,harbin:2,shanghai:3,guangzhou:3},on:{beijing:true,harbin:false,shanghai:true,guangzhou:true},start:"2027-01-01",rate:13};
+var DEF={days:{beijing:4,harbin:2,shanghai:3,guangzhou:3},on:{beijing:true,harbin:false,shanghai:true,guangzhou:true},start:"2027-01-01",rate:13};
 var state=store.get("cn_route_v2");
-if(!state||!state.days||!state.on||!state.start){state=JSON.parse(JSON.stringify(DEFAULTS));}
-if(!state.rate)state.rate=13;
+if(!state||!state.days||!state.on||!state.start){state=JSON.parse(JSON.stringify(DEF));}
 
 var $=function(s){return document.querySelector(s)};
 var ticketsEl=$("#tickets"),balanceEl=$("#balance"),itinEl=$("#itin");
@@ -648,7 +635,7 @@ function renderTickets(){
   var el=document.createElement("div");
   el.className="ticket"+(on?"":" off");
   el.style.setProperty("--tc",m.color);
-  el.innerHTML='<div class="t-top"><div><div class="t-city">'+m.name+'</div><div class="t-sub">'+m.sub+'</div></div>'+
+  el.innerHTML='<div class="t-top"><div><div class="t-city">'+m.name+(m.opt?' <span class="badge b-qr" style="vertical-align:middle">опция</span>':"")+'</div><div class="t-sub">'+m.sub+'</div></div>'+
    '<label class="switch"><input type="checkbox" data-tgl="'+m.id+'"'+(on?" checked":"")+' aria-label="Включить '+m.name+'"><span class="tr"></span></label>'+
    '</div><div class="stepper"><button type="button" data-dec="'+m.id+'" aria-label="Меньше дней"'+((!on||d<=m.min)?" disabled":"")+'>−</button><div class="val">'+(on?d+" "+plural(d):"выкл")+'</div><button type="button" data-inc="'+m.id+'" aria-label="Больше дней"'+((!on||d>=m.max)?" disabled":"")+'>+</button></div>';
   ticketsEl.appendChild(el);
@@ -661,24 +648,23 @@ function renderBalance(){
  $("#endDateOut").textContent="→ финиш "+fmtDate(end)+" ("+WD[end.getDay()]+"), "+TOTAL+" дней / "+(TOTAL-1)+" ночей";
  if(diff===0){balanceEl.className="balance";balanceEl.innerHTML="✅ <b>Ровно "+TOTAL+" дней</b> — маршрут собран. Дни, даты и бюджет ниже обновлены.";}
  else{balanceEl.className="balance err";
-  balanceEl.innerHTML=(diff>0?"🧩 Свободно <b>"+diff+" "+plural(diff)+"</b> — раскидать по городам?":"⚠️ Перебор <b>"+(-diff)+" "+plural(-diff)+"</b> — ужать программу?")+
+  balanceEl.innerHTML=(diff>0?"🧩 Свободно <b>"+diff+" "+plural(diff)+"</b>":"⚠️ Перебор <b>"+(-diff)+" "+plural(-diff)+"</b>")+
   '<button class="btn fix" type="button" id="autofix">Выровнять автоматически</button>';}
 }
 
-/* распределяет разницу дней по активным городам в пределах min/max, начиная с Пекина и Шанхая */
 function autofix(){
- var diff=TOTAL-totalDays();
- var order=["beijing","shanghai","guangzhou","harbin"];
- var guard=20;
- while(diff!==0&&guard-->0){
-  var moved=false;
-  for(var i=0;i<order.length&&diff!==0;i++){
+ var order=["guangzhou","beijing","shanghai","harbin"];
+ var guard=0;
+ while(totalDays()!==TOTAL&&guard<40){
+  var diff=TOTAL-totalDays(),moved=false;
+  for(var i=0;i<order.length;i++){
    var m=MODULES.find(function(x){return x.id===order[i]});
    if(!state.on[m.id])continue;
-   if(diff>0&&state.days[m.id]<m.max){state.days[m.id]++;diff--;moved=true;}
-   else if(diff<0&&state.days[m.id]>m.min){state.days[m.id]--;diff++;moved=true;}
+   if(diff>0&&state.days[m.id]<m.max){state.days[m.id]++;moved=true;break;}
+   if(diff<0&&state.days[m.id]>m.min){state.days[m.id]--;moved=true;break;}
   }
   if(!moved)break;
+  guard++;
  }
 }
 
@@ -687,7 +673,7 @@ function renderItin(){
  itinEl.innerHTML="";
  if(mods.length===0){itinEl.innerHTML='<p style="color:var(--dim)">Включи хотя бы один город — и план соберётся.</p>';return;}
  var arr=document.createElement("div");arr.className="leg";
- arr.innerHTML='<div class="ic">✈️</div><div>'+ARRIVE[mods[0].id]+'</div>';
+ arr.innerHTML='<div class="ic">✈️</div><div>Вылет из Москвы вечером 31 декабря — Новый год встречаете в небе (прямой до Пекина ~7,5 ч), либо утром 1 января</div>';
  itinEl.appendChild(arr);
  var day=1,prev=null;
  mods.forEach(function(m){
@@ -706,8 +692,9 @@ function renderItin(){
   });
   prev=m;
  });
+ var last=mods[mods.length-1];
  var dep=document.createElement("div");dep.className="leg";
- dep.innerHTML='<div class="ic">🏠</div><div>'+DEPART[mods[mods.length-1].id]+'</div>';
+ dep.innerHTML='<div class="ic">✈️</div><div>'+(last.id==="guangzhou"?"Вылет домой: прямой China Southern Гуанчжоу → Москва, ~10,5 ч":"Вылет домой: "+last.name+" → Москва (прямой или с пересадкой — смотри Aviasales)")+'</div>';
  itinEl.appendChild(dep);
 }
 
@@ -716,15 +703,15 @@ function renderBudget(){
  var lo=0,hi=0,mods=activeModules(),prev=null;
  mods.forEach(function(m,idx){
   var d=state.days[m.id];
-  var nights=(idx===mods.length-1)?Math.max(d-1,0):d;
+  var nights=(idx===mods.length-1)?Math.max(d-1,1):d;
   lo+=m.hotel[0]*nights+m.daily[0]*d+m.fixed[0];
   hi+=m.hotel[1]*nights+m.daily[1]*d+m.fixed[1];
   if(prev){var leg=LEGS[prev.id+"-"+m.id];if(leg){lo+=leg.cost[0];hi+=leg.cost[1];}}
   prev=m;
  });
- var rubLo=lo*rate+110000+6000, rubHi=hi*rate+170000+12000;
- $("#budgetOut").textContent=mods.length?("≈ "+fmtRange(rubLo,rubHi)):"—";
- $("#budgetDetail").textContent=mods.length?("Внутри Китая: ¥"+lo.toLocaleString("ru-RU")+"–"+hi.toLocaleString("ru-RU")+" + перелёты из Москвы 110–170 т.₽ (новогодний пик) + eSIM и страховка. Без шопинга."):"";
+ var rubLo=lo*rate+100000+6000, rubHi=hi*rate+150000+12000;
+ $("#budgetOut").textContent="≈ "+fmtRange(rubLo,rubHi);
+ $("#budgetDetail").textContent="Внутри Китая: ¥"+lo.toLocaleString("ru-RU")+"–"+hi.toLocaleString("ru-RU")+" + перелёты из Москвы 100–150 т.₽ (новогодний пик) + eSIM и страховка. Без шопинга.";
 }
 
 function renderAll(){renderTickets();renderBalance();renderItin();renderBudget();store.set("cn_route_v2",state);}
@@ -738,10 +725,7 @@ document.addEventListener("click",function(e){
 });
 document.addEventListener("change",function(e){
  var t=e.target;
- if(t.dataset&&t.dataset.tgl){state.on[t.dataset.tgl]=t.checked;
-  if(t.checked&&totalDays()>TOTAL)autofix();
-  if(!t.checked&&totalDays()<TOTAL)autofix();
-  renderAll();}
+ if(t.dataset&&t.dataset.tgl){state.on[t.dataset.tgl]=t.checked;renderAll();}
  if(t.id==="startDate"){state.start=t.value||"2027-01-01";renderAll();}
  if(t.id==="rateInput"){var r=parseFloat(t.value);if(r>0){state.rate=r;renderBudget();store.set("cn_route_v2",state);}}
  if(t.dataset&&t.dataset.cl!==undefined){clState[t.dataset.cl]=t.checked;store.set("cn_check_v2",clState);updateProgress();
@@ -750,7 +734,7 @@ document.addEventListener("change",function(e){
 $("#startDate").value=state.start;
 $("#rateInput").value=state.rate||13;
 
-/* ---------- checklist ---------- */
+/* ---------- checklist (winter) ---------- */
 var CHECK=[
  {cat:"Документы",items:[
   ["Загранпаспорта — срок действия 6+ месяцев от даты въезда*",""],
@@ -769,26 +753,25 @@ var CHECK=[
   ["Яндекс Переводчик и Google Translate с офлайн-пакетами ru↔zh*",""],
   ["12306 и Trip.com с аккаунтами",""],
   ["Скрины адресов отелей иероглифами*","показывать таксистам"]]},
- {cat:"Зима — главное",items:[
-  ["Термобельё обоим*","в Пекине −5°, на Стене с ветром — все −12°"],
-  ["Пуховик / тёплая парка*",""],
-  ["Шапка, перчатки, шарф*","перчатки лучше с тач-пальцами: билеты и карты — всё в телефоне"],
-  ["Тёплая обувь на нескользящей подошве*","лёд у катков и на Стене"],
-  ["Крем от мороза + гигиеническая помада*","сухой пекинский мороз обветривает за день"],
-  ["Для Харбина: балаклава/бафф и вторая пара носков","либо докупить на месте — там всё есть и дёшево"],
-  ["Термос","кипяток в Китае бесплатно везде — вокзалы, парки, отели"]]},
+ {cat:"Зимняя экипировка",items:[
+  ["Пуховики: Пекин −9°, ветер на Стене*",""],
+  ["Термобельё обоим*","под джинсы в Universal — там много улицы"],
+  ["Шапки, перчатки, шарфы*",""],
+  ["Тёплая нескользящая обувь*","лёд на Хоухае и брусчатка хутунов"],
+  ["Слои для Гуанчжоу: там +15…18","футболка + лёгкая куртка, пуховик в рюкзак"],
+  ["Для Харбина (если едете): балаклава/бафф — докупить грелки HotHands на месте, ¥2–5","телефон на морозе держать во внутреннем кармане"]]},
  {cat:"Техника",items:[
-  ["Пауэрбанк с маркировкой CCC, только в ручную кладь*","на внутренних рейсах Китая без значка CCC изымают; на морозе держать во внутреннем кармане"],
-  ["Универсальный переходник для розеток","евровилка входит почти везде, но пусть будет"],
-  ["Грелки для рук","можно купить там по ¥2 — но первая пара пригодится сразу"]]},
+  ["Пауэрбанк с маркировкой CCC, только в ручную кладь*","на внутренних рейсах Китая без значка CCC изымают; мороз ест батарею вдвое быстрее"],
+  ["Универсальный переходник для розеток","евровилка входит почти везде, но пусть будет"]]},
  {cat:"Аптечка",items:[
   ["Свои лекарства + от простуды и желудка","аптеки есть, но всё в иероглифах"],
-  ["Пластыри","20 000+ шагов в день гарантированы"]]},
+  ["Гигиеническая помада и увлажняющий крем*","пекинский мороз сухой — обветривает за день"],
+  ["Пластыри — находитесь 20 000+ шагов в день",""]]},
  {cat:"Мелочи, которые спасают",items:[
   ["Влажные салфетки и карманная туалетная бумага*","в общественных туалетах бумаги нет"],
-  ["Складной зонт","в Шанхае возможен зимний дождь"],
-  ["Ручка — заполнить прибытие в самолёте",""],
-  ["Купальники","если в отеле крытый бассейн или спа — пригодятся"]]}
+  ["Складной зонт","Шанхай зимой моросит"],
+  ["Термос-кружка","кипяток бесплатно везде: вокзалы, парки, поезда — очень китайская привычка"],
+  ["Ручка — заполнить прибытие в самолёте",""]]}
 ];
 var clState=store.get("cn_check_v2")||{};
 function renderChecklist(){
