@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Китай на двоих — Новый год · 1–10 января 2027</title>
-<meta name="description" content="Личный гид: зимний Пекин, Гарри Поттер в Universal, Шанхай Дисней, жирафы Chimelong и опция — ледовый Харбин. Конструктор маршрута, бюджет, деньги, связь, ловушки.">
+<meta name="description" content="Личный гид: выбираешь места-карточки — маршрут по городам и датам собирается сам. Зимний Пекин, Гарри Поттер, Дисней, жирафы Chimelong, опция Харбин.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Prata&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap&subset=cyrillic" rel="stylesheet">
@@ -23,7 +23,7 @@ html{scroll-behavior:smooth;scroll-padding-top:64px}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
 body{font-family:'IBM Plex Sans',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.55;font-size:16px}
 .wrap{max-width:780px;margin:0 auto;padding:0 18px}
-h1,h2,.disp{font-family:'Prata',serif;font-weight:400;line-height:1.15}
+h1,h2{font-family:'Prata',serif;font-weight:400;line-height:1.15}
 .mono{font-family:'IBM Plex Mono',monospace}
 a{color:var(--shanghai);text-underline-offset:3px}
 a:hover{color:var(--lacquer)}
@@ -35,7 +35,7 @@ nav{position:sticky;top:0;z-index:50;background:rgba(250,248,243,.92);backdrop-f
 .chips{display:flex;gap:8px;overflow-x:auto;padding:10px 18px;max-width:780px;margin:0 auto;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
 .chip{flex:0 0 auto;font-size:13px;font-weight:600;padding:7px 13px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;white-space:nowrap}
-.chip:hover{border-color:var(--gold);color:var(--ink)}
+.chip:hover{border-color:var(--gold)}
 
 /* ---------- HERO ---------- */
 header{position:relative;color:#fff;overflow:hidden}
@@ -77,7 +77,6 @@ tr:last-child td{border-bottom:none}
 .b-qr{background:#DCEBFF;color:#1F4FA8}
 .b-up{background:#E2F2EA;color:#14684F}
 .b-ru{background:#F3E3F5;color:#7A2E86}
-.b-warn{background:#FBE0DC;color:#9A2418}
 .b-ok{background:#E2F2EA;color:#14684F}
 .note{border-left:4px solid var(--gold);background:#FBF4E0;padding:12px 14px;border-radius:0 10px 10px 0;font-size:14.5px;margin:14px 0}
 .danger{border-left-color:var(--lacquer);background:#FBEAE8}
@@ -92,35 +91,41 @@ ul.tick li::before{content:"—";position:absolute;left:4px;color:var(--gold);fo
 .btn.solid{background:var(--ink);color:#fff}
 .btn.solid:hover{background:#000;color:#fff}
 
-/* ---------- ROUTE BUILDER ---------- */
-#builder .tickets{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:640px){#builder .tickets{grid-template-columns:1fr}}
-.ticket{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px 16px 16px 26px;overflow:hidden;transition:opacity .2s}
-.ticket::before{content:"";position:absolute;left:0;top:0;bottom:0;width:10px;background:var(--tc)}
-.ticket::after{content:"";position:absolute;left:5px;top:0;bottom:0;width:0;border-left:2px dashed rgba(255,255,255,.75)}
-.ticket.off{opacity:.45}
-.ticket .t-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.ticket .t-city{font-family:'Prata',serif;font-size:21px}
-.ticket .t-sub{font-size:13px;color:var(--dim);margin-top:2px}
-.switch{position:relative;width:46px;height:26px;flex:0 0 auto}
-.switch input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;z-index:2;margin:0}
-.switch .tr{position:absolute;inset:0;border-radius:99px;background:#D8D2C4;transition:.2s}
-.switch .tr::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:.2s}
-.switch input:checked+.tr{background:var(--tc)}
-.switch input:checked+.tr::after{left:23px}
-.stepper{display:flex;align-items:center;gap:12px;margin-top:14px}
-.stepper button{width:38px;height:38px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);font-size:20px;font-weight:600;color:var(--ink);cursor:pointer}
-.stepper button:hover{border-color:var(--tc);color:var(--tc)}
-.stepper button:disabled{opacity:.3;cursor:default}
-.stepper .val{font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:600;min-width:74px;text-align:center}
-.balance{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:18px 0;padding:14px 16px;border-radius:var(--r);border:1px dashed var(--gold);background:#FBF4E0;font-size:14.5px}
-.balance.err{border-color:var(--lacquer);background:#FBEAE8}
-.balance .fix{margin-left:auto}
-.date-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:6px 0 18px;font-size:14.5px}
-.date-row input{font:inherit;font-family:'IBM Plex Mono',monospace;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+/* ---------- PLACE PICKER (шаг 1) ---------- */
+.pgroup{margin-top:26px}
+.pgroup .gh{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.pgroup .gh .bar{width:26px;height:9px;border-radius:3px}
+.pgroup .gh h3{margin:0}
+.pgroup .gh .cnt{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--dim)}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.pgrid{grid-template-columns:1fr}}
+.pcard{position:relative;display:flex;flex-direction:column;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:var(--r);overflow:hidden;cursor:pointer;box-shadow:var(--shadow);padding:0;font:inherit;color:inherit;transition:border-color .15s, transform .08s}
+.pcard:active{transform:scale(.99)}
+.pcard .im{aspect-ratio:3/2;background:#E8E3D8;overflow:hidden}
+.pcard .im img{width:100%;height:100%;object-fit:cover;filter:saturate(.92)}
+.pcard .bd{padding:12px 14px 14px}
+.pcard .nm{font-weight:700;font-size:15.5px;line-height:1.3}
+.pcard .meta{display:flex;flex-wrap:wrap;gap:6px;margin:7px 0}
+.pcard .meta span{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--dim);border:1px solid var(--line);padding:2px 8px;border-radius:99px}
+.pcard .why{font-size:13.5px;color:var(--dim)}
+.pcard .ribbon{position:absolute;top:10px;left:10px;font-size:11px;font-weight:700;padding:4px 9px;border-radius:8px;background:rgba(250,248,243,.95);box-shadow:0 1px 4px rgba(0,0,0,.18)}
+.pcard .ribbon.wish{color:#7A5A12;background:#FBF0D2}
+.pcard .ribbon.winter{color:#1D5E8C;background:#DCEEFB}
+.pcard .chk{position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:50%;background:rgba(250,248,243,.95);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:800;color:transparent;box-shadow:0 1px 4px rgba(0,0,0,.18);transition:.15s}
+.pcard.sel{border-color:var(--pc)}
+.pcard.sel .chk{background:var(--pc);border-color:var(--pc);color:#fff}
+.pcard.sel .im img{filter:saturate(1.05)}
 
-/* итог: лента дней */
-#itin{margin-top:26px}
+/* ---------- METER + ITINERARY (шаг 2) ---------- */
+.meter{margin:18px 0;padding:14px 16px;border-radius:var(--r);border:1px dashed var(--gold);background:#FBF4E0}
+.meter.err{border-color:var(--lacquer);background:#FBEAE8}
+.meter .mtop{display:flex;justify-content:space-between;gap:10px;font-size:14.5px;flex-wrap:wrap}
+.meter .mbar{height:10px;border-radius:99px;background:#EFE8D6;overflow:hidden;margin-top:10px}
+.meter .mbar i{display:block;height:100%;background:linear-gradient(90deg,var(--jade),var(--gold));transition:width .25s}
+.meter.err .mbar i{background:linear-gradient(90deg,var(--gold),var(--lacquer))}
+.date-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:6px 0 4px;font-size:14.5px}
+.date-row input{font:inherit;font-family:'IBM Plex Mono',monospace;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+#itin{margin-top:22px}
 .day{display:grid;grid-template-columns:64px 1fr;gap:14px;position:relative;padding-bottom:18px}
 .day::before{content:"";position:absolute;left:31px;top:44px;bottom:-2px;width:2px;background:var(--line)}
 .day:last-child::before{display:none}
@@ -130,7 +135,10 @@ ul.tick li::before{content:"—";position:absolute;left:4px;color:var(--gold);fo
 .day .body{padding-top:4px}
 .day .city{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dc)}
 .day .what{margin-top:3px;font-size:15px}
-.day .date{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--dim)}
+.day .what .eve{color:var(--dim)}
+.day .warn{margin-top:5px;font-size:13px;color:var(--lacquer)}
+.day.over .stamp{border-style:dashed;opacity:.75}
+.day.over .body{opacity:.8}
 .leg{display:flex;align-items:center;gap:10px;margin:2px 0 18px 14px;color:var(--dim);font-size:13.5px}
 .leg .ic{width:34px;height:34px;border-radius:50%;border:1.5px dashed var(--gold);display:flex;align-items:center;justify-content:center;background:var(--card);flex:0 0 auto}
 .budget-pill{margin-top:22px;padding:18px;border-radius:var(--r);background:linear-gradient(135deg,#1D2C4B,#2E7FB8);color:#fff}
@@ -179,7 +187,7 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
   <div class="hero">
     <div class="eyebrow">Новогодние каникулы · 10 дней · 1–10 января 2027</div>
     <h1>Китай на двоих. Зимняя серия</h1>
-    <p>Запретный город в снегу, Хогвартс с горячим сливочным пивом, неон Шанхая, жирафы с ладони — и финал в тёплом Гуанчжоу при +18°. Пляж в этот раз за Турцией, у Китая — культура и шопинг.</p>
+    <p>Работает так: выбираешь карточки мест — а маршрут по городам, датам и бюджет собирается сам. Гарри Поттер, Дисней, жирафы и шопинг уже отмечены; рядом — то, что я добавил бы к ним зимой.</p>
     <div class="route-line">
       <b style="background:rgba(179,39,30,.75)">Пекин</b><span>→</span>
       <b class="opt" style="background:rgba(46,127,184,.55)">Харбин*</b><span>→</span>
@@ -191,7 +199,7 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
 
 <nav aria-label="Разделы гида"><div class="chips">
   <a class="chip" href="#when">Январь</a>
-  <a class="chip" href="#builder">Конструктор маршрута</a>
+  <a class="chip" href="#builder">Конструктор</a>
   <a class="chip" href="#beijing">Пекин</a>
   <a class="chip" href="#harbin">Харбин</a>
   <a class="chip" href="#shanghai">Шанхай</a>
@@ -216,13 +224,13 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
     <div class="tbl-scroll"><table>
       <tr><th>Город</th><th>Погода в начале января</th><th>Как это ощущается</th></tr>
       <tr><td><b>Пекин</b></td><td class="num">−9…+2°, сухо, солнечно</td><td>Морозная Москва без слякоти. Озёра замерзают — коньки в центре города. Запретный город в снегу — джекпот для фото</td></tr>
-      <tr><td><b>Харбин*</b></td><td class="num">−24…−12°</td><td>Сибирь. Ради ледового фестиваля — оно того стоит (опция в конструкторе)</td></tr>
+      <tr><td><b>Харбин*</b></td><td class="num">−24…−12°</td><td>Сибирь. Ради ледового фестиваля — оно того стоит (карточки в конструкторе)</td></tr>
       <tr><td><b>Шанхай</b></td><td class="num">+2…+9°, сыро</td><td>Промозгло, как Питер в ноябре. Пуховик + шарф, и город прекрасен</td></tr>
       <tr><td><b>Гуанчжоу</b></td><td class="num">+11…+18°, сухо</td><td>Расстёгиваем куртки. Финал маршрута в тепле — не случайность, а план</td></tr>
     </table></div>
   </div>
 
-  <div class="note"><b>1–3 января — государственные выходные в Китае.</b> Парки и главные музеи в эти дни штурмует вся страна. Поэтому маршрут построен хитро: на праздники — прогулки, стена и коньки, а Universal и Дисней поставлены на будни после 4 января, когда очереди тают. Не переставляй их на 1–3 число.</div>
+  <div class="note"><b>1–3 января — государственные выходные в Китае.</b> Парки и главные музеи в эти дни штурмует вся страна. Конструктор ниже это знает: Universal и Дисней он сам ставит на будни после 3 января, а на праздники — прогулки, стену и коньки. Если из-за твоего выбора парк всё же попадёт на плохой день — увидишь красное предупреждение в плане.</div>
   <div class="note good"><b>Где повезло.</b> Китайский Новый год в 2027-м — 6 февраля: великая миграция чуньюнь начнётся через две недели после вашего отъезда. Поезда и билеты — без ажиотажа. Бонус: январь — низкий сезон для отелей, цены на 10–20% мягче осенних.</div>
   <div class="note cold"><b>К слову о Санье:</b> там в январе +24…27 и высокий сезон — «холодно» на Хайнане не бывает. Но раз пляж закрывает Турция в сентябре — освободившуюся неделю честно отдаём культуре, шопингу и одной ледяной авантюре ниже.</div>
 </section>
@@ -230,23 +238,24 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
 <!-- ================= BUILDER ================= -->
 <section id="builder">
   <div class="sec-head"><div class="bar" style="background:linear-gradient(90deg,var(--lacquer),var(--iceblue),var(--shanghai),var(--amber))"></div><h2>Конструктор маршрута</h2></div>
-  <p class="lead">Включай и выключай города, крути дни — план и бюджет пересобираются сами. Харбин выключен по умолчанию: это ледяная авантюра для смелых. Выбор сохраняется в браузере.</p>
+  <p class="lead"><b>Шаг 1.</b> Отметь места, которые зовут (тап по карточке). Метка <span class="badge" style="background:#FBF0D2;color:#7A5A12">из твоего списка</span> — то, что ты просил; <span class="badge" style="background:#DCEEFB;color:#1D5E8C">только зимой</span> — сезонные бонусы. <b>Шаг 2</b> ниже соберёт города, даты и бюджет сам. Выбор сохраняется в браузере.</p>
 
+  <div id="placeGrid"></div>
+  <div class="link-row" style="margin-top:16px"><button class="btn" id="selReset" type="button">Вернуть мой рекомендованный набор</button></div>
+
+  <h3 style="margin-top:34px">Шаг 2 — маршрут собрался сам</h3>
   <div class="date-row">
     <label for="startDate"><b>Старт поездки:</b></label>
     <input type="date" id="startDate" value="2027-01-01">
     <span id="endDateOut" class="mono" style="color:var(--dim)"></span>
   </div>
 
-  <div class="tickets" id="tickets"></div>
+  <div class="meter" id="meter" role="status"></div>
 
-  <div class="balance" id="balance" role="status"></div>
-
-  <h3 style="margin-top:30px">План по дням</h3>
   <div id="itin"></div>
 
   <div class="budget-pill">
-    <div style="font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#CFE0F0">Оценка бюджета на двоих под выбранный маршрут</div>
+    <div style="font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#CFE0F0">Оценка бюджета на двоих под выбранные места</div>
     <div class="sum" id="budgetOut">—</div>
     <small id="budgetDetail"></small>
     <div class="rate-row"><span>Курс юаня:</span><input type="number" id="rateInput" value="13" min="8" max="25" step="0.5"> <span>₽ за ¥1 · перелёты из Москвы считаются в ₽ отдельно</span></div>
@@ -255,35 +264,16 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
 
 <!-- ================= BEIJING ================= -->
 <section id="beijing">
-  <div class="sec-head"><div class="bar" style="background:var(--lacquer)"></div><h2>Пекин — 4 дня зимней империи</h2></div>
-  <p class="lead">Прилетаете из Москвы (прямые ~7,5 ч: Аэрофлот SU204, Air China). Мороз тут сухой и солнечный, столица зимой — это коньки на озёрах, пар над хого и стена без туристов.</p>
+  <div class="sec-head"><div class="bar" style="background:var(--lacquer)"></div><h2>Пекин: детали и логистика</h2></div>
+  <p class="lead">Прилетаете из Москвы (прямые ~7,5 ч: Аэрофлот SU204, Air China). Мороз тут сухой и солнечный. Ниже — то, что не влезло в карточки.</p>
 
   <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/The%20Mutianyu%20section%20of%20the%20Great%20Wall%20of%20China.jpg?width=1200" alt="Великая Китайская стена, участок Мутяньюй" onerror="this.closest('.ph').style.display='none'"><figcaption>Мутяньюй: зимой — та же стена с открыток, только без толп</figcaption></figure>
 
-  <h3>Что обязательно</h3>
   <div class="card">
-    <p><b>Запретный город в снегу.</b> Билеты <span class="num">¥60</span> продаются ровно за 7 дней в 8:00 по Пекину (3:00 мск — будильник!) в официальном WeChat-миниаппе «故宫博物院» по номеру загранпаспорта. На 2 января будет праздничный спрос — ловите в момент открытия продаж 26 декабря. Понедельник — выходной (учтено в плане). После дворца — парк Цзиншань (<span class="num">¥2</span>): вид на заснеженные золотые крыши, лучшая фототочка города.</p>
-    <p><b>Коньки на Хоухае.</b> С конца декабря озёра Шичахай официально замерзают и превращаются в главный зимний аттракцион пекинцев: коньки, ледовые велосипеды и санки-кресла прямо на озере, прокат <span class="num">¥60–80</span>. Встретить так первый вечер — идеально.</p>
-    <p><b>Великая стена — только Мутяньюй,</b> не Бадалин. Зимой почти пусто; если выпал снег — кадры на всю жизнь. Канатка работает круглый год, а вот тобоган-спуск в гололёд закрывают — тогда вниз тоже канаткой. Билет + канатка ≈ <span class="num">¥140–180/чел</span>. Заказной трансфер туда-обратно <span class="num">¥600–800 за машину</span> (Trip.com или через отель), выезд в 7:30. Одевайтесь как на лыжи: наверху ветер.</p>
-    <p><b>Храм Неба</b> утром (<span class="num">¥34</span>): дедушки с тайцзи и каллиграфией водой на плитке никуда не деваются даже в −5. <b>Хутуны</b> Наньлогусян — на вечер, с бататом в сахаре из уличной жаровни.</p>
-  </div>
-
-  <h3>Universal Beijing: Гарри Поттер в снегу</h3>
-  <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Universal%20Studios%20Beijing%20globe%20square%20(20210907121340).jpg?width=1200" alt="Universal Beijing Resort" onerror="this.closest('.ph').style.display='none'"><figcaption>Universal Beijing — полноценный Хогсмид, зимой он ещё атмосфернее</figcaption></figure>
-  <div class="card">
-    <p>Отдельного парка Гарри Поттера в Китае нет, но в Universal Beijing — полноценная <b>The Wizarding World of Harry Potter</b>: Хогсмид (который и задуман заснеженным — январь его лучший сезон), замок с Forbidden Journey, <b>горячее</b> сливочное пиво и палочки у Олливандера. Плюс Трансформеры, Кунг-фу Панда и Джурассик.</p>
-    <ul class="tick">
-      <li>Билет датированный: <span class="num">≈ ¥418–638</span> — январские будни после праздников идут по нижней границе сетки. Официальное приложение Universal Beijing Resort или Trip.com.</li>
-      <li><b>Ставим парк на понедельник 4 января</b> — праздники закончились, очереди минимальные за весь год. Express Pass не понадобится.</li>
-      <li>Зимой день короче: парк работает примерно 10:00–19:00 — приезжайте к открытию. Много открытых зон: термобельё под джинсы.</li>
-      <li>Метро 7/1 до станции Universal Resort, ~50 мин от центра.</li>
-    </ul>
-    <div class="link-row"><a class="btn" href="https://www.universalbeijingresort.com/en" target="_blank" rel="noopener">Официальный сайт Universal Beijing</a></div>
-  </div>
-
-  <h3>Еда: сезон утки и хого</h3>
-  <div class="card">
-    <p><b>Siji Minfu (四季民福)</b> у восточных ворот Запретного города — лучший баланс цены и качества, утка <span class="num">¥238–288</span>, ужин на двоих <span class="num">¥350–450</span>. Очередь всегда: приходите к 16:30 либо возьмите номерок и гуляйте. <b>Da Dong</b> — модно-премиально, счёт <span class="num">¥600–800</span> на двоих. И главное зимнее: <b>хого</b> — котёл-самовар с бульоном, в котором варишь всё подряд. Старопекинский медный вариант — сеть <b>Juqi (局气)</b> или любое место с очередью из местных; ужин <span class="num">¥200–350</span> на двоих. После −9° на улице это счастье в чистом виде.</p>
+    <p><b>Запретный город:</b> билеты <span class="num">¥60</span> продаются ровно за 7 дней в 8:00 по Пекину (3:00 мск — будильник!) в официальном WeChat-миниаппе «故宫博物院» по номеру загранпаспорта. На 2 января — праздничный спрос, ловите в момент открытия продаж 26 декабря. Понедельник — выходной, конструктор об этом знает. После дворца поднимитесь в парк Цзиншань (<span class="num">¥2</span>) — вид на заснеженные крыши.</p>
+    <p><b>Стена:</b> только Мутяньюй, не Бадалин. Канатка работает круглый год, тобоган в гололёд закрывают. Заказной трансфер туда-обратно <span class="num">¥600–800 за машину</span> (Trip.com или через отель), выезд 7:30, наверху ветер — одевайтесь как на лыжи.</p>
+    <p><b>Universal:</b> билет датированный <span class="num">≈ ¥418–638</span> (январские будни — нижняя граница), официальное приложение или Trip.com. Зимой парк работает ~10:00–19:00, много открытых зон — термобельё. Хогсмид и задуман заснеженным: январь его лучший месяц, сливочное пиво подают горячим.</p>
+    <p><b>Еда:</b> утка в <b>Siji Minfu</b> у восточных ворот дворца (утка ¥238–288, приходить к 16:30 или брать номерок), премиальный вариант — <b>Da Dong</b>. Зимний спешл — <b>хого</b>: старопекинский медный самовар в сети <b>Juqi (局气)</b>, ужин ¥200–350 на двоих. После −9° это счастье.</p>
   </div>
 
   <h3>Где жить</h3>
@@ -291,54 +281,34 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
     <div class="hotel"><div><div class="nm">Hotel Kapok Forbidden City</div><div class="ds">4★, 10 минут пешком до Запретного города, дизайнерский, тихий</div></div><div class="pr">¥500–750 / ночь</div></div>
     <div class="hotel"><div><div class="nm">Pentahotel Beijing</div><div class="ds">4★ у станции Chongwenmen, 2 остановки до центра, большие номера</div></div><div class="pr">¥450–650</div></div>
     <div class="hotel"><div><div class="nm">The Emperor Qianmen</div><div class="ds">Бутик в хутуне с террасой на крыше — романтика для молодожёнов</div></div><div class="pr">¥650–900</div></div>
-    <p style="margin-top:10px;font-size:14px;color:var(--dim)">Январь — низкий сезон: цены мягче октябрьских на 10–20%. Апартаменты не советую: хозяин обязан регистрировать иностранцев в полиции за 24 ч, отель делает это автоматически. Бронь — Trip.com или Ostrovok (принимает российские карты).</p>
+    <p style="margin-top:10px;font-size:14px;color:var(--dim)">Январь — низкий сезон: цены мягче осенних на 10–20%. Апартаменты не советую: хозяин обязан регистрировать иностранцев в полиции за 24 ч, отель делает это автоматически. Бронь — Trip.com или Ostrovok (принимает российские карты).</p>
   </div>
 </section>
 
 <!-- ================= HARBIN ================= -->
 <section id="harbin">
-  <div class="sec-head"><div class="bar" style="background:var(--iceblue)"></div><h2>Харбин — ледяная авантюра (опция)</h2></div>
-  <p class="lead">Мой козырь для новогоднего Китая. В 4,5 часах поезда от Пекина в первых числах января открывается крупнейший в мире ледовый фестиваль. Включается тумблером в конструкторе — заберёт 2 дня.</p>
+  <div class="sec-head"><div class="bar" style="background:var(--iceblue)"></div><h2>Харбин: ледяная авантюра</h2></div>
+  <p class="lead">Мой козырь для новогоднего Китая — карточки в конструкторе. Отметишь любую — маршрут сам вставит крюк на север и поезд.</p>
 
   <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Harbin%20Ice%20Festival.jpg?width=1200" alt="Ледовые дворцы фестиваля в Харбине" onerror="this.closest('.ph').style.display='none'"><figcaption>Harbin Ice and Snow World: дворцы в натуральную величину изо льда Сунгари</figcaption></figure>
 
   <div class="card">
-    <p><b>Ice and Snow World (冰雪大世界)</b> — город из ледяных дворцов, горок и замков с подсветкой изнутри; официальное открытие сезона — конец декабря, к вашим датам всё сияет. Билет <span class="num">≈ ¥300–330</span>, брать на Trip.com. Приезжайте к 15:00: застанете лёд при свете и главное — включение подсветки в сумерках.</p>
-    <p><b>Плюс к фестивалю:</b> Центральная улица (中央大街) — «русский Арбат» с домами модерна, Софийский собор, мороженое Modern на морозе (местная традиция со столетним стажем) и снежные скульптуры Солнечного острова (<span class="num">¥240–330</span>).</p>
-    <p><b>Логистика:</b> поезд-пуля Пекин → Харбин 4 ч 40 мин, <span class="num">¥541</span> второй класс — ещё одна галочка в «покататься на скоростных поездах», причём по снежной Маньчжурии. Обратно не возвращаемся: прямой перелёт Харбин → Шанхай ~3 ч. Отели у Центральной улицы: <span class="num">¥400–700/ночь</span> (Ibis Harbin Central Street, Holiday Inn City Centre).</p>
-    <div class="note cold"><b>Честно про −25°.</b> Это другой уровень холода: нужны совсем тёплая обувь, балаклава/шарф на лицо и химические грелки в перчатки (продаются на каждом углу, ¥2–5). Телефон на морозе садится за час — держите во внутреннем кармане. Если сомневаетесь в экипировке — пуховики и штаны докупаются в Харбине дёшево и на месте.</div>
+    <p>К вашим датам сезон в разгаре: ледовый город сияет, снежные скульптуры Солнечного острова стоят, Центральная улица пахнет жареными каштанами. Поезд-пуля Пекин → Харбин: 4 ч 40 мин, <span class="num">¥541</span> второй класс, за окном снежная Маньчжурия — ещё одна галочка в «покататься на поездах». Обратно не возвращаемся: прямой перелёт Харбин → Шанхай ~3 ч. Отели у Центральной улицы: <span class="num">¥400–700/ночь</span> (Ibis Harbin Central Street, Holiday Inn City Centre).</p>
+    <div class="note cold"><b>Честно про −25°.</b> Это другой уровень холода: совсем тёплая обувь, балаклава/шарф на лицо, химические грелки в перчатки (¥2–5 на каждом углу). Телефон на морозе садится за час — во внутренний карман. Недостающую экипировку дёшево докупите на месте.</div>
   </div>
 </section>
 
 <!-- ================= SHANGHAI ================= -->
 <section id="shanghai">
-  <div class="sec-head"><div class="bar" style="background:var(--shanghai)"></div><h2>Шанхай — 3 дня неона и распродаж</h2></div>
-  <p class="lead">Из Пекина — 4,5 часа на «Фусине». Зимний Шанхай промозглый, но именно в январе тут лучший Дисней года и сезон скидок.</p>
+  <div class="sec-head"><div class="bar" style="background:var(--shanghai)"></div><h2>Шанхай: детали и логистика</h2></div>
+  <p class="lead">Из Пекина — 4,5 часа на «Фусине». Зимний Шанхай промозглый, но именно в январе тут лучший Дисней года и сезон распродаж.</p>
 
-  <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Pudong%20Shanghai%20November%202017%20HDR%20panorama.jpg?width=1200" alt="Небоскрёбы Пудуна вечером" onerror="this.closest('.ph').style.display='none'"><figcaption>Пудун с набережной Бунд: зимний воздух прозрачнее — неон чётче</figcaption></figure>
-
-  <h3>Shanghai Disneyland без нервов</h3>
   <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Shanghai%20Disneyland%20Castle%20Night.jpg?width=1200" alt="Замок Shanghai Disneyland" onerror="this.closest('.ph').style.display='none'"><figcaption>Самый большой замок из всех Диснейлендов мира</figcaption></figure>
-  <div class="card">
-    <ul class="tick">
-      <li>Билет датированный <span class="num">¥475–599</span> в январские будни — нижние тарифы сетки. Официальное приложение Shanghai Disney Resort или Trip.com. Паспортные данные обязательны.</li>
-      <li><b>Будний день после 4 января — самые короткие очереди года.</b> Стратегия: к открытию → сразу <b>Zootopia</b> → <b>TRON Lightcycle</b> (лучшая горка парка). Premier Access <span class="num">¥120–160/аттракцион</span> при январских очередях, скорее всего, не понадобится — а на TRON можно взять ради второго круга.</li>
-      <li>Зимой салют и шоу у замка раньше — около 19:30–20:00, время в приложении. До салюта не уходить.</li>
-      <li>Новогоднее оформление парка обычно держат до китайского НГ — вам достанется.</li>
-      <li>Метро 11 прямо до парка, ~1 ч от центра. Одевайтесь тепло: ветер с моря.</li>
-    </ul>
-    <div class="link-row"><a class="btn" href="https://www.shanghaidisneyresort.com/en/" target="_blank" rel="noopener">Официальный сайт Disney Shanghai</a></div>
-  </div>
 
-  <h3>Город</h3>
   <div class="card">
-    <p><b>Бунд</b> вечером — обязательная романтика: колониальные фасады против неона Пудуна, зимой воздух прозрачный и огни особенно чёткие. Речной круиз по Хуанпу <span class="num">¥120/чел</span>, 50 минут, на верхней палубе выдают пледы — берите после заката. <b>Shanghai Tower</b>, смотровая на 118 этаже (<span class="num">¥199</span>) — самый быстрый лифт мира; зимой видимость лучшая в году. <b>Сад Юй</b> (<span class="num">¥40</span>) к 9:00 — а к середине января там уже начинают собирать гигантские фонари к празднику фонарей: бонус-декорации. <b>Французская концессия</b>: улицы Wukang и Anfu — кофейни, винтаж, неспешность. Полдня на <b>Чжуцзяцзяо</b> — водный городок на 17-й линии метро: зимой без толп вообще, лодка <span class="num">¥80–150</span>.</p>
-    <p><b>Сяолунбао:</b> Jia Jia Tang Bao (佳家汤包) — легендарная забегаловка, корзинка <span class="num">¥25–40</span>; Din Tai Fung — «парадный» вариант в моллах. Горячий бульон внутри пельменя в +4° снаружи — идеальная механика.</p>
-  </div>
-
-  <h3>Шопинг — январь ваш союзник</h3>
-  <div class="card">
-    <p>Январь в Китае — сезон зимних распродаж перед китайским Новым годом: моллы вешают «-30…-70%» задолго до праздника. Маршрут: <b>IAPM</b> и <b>Plaza 66</b> — люкс и премиум, <b>TX Huaihai</b> — молодёжные бренды и стритвир, <b>Nanjing Road</b> — витринная миля (и место обитания «чайных» разводил — см. Ловушки). Флагманы <b>Huawei</b> (Nanjing East) и <b>Xiaomi</b> — техника дешевле российских цен, витрины сами по себе аттракцион. Чай без разводов — сеть <b>Tenfu Tea</b> с дегустацией. Во многих ТЦ — моментальный tax refund для иностранцев (11% при чеке от <span class="num">¥200</span>): ищите стойку Tax Free, нужен паспорт.</p>
+    <p><b>Дисней:</b> билет датированный <span class="num">¥475–599</span> в январские будни, официальное приложение Shanghai Disney Resort или Trip.com, паспортные данные обязательны. Стратегия: к открытию → сразу Zootopia → TRON Lightcycle. Premier Access (<span class="num">¥120–160/аттракцион</span>) в январе, скорее всего, не понадобится. Салют зимой ~19:30–20:00 — не уходить. Метро 11 прямо до парка.</p>
+    <p><b>Шопинг:</b> январь — распродажи перед китайским НГ, «-30…-70%» задолго до праздника. IAPM и Plaza 66 — люкс, TX Huaihai — молодёжное, флагманы Huawei (Nanjing East) и Xiaomi — техника дешевле московских цен. Tax refund 11% при чеке от ¥200 — стойка Tax Free + паспорт. Nanjing Road — витринная миля и место обитания «чайных» разводил (см. Ловушки).</p>
+    <p><b>Сяолунбао:</b> Jia Jia Tang Bao (佳家汤包) — легенда, корзинка ¥25–40; Din Tai Fung — «парадный» вариант. Горячий бульон внутри пельменя в +4° снаружи — идеальная механика.</p>
   </div>
 
   <h3>Где жить</h3>
@@ -351,29 +321,15 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
 
 <!-- ================= GUANGZHOU ================= -->
 <section id="guangzhou">
-  <div class="sec-head"><div class="bar" style="background:var(--amber)"></div><h2>Гуанчжоу — жирафы и +18° на финал</h2></div>
-  <p class="lead">Перелёт из Шанхая 2 ч 15 мин — и вы из зимы в субтропиках. Здесь кульминация: кормление жирафов, вечерний цирк, кантонские димсамы — и прямой рейс домой.</p>
-
-  <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Giraffe%20feeding,%20Tanzania.jpg?width=1200" alt="Кормление жирафа с руки" onerror="this.closest('.ph').style.display='none'"><figcaption>В Chimelong Safari жирафов кормят листьями с платформы — морда окажется вот так же близко</figcaption></figure>
-
-  <div class="card">
-    <p><b>Chimelong Safari Park</b> — крупнейший сафари-парк Азии: больше 40 жирафов, платформа кормления (веник листьев <span class="num">¥30–50</span>), сафари-поезд через вольеры, панды, коалы. Билет <span class="num">≈ ¥300/чел</span>, брать на Trip.com или в официальном WeChat. Январские +15…18° — комфортнее для прогулки по парку, чем летние +35, и звери активнее.</p>
-    <p><b>Вечером — Chimelong International Circus:</b> цирковое шоу мирового уровня на 8000 мест, билеты <span class="num">¥280–400</span>. Идеальная связка с сафари-днём.</p>
-    <p><b>Ночевать — в Chimelong Hotel:</b> сафари-тематика, во внутреннем дворе живут белые тигры и фламинго, до парка и цирка — шаттл. Номер <span class="num">¥1200–1800</span> (январь мягче октября). Бюджетнее — Panda Hotel рядом (<span class="num">¥700–1000</span>).</p>
-    <p style="font-size:14px;color:var(--dim)">Честно: отеля формата кенийского Giraffe Manor — где жираф суёт голову в окно номера — в Китае со стабильной работой нет. Chimelong — самый надёжный способ получить «свидание с жирафом»: кормление гарантировано в часы работы парка.</p>
-  </div>
+  <div class="sec-head"><div class="bar" style="background:var(--amber)"></div><h2>Гуанчжоу: детали и логистика</h2></div>
+  <p class="lead">Перелёт из Шанхая 2 ч 15 мин — и вы из зимы в субтропиках. Кульминация с жирафами, вечерний цирк, кантонские димсамы — и прямой рейс домой.</p>
 
   <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Canton%20Tower%20at%20night%20Guangzhou%202024%20dllu.jpg?width=1200" alt="Телебашня Canton Tower ночью" onerror="this.closest('.ph').style.display='none'"><figcaption>Canton Tower: подсветка включается с закатом — в январе это ~18:00</figcaption></figure>
 
-  <h3>Город на день-полтора</h3>
   <div class="card">
-    <ul class="tick">
-      <li><b>Остров Шамянь</b> — бывший колониальный квартал: платаны, особняки, набережная Жемчужной реки. Лучшая неспешная прогулка юга.</li>
-      <li><b>Canton Tower</b> — смотровая <span class="num">¥228</span>, для смелых — колесо обозрения из капсул прямо на макушке башни (<span class="num">¥298</span>). Идти к закату.</li>
-      <li><b>Утренний чай «юм ча»</b> — кантонский ритуал: тележки с димсамами, час-полтора неспешного завтрака. Классика: <b>Diandude (点都德)</b> или столетний <b>Taotaoju (陶陶居)</b>, на двоих <span class="num">¥120–200</span>. Это и есть «проникнуться культурой» в гастрономической форме.</li>
-      <li><b>Шопинг:</b> пешеходная Beijing Road, моллы кластера Tianhe (Taikoo Hui, Grandview). Те же предновогодние скидки, что и в Шанхае.</li>
-      <li>Домой — прямым рейсом China Southern Гуанчжоу → Москва (~10,5 ч), без пересадок.</li>
-    </ul>
+    <p><b>Chimelong Safari</b> — крупнейший сафари-парк Азии: 40+ жирафов и платформа кормления (веник листьев <span class="num">¥30–50</span>), панды, коалы, сафари-поезд. Билет <span class="num">≈ ¥300/чел</span>, Trip.com или официальный WeChat. Январские +15…18° комфортнее летних +35, звери активнее.</p>
+    <p><b>Ночёвка у зверей:</b> Chimelong Hotel — сафари-тематика, во дворе белые тигры и фламинго, шаттл до парка и цирка, номер <span class="num">¥1200–1800</span>. Бюджетнее — Panda Hotel (<span class="num">¥700–1000</span>). Честно: отеля формата кенийского Giraffe Manor — где жираф суёт голову в окно — в Китае со стабильной работой нет; Chimelong — самый надёжный способ получить «свидание с жирафом».</p>
+    <p><b>Домой</b> — прямым рейсом China Southern Гуанчжоу → Москва (~10,5 ч), без пересадок.</p>
     <div class="link-row"><a class="btn" href="https://www.chimelong.com/gz/" target="_blank" rel="noopener">Chimelong — оф. сайт</a><a class="btn" href="https://www.trip.com" target="_blank" rel="noopener">Билеты и отель на Trip.com</a></div>
   </div>
 </section>
@@ -395,15 +351,15 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
     <ul class="tick">
       <li>Продажи открываются за <b>15 дней</b>. Покупка: официальное приложение <b>12306</b> (есть английский, регистрация по загранпаспорту) или Trip.com с комиссией ~¥30–40, зато оплата привычнее.</li>
       <li>Билет «записан» на паспорт — на турникете просто прикладываешь загран. Приезжать за 40 минут: досмотр как в аэропорту.</li>
-      <li>Берите места у окна и рейс на ~9–10 утра: день в Шанхае остаётся целым.</li>
-      <li>С опцией Харбина добавляется участок Пекин → Харбин: 4 ч 40 мин, <span class="num">¥541</span> второй класс, за окном — снежная Маньчжурия.</li>
+      <li>Берите места у окна и рейс на ~9–10 утра: день в городе прибытия остаётся целым.</li>
+      <li>С Харбином добавляется участок Пекин → Харбин: 4 ч 40 мин, <span class="num">¥541</span> второй класс, за окном — снежная Маньчжурия.</li>
       <li>Хочется ещё рельсов вместо перелёта? Шанхай → Гуанчжоу тоже ходит «пуля»: ~7 ч, <span class="num">¥793</span> второй класс, вокзалы в центре городов. Дневной переезд с пейзажами — законная альтернатива самолёту.</li>
     </ul>
     <div class="link-row"><a class="btn" href="https://www.12306.cn/en/" target="_blank" rel="noopener">12306 — официальные билеты</a><a class="btn" href="https://www.trip.com/trains/" target="_blank" rel="noopener">Trip.com Trains</a></div>
   </div>
 
   <div class="card">
-    <p><b>Бонус-аттракцион: шанхайский маглев.</b> Поезд на магнитной подушке из аэропорта Пудун — 30 км за 7,5 минут, в отдельные слоты разгоняется до 430 км/ч (обычно 300). Билет <span class="num">¥50</span> (¥40 при авиабилете за тот же день). Даже если он не по пути — съездить туда-обратно ради табло скорости стоит того.</p>
+    <p><b>Бонус-аттракцион: шанхайский маглев</b> — есть отдельной карточкой в конструкторе. Поезд на магнитной подушке из аэропорта Пудун — 30 км за 7,5 минут, в отдельные слоты до 430 км/ч (обычно 300). Билет <span class="num">¥50</span> (¥40 при авиабилете за тот же день).</p>
   </div>
 </section>
 
@@ -463,7 +419,7 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
 <!-- ================= BUDGET ================= -->
 <section id="budget">
   <div class="sec-head"><div class="bar" style="background:var(--jade)"></div><h2>Бюджет: детальная раскладка</h2></div>
-  <p class="lead">Вилки на двоих, курс ¥1 ≈ 13 ₽ (поменяй в конструкторе — всё пересчитается). Итог под твой маршрут считается в конструкторе выше.</p>
+  <p class="lead">Вилки на двоих, курс ¥1 ≈ 13 ₽ (поменяй в конструкторе — всё пересчитается). Живой итог под твой выбор мест — в конструкторе выше.</p>
 
   <div class="tbl-scroll"><table>
     <tr><th>Статья</th><th>Вилка на двоих</th><th>Оплата</th></tr>
@@ -516,12 +472,12 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
   <p class="lead">Что и когда покупать, чтобы не переплатить на новогоднем пике. Отсчёт — от старта 1 января.</p>
   <div class="tbl-scroll"><table>
     <tr><th>Когда</th><th>Что сделать</th></tr>
-    <tr><td class="num">Сейчас (лето)</td><td>Зафиксировать даты и состав маршрута (Харбин: да/нет). Открыть карту UnionPay в работающем банке. Завести Alipay и WeChat, привязать загранпаспорта</td></tr>
+    <tr><td class="num">Сейчас (лето)</td><td>Собрать маршрут в конструкторе (Харбин: да/нет). Открыть карту UnionPay в работающем банке. Завести Alipay и WeChat, привязать загранпаспорта</td></tr>
     <tr><td class="num">Сентябрь–октябрь<br>(за 3 мес)</td><td>Авиабилеты open-jaw: Москва → Пекин и Гуанчжоу → Москва на Aviasales. Новогодние вылеты дорожают быстрее всего — чем раньше, тем дешевле</td></tr>
     <tr><td class="num">Ноябрь<br>(за 1,5–2 мес)</td><td>Все отели: Пекин, Шанхай, Гуанчжоу + Chimelong Hotel (номера с видом на сафари уходят рано). Перелёт Шанхай → Гуанчжоу (и Харбин → Шанхай, если летите). Страховка</td></tr>
     <tr><td class="num">Начало декабря</td><td>eSIM купить и установить профили. Перепроверить статус UnionPay-карты в свежих ветках форумов</td></tr>
     <tr><td class="num">Середина декабря<br>(за 2–3 недели)</td><td>Датированные билеты: Universal на 4 января, Disney на будний день 6–7 января, Chimelong Safari и цирк</td></tr>
-    <tr><td class="num">С 18–21 декабря<br>(за 15 дней)</td><td>Открываются продажи на поезда — брать сразу: Пекин → Шанхай (и Пекин → Харбин, если опция включена)</td></tr>
+    <tr><td class="num">С 18–21 декабря<br>(за 15 дней)</td><td>Открываются продажи на поезда — брать сразу: Пекин → Шанхай (и Пекин → Харбин, если он в маршруте)</td></tr>
     <tr><td class="num">26 декабря, 3:00 мск</td><td>⏰ Билеты в Запретный город на 2 января в WeChat-миниаппе — праздничный спрос, ловить в момент открытия. Будильник обязателен</td></tr>
     <tr><td class="num">29–31 декабря</td><td>Наличные юани. Офлайн-карты Amap и офлайн-пакеты переводчиков. Скрины адресов отелей иероглифами. Распечатки броней и обратных билетов для границы</td></tr>
   </table></div>
@@ -541,27 +497,103 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
 
 <footer><div class="wrap">
   <p>Гайд собран под конкретную пару и конкретные даты 1–10 января 2027. Цены — ориентиры, вилки специально даны с запасом; всё перепроверяй при бронировании. Новогодние тарифы парков и авиа плавают — датированные билеты фиксируют цену.</p>
-  <p class="updated" style="margin-top:8px">Обновлено: июль 2026 · зимняя редакция · сделано с заботой о двух туристах 🧣🧤</p>
+  <p class="updated" style="margin-top:8px">Обновлено: июль 2026 · зимняя редакция v3 · сделано с заботой о двух туристах 🧣🧤</p>
 </div></footer>
 
 <script>
 (function(){
 "use strict";
-/* ---------- safe storage ---------- */
 var store={get:function(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+var TOTAL=10, IMG="https://commons.wikimedia.org/wiki/Special:FilePath/";
+function im(f){return IMG+encodeURIComponent(f)+"?width=640"}
 
-/* ---------- route model ---------- */
-var TOTAL=10;
-var MODULES=[
- {id:"beijing",name:"Пекин",sub:"Стена · дворец в снегу · Universal (Гарри Поттер) · коньки",color:"var(--lacquer)",key:"ПЕК",min:3,max:5,def:4,
-  hotel:[500,850],daily:[500,750],fixed:[2300,3000]},
- {id:"harbin",name:"Харбин",sub:"Ледовый фестиваль · «русский Арбат» · −25°",color:"var(--iceblue)",key:"ХАР",min:2,max:3,def:2,opt:true,
-  hotel:[400,700],daily:[400,650],fixed:[1100,1500]},
- {id:"shanghai",name:"Шанхай",sub:"Disney · Бунд · распродажи · маглев",color:"var(--shanghai)",key:"ШАН",min:2,max:4,def:3,
-  hotel:[550,900],daily:[500,800],fixed:[2000,2600]},
- {id:"guangzhou",name:"Гуанчжоу · жирафы",sub:"Chimelong Safari · цирк · димсамы · +18°",color:"var(--amber)",key:"ГУА",min:2,max:4,def:3,
-  hotel:[750,1200],daily:[450,700],fixed:[1500,2000]}
+var CITIES={
+ beijing:{name:"Пекин",key:"ПЕК",color:"var(--lacquer)",hotel:[500,850],daily:[500,750],ghead:"Пекин — империя, снег и Гарри Поттер"},
+ harbin:{name:"Харбин",key:"ХАР",color:"var(--iceblue)",hotel:[400,700],daily:[400,650],ghead:"Харбин — крюк на север (+ поезд 4 ч 40 мин)"},
+ shanghai:{name:"Шанхай",key:"ШАН",color:"var(--shanghai)",hotel:[550,900],daily:[500,800],ghead:"Шанхай — неон, Дисней и распродажи"},
+ guangzhou:{name:"Гуанчжоу",key:"ГУА",color:"var(--amber)",hotel:[750,1200],daily:[450,700],ghead:"Гуанчжоу — жирафы и +18° на финал"}
+};
+var ORDER=["beijing","harbin","shanghai","guangzhou"];
+
+/* tod: "full" — весь день; "day" — полдня; "evening" — вечер (не тратит дневной лимит) */
+var PLACES=[
+ {id:"forbidden",city:"beijing",name:"Запретный город + холм Цзиншань",img:im("Forbidden City after snow (20200106114845).jpg"),
+  why:"Сердце империи: 9 000 залов, а под снегом — открытка. Закат над золотыми крышами — с холма напротив.",
+  hrs:"утро, 3–4 ч",tod:"day",cost:[140,190],def:true,cons:"not_monday",warn:"⚠ Понедельник — Запретный город закрыт. Конструктор не нашёл другой день: подвигай карточки"},
+ {id:"wall",city:"beijing",name:"Великая стена, Мутяньюй",img:im("The Mutianyu section of the Great Wall of China.jpg"),
+  why:"Без толп Бадалина; зимой шанс увидеть её белой. Канатка наверх, термос с чаем — и вы одни на башне.",
+  hrs:"весь день, выезд 7:30",tod:"full",cost:[700,1100],def:true},
+ {id:"universal",city:"beijing",name:"Universal: мир Гарри Поттера",img:im("Universal Studios Beijing globe square (20210907121340).jpg"),
+  why:"Хогсмид задуман заснеженным — январь его сезон. Горячее сливочное пиво, Forbidden Journey в замке.",
+  hrs:"весь день",tod:"full",cost:[840,1280],tag:"wish",def:true,cons:"park_weekday",warn:"⚠ Парк попал на праздник/выходной — очереди. Лучше будний день после 3 января"},
+ {id:"temple",city:"beijing",name:"Храм Неба",img:im("Temple of Heaven, Beijing, China - 010 edit.jpg"),
+  why:"Утренний Китай как он есть: тайцзи, каллиграфия водой на плитке, веера — и храм в придачу.",
+  hrs:"утро, 2–3 ч",tod:"day",cost:[70,120],def:true},
+ {id:"summer",city:"beijing",name:"Летний дворец",img:im("Winter in the Summer Palace, Beijing (4278744336).jpg"),
+  why:"Императорская резиденция у замёрзшего озера Куньмин — зимой почти приватно.",
+  hrs:"полдня",tod:"day",cost:[60,120],def:false},
+ {id:"skate",city:"beijing",name:"Коньки на Хоухае",img:im("Houhai Lake in winter 3.jpg"),
+  why:"Озеро в центре города замерзает: коньки, ледовые велосипеды, санки-кресла. Очень пекинская зима.",
+  hrs:"вечер, 1,5–2 ч",tod:"evening",cost:[120,200],tag:"winter",def:true},
+ {id:"hutong",city:"beijing",name:"Хутуны Наньлогусян",img:im("2016-09-04 Beijing Nanluoguxiang anagoria 22.jpg"),
+  why:"Старый Пекин в переулках: лавки, чай, засахаренный боярышник из жаровни.",
+  hrs:"вечер, 2 ч",tod:"evening",cost:[0,100],def:true},
+
+ {id:"icewold",city:"harbin",name:"Ice and Snow World",img:im("Harbin Ice Festival.jpg"),
+  why:"Крупнейший ледовый город мира: дворцы в полный рост, горки изо льда. Подсветка в сумерках — главное зрелище зимы.",
+  hrs:"с 15:00 до вечера",tod:"full",alsoEvening:true,cost:[600,760],tag:"winter",def:false},
+ {id:"central",city:"harbin",name:"Центральная улица и София",img:im("Harbin Ice & Snow Festival 2026 - Saint Sophia Cathedral.jpg"),
+  why:"«Русский Арбат»: модерн, собор, мороженое на морозе — столетняя местная традиция.",
+  hrs:"полдня",tod:"day",cost:[0,80],tag:"winter",def:false},
+ {id:"sunisl",city:"harbin",name:"Снежные скульптуры Солнечного острова",img:im("Snow sculpture, Harbin International Ice and Snow Sculpture Festival (3238491776).jpg"),
+  why:"Гигантские снежные фигуры при дневном свете — дневная пара к ночному ледовому городу.",
+  hrs:"полдня",tod:"day",cost:[480,660],tag:"winter",def:false},
+
+ {id:"disney",city:"shanghai",name:"Shanghai Disneyland",img:im("Shanghai Disneyland Castle Night.jpg"),
+  why:"Самый большой замок Диснея, Zootopia и TRON. В январские будни — самые короткие очереди года.",
+  hrs:"весь день",tod:"full",cost:[950,1250],tag:"wish",def:true,cons:"park_weekday",warn:"⚠ Парк попал на праздник/выходной — очереди. Лучше будний день после 3 января"},
+ {id:"bund",city:"shanghai",name:"Бунд + круиз по Хуанпу",img:im("Pudong Shanghai November 2017 HDR panorama.jpg"),
+  why:"Колониальные фасады против неона Пудуна; зимний воздух прозрачнее. На верхней палубе круиза выдают пледы.",
+  hrs:"вечер, 2–3 ч",tod:"evening",cost:[240,320],def:true},
+ {id:"yugarden",city:"shanghai",name:"Сад Юй и старый город",img:im("Shanghai - Yu Garden - 0035.jpg"),
+  why:"Классический сад в кольце небоскрёбов + сяолунбао по соседству. К 9 утра — без толп.",
+  hrs:"утро, 2–3 ч",tod:"day",cost:[80,160],def:true},
+ {id:"frconc",city:"shanghai",name:"Французская концессия",img:im("Wukang Mansion (20191114161507).jpg"),
+  why:"Платаны, особняки, кофейни улиц Wukang и Anfu — лучший неспешный променад Шанхая.",
+  hrs:"полдня",tod:"day",cost:[0,80],def:true},
+ {id:"shopsh",city:"shanghai",name:"Шопинг: IAPM, TX Huaihai, флагманы",img:im("East Nanjing Road at night, Shanghai.jpg"),
+  why:"Январские распродажи перед китайским НГ; техника Huawei/Xiaomi дешевле московских цен. Tax free 11%.",
+  hrs:"полдня",tod:"day",cost:[0,0],tag:"wish",def:true},
+ {id:"tower",city:"shanghai",name:"Shanghai Tower, 118 этаж",img:im("Shanghai - Shanghai Tower - 0001.jpg"),
+  why:"Самый быстрый лифт мира и город с полукилометра; зимой видимость лучшая в году.",
+  hrs:"1,5 ч, к закату",tod:"day",cost:[400,440],def:false},
+ {id:"maglev",city:"shanghai",name:"Маглев на 430 км/ч",img:im("China-Shanghai (2024) Maglev train - img 01.jpg"),
+  why:"7,5 минут магнитной левитации ради табло скорости — чистый аттракцион для фанатов поездов.",
+  hrs:"1,5–2 ч туда-обратно",tod:"day",cost:[100,200],tag:"wish",def:false},
+ {id:"zhujia",city:"shanghai",name:"Водный городок Чжуцзяцзяо",img:im("Zhujiajiao canal 4.JPG"),
+  why:"Каналы, мостики, лодки — «Венеция» на метро. Зимой пусто и атмосферно.",
+  hrs:"полдня",tod:"day",cost:[160,300],def:false},
+
+ {id:"safari",city:"guangzhou",name:"Chimelong Safari: жирафы с ладони",img:im("Giraffe feeding, Tanzania.jpg"),
+  why:"Кульминация поездки: платформа кормления жирафов, панды, сафари-поезд. Январские +15 — комфорт и активные звери.",
+  hrs:"весь день",tod:"full",cost:[640,760],tag:"wish",def:true},
+ {id:"circus",city:"guangzhou",name:"Международный цирк Chimelong",img:im("2025 Chimelong International Circus 05.jpg"),
+  why:"Шоу мирового уровня на 8 000 мест — идеальный вечер после сафари-дня.",
+  hrs:"вечер, 2 ч",tod:"evening",after:"safari",cost:[560,800],def:true},
+ {id:"canton",city:"guangzhou",name:"Canton Tower на закате",img:im("Canton Tower at night Guangzhou 2024 dllu.jpg"),
+  why:"Подсветка включается с закатом (~18:00); для смелых — капсулы-колесо прямо на макушке башни.",
+  hrs:"вечер, 2 ч",tod:"evening",cost:[456,600],def:true},
+ {id:"shamian",city:"guangzhou",name:"Остров Шамянь",img:im("Shamian Island, Guangzhou (5929144006).jpg"),
+  why:"Колониальный квартал у Жемчужной реки: платаны, особняки и +18° после севера.",
+  hrs:"полдня",tod:"day",cost:[0,0],def:true},
+ {id:"yumcha",city:"guangzhou",name:"Утренний чай «юм ча»",img:im("Dim Sum Breakfast.jpg"),
+  why:"Кантонский ритуал: тележки с димсамами, полтора часа неспешности. Культура через желудок.",
+  hrs:"утро, 1,5–2 ч",tod:"day",cost:[120,200],def:true},
+ {id:"shopgz",city:"guangzhou",name:"Шопинг: Beijing Road и Tianhe",img:im("北京路天河城2.jpg"),
+  why:"Пешеходная миля + моллы Taikoo Hui и Grandview — те же предновогодние скидки, что и в Шанхае.",
+  hrs:"полдня",tod:"day",cost:[0,0],tag:"wish",def:false}
 ];
+
 var LEGS={
  "beijing-harbin":{t:"🚄",txt:"Поезд-пуля Пекин → Харбин · 4 ч 40 мин · ¥541/чел, за окном снежная Маньчжурия",cost:[1082,1400]},
  "harbin-shanghai":{t:"✈️",txt:"Перелёт Харбин → Шанхай · ~3 ч",cost:[1800,3200]},
@@ -570,164 +602,222 @@ var LEGS={
  "beijing-guangzhou":{t:"✈️",txt:"Перелёт Пекин → Гуанчжоу · ~3 ч 20 мин",cost:[1800,3200]},
  "shanghai-guangzhou":{t:"✈️",txt:"Перелёт Шанхай → Гуанчжоу · 2 ч 15 мин (или поезд-пуля ~7 ч, ¥793)",cost:[1400,2600]}
 };
-var PLANS={
- beijing:{
-  3:["Прилёт, заселение. Вечером — замёрзшие озёра Хоухай: коньки и ледовые велосипеды прямо на озере (прокат ¥60–80), горячий тан-ху-лу в руку",
-     "Запретный город в снегу (бронь за 7 дней!) → Тяньаньмэнь → закат в парке Цзиншань → согревающая утка в Siji Minfu",
-     "Universal Beijing: Хогсмид, замок, горячее сливочное пиво. Стоит в будни после 3 января — очередей нет. ⚠ При 3 днях Стена не влезает — добавь день"],
-  4:["Прилёт, заселение. Вечером — замёрзшие озёра Хоухай: коньки и ледовые велосипеды прямо на озере (прокат ¥60–80), горячий тан-ху-лу в руку",
-     "Запретный город в снегу (бронь за 7 дней!) → Тяньаньмэнь → закат в парке Цзиншань → утка в Siji Minfu",
-     "Великая стена Мутяньюй: зимой без толп, если повезёт — в снегу (выезд 7:30, одеться как на лыжи) → вечером хутуны Наньлогусян и хого",
-     "Universal Beijing: Хогсмид, Forbidden Journey, горячее сливочное пиво — весь день, парк в будни пуст"],
-  5:["Прилёт, заселение. Вечером — Хоухай: коньки на замёрзшем озере, тан-ху-лу",
-     "Запретный город в снегу (бронь за 7 дней!) → Тяньаньмэнь → закат в парке Цзиншань → утка в Siji Minfu",
-     "Великая стена Мутяньюй (выезд 7:30) → вечером хутуны Наньлогусян и хого",
-     "Universal Beijing — весь день, парк в будни пуст",
-     "Храм Неба утром (тайцзи не отменяет мороз) → Летний дворец у льда озера Куньмин → прощальный вечер у Хоухай"]},
- harbin:{
-  2:["Центральная улица — «русский Арбат»: дома модерна, Софийский собор, мороженое Modern на морозе (местная традиция) → к 15:00 в Ice and Snow World: город изо льда, подсветку включают в сумерках",
-     "Солнечный остров: гигантские снежные скульптуры → обед: харбинские пельмени и красная колбаса → перелёт дальше по маршруту"],
-  3:["Центральная улица: дома модерна, Софийский собор, мороженое на морозе → к 15:00 в Ice and Snow World: подсветка в сумерках — главное зрелище зимы",
-     "Парк сибирских тигров или неспешный день: кофейни в особняках Центральной, фотопрогулка по льду Сунгари",
-     "Солнечный остров: снежные скульптуры → пельмени и красная колбаса → перелёт дальше по маршруту"]},
- shanghai:{
-  2:["Сад Юй + сяолунбао в Jia Jia Tang Bao → вечером Бунд: зимний воздух прозрачнее, неон чётче; круиз по Хуанпу с пледом",
-     "Shanghai Disneyland: к открытию → Zootopia → TRON → вечерний салют (~19:30). Январские будни — самые короткие очереди года"],
-  3:["Сад Юй + сяолунбао в Jia Jia Tang Bao → вечером Бунд и круиз по Хуанпу с пледом",
-     "Shanghai Disneyland: к открытию → Zootopia → TRON → салют (~19:30). Будний день — очередей почти нет",
-     "Французская концессия (Wukang Rd): платаны и кофейни → большой шопинг: IAPM, TX Huaihai, флагманы Huawei/Xiaomi, январские скидки → смотровая Shanghai Tower → по желанию маглев на скорость"],
-  4:["Сад Юй + сяолунбао в Jia Jia Tang Bao → вечером Бунд и круиз по Хуанпу с пледом",
-     "Shanghai Disneyland: весь день до салюта — январские будни, парк ваш",
-     "Французская концессия → большой шопинг: IAPM, TX Huaihai, флагманы техники, распродажи → Shanghai Tower",
-     "Полдня водный городок Чжуцзяцзяо (зимой без толп совсем) → вечером маглев на скорость и прощание с Бундом"]},
- guangzhou:{
-  2:["Chimelong Safari: платформа кормления жирафов, сафари-поезд, панды → вечером Международный цирк Chimelong → ночь в сафари-отеле среди белых тигров",
-     "Утренний чай с димсамами по-кантонски → остров Шамянь → Canton Tower на закате → ночной вылет домой"],
-  3:["Заселение → остров Шамянь: колониальный квартал у Жемчужной реки, +18° после севера → вечером Canton Tower (закат ~18:00, смотровая или капсулы-колесо на макушке)",
-     "Chimelong Safari весь день: жирафы с ладони, панды, сафари-поезд → вечером Международный цирк Chimelong → ночь в Chimelong Hotel",
-     "Утренний чай «юм ча» с димсамами (Diandude / Taotaoju) → шопинг: Beijing Road или моллы Tianhe → вылет в Москву"],
-  4:["Заселение → остров Шамянь → вечером Canton Tower (закат ~18:00)",
-     "Chimelong Safari весь день: жирафы, панды, сафари-поезд → вечером цирк Chimelong → ночь в Chimelong Hotel",
-     "Парк Юэсю и мемориал Сунь Ятсена → академия клана Чэнь (кантонская резьба) → вечером набережная Жемчужной реки",
-     "Утренний чай «юм ча» с димсамами → финальный шопинг: Beijing Road, Taikoo Hui → вылет в Москву"]}
-};
 
-var DEF={days:{beijing:4,harbin:2,shanghai:3,guangzhou:3},on:{beijing:true,harbin:false,shanghai:true,guangzhou:true},start:"2027-01-01",rate:13};
-var state=store.get("cn_route_v2");
-if(!state||!state.days||!state.on||!state.start){state=JSON.parse(JSON.stringify(DEF));}
+var DEF={sel:{},start:"2027-01-01",rate:13};
+PLACES.forEach(function(p){DEF.sel[p.id]=!!p.def});
+var state=store.get("cn_places_v3");
+if(!state||!state.sel||!state.start){state=JSON.parse(JSON.stringify(DEF));}
+PLACES.forEach(function(p){if(typeof state.sel[p.id]!=="boolean")state.sel[p.id]=!!p.def});
 
 var $=function(s){return document.querySelector(s)};
-var ticketsEl=$("#tickets"),balanceEl=$("#balance"),itinEl=$("#itin");
-
-function activeModules(){return MODULES.filter(function(m){return state.on[m.id]})}
-function totalDays(){return activeModules().reduce(function(s,m){return s+state.days[m.id]},0)}
-
-function fmtRange(lo,hi){return (Math.round(lo/1000))+"–"+(Math.round(hi/1000))+" тыс ₽"}
 function addDays(iso,n){var d=new Date(iso+"T12:00:00");d.setDate(d.getDate()+n);return d}
 function fmtDate(d){var m=["янв","фев","мар","апр","мая","июн","июл","авг","сен","окт","ноя","дек"];return d.getDate()+" "+m[d.getMonth()]}
 var WD=["вс","пн","вт","ср","чт","пт","сб"];
-function plural(n){return n===1?"день":(n>=2&&n<=4?"дня":"дней")}
+function plural(n,a,b,c){n=Math.abs(n);return n===1?a:(n>=2&&n<=4?b:c)}
+function fmtRange(lo,hi){return Math.round(lo/1000)+"–"+Math.round(hi/1000)+" тыс ₽"}
 
-function renderTickets(){
- ticketsEl.innerHTML="";
- MODULES.forEach(function(m){
-  var on=state.on[m.id],d=state.days[m.id];
-  var el=document.createElement("div");
-  el.className="ticket"+(on?"":" off");
-  el.style.setProperty("--tc",m.color);
-  el.innerHTML='<div class="t-top"><div><div class="t-city">'+m.name+(m.opt?' <span class="badge b-qr" style="vertical-align:middle">опция</span>':"")+'</div><div class="t-sub">'+m.sub+'</div></div>'+
-   '<label class="switch"><input type="checkbox" data-tgl="'+m.id+'"'+(on?" checked":"")+' aria-label="Включить '+m.name+'"><span class="tr"></span></label>'+
-   '</div><div class="stepper"><button type="button" data-dec="'+m.id+'" aria-label="Меньше дней"'+((!on||d<=m.min)?" disabled":"")+'>−</button><div class="val">'+(on?d+" "+plural(d):"выкл")+'</div><button type="button" data-inc="'+m.id+'" aria-label="Больше дней"'+((!on||d>=m.max)?" disabled":"")+'>+</button></div>';
-  ticketsEl.appendChild(el);
+function consOK(p,date){
+ if(!p.cons)return true;
+ if(p.cons==="not_monday")return date.getDay()!==1;
+ if(p.cons==="park_weekday"){var wd=date.getDay(),hol=(date.getMonth()===0&&date.getDate()<=3);return wd>=1&&wd<=5&&!hol}
+ return true;
+}
+
+/* ---------- планировщик ---------- */
+function schedule(){
+ var sel=PLACES.filter(function(p){return state.sel[p.id]});
+ var cities=ORDER.filter(function(c){return sel.some(function(p){return p.city===c})});
+ var res={cities:cities,perCity:{},days:[],needed:0,unplaced:[]};
+ if(!cities.length)return res;
+
+ /* сколько дней нужно каждому городу */
+ cities.forEach(function(c,ci){
+  var items=sel.filter(function(p){return p.city===c});
+  var fulls=items.filter(function(p){return p.tod==="full"});
+  var halves=items.filter(function(p){return p.tod==="day"});
+  var eves=items.filter(function(p){return p.tod==="evening"});
+  var load=fulls.length+halves.length*0.5;
+  var isLast=ci===cities.length-1;
+  var d=1;
+  while(d<9){
+   var cap=d-0.5-(isLast?0.5:0);
+   var evCap=d-fulls.filter(function(f){return f.alsoEvening}).length;
+   if(cap>=load&&evCap>=eves.length)break;
+   d++;
+  }
+  res.perCity[c]=d;
+ });
+ res.needed=cities.reduce(function(s,c){return s+res.perCity[c]},0);
+ var extra=TOTAL-res.needed;
+ if(extra>0)res.perCity[cities[cities.length-1]]+=extra;
+
+ /* раскладываем по конкретным дням */
+ var dayNo=1;
+ cities.forEach(function(c,ci){
+  var items=sel.filter(function(p){return p.city===c});
+  var fulls=items.filter(function(p){return p.tod==="full"}).sort(function(a,b){return (b.cons?1:0)-(a.cons?1:0)});
+  var halves=items.filter(function(p){return p.tod==="day"}).sort(function(a,b){return (b.cons?1:0)-(a.cons?1:0)});
+  var eves=items.filter(function(p){return p.tod==="evening"});
+  var n=res.perCity[c], isLast=ci===cities.length-1;
+  var days=[];
+  for(var i=0;i<n;i++){
+   var cap=1;
+   if(i===0)cap=0.5;                 /* день прибытия: утро в дороге */
+   if(isLast&&i===n-1)cap-=0.5;      /* день вылета домой */
+   days.push({no:dayNo+i,city:c,cap:Math.max(cap,0),arrive:i===0,depart:isLast&&i===n-1,parts:[],evening:null,evBlock:false,notes:[]});
+  }
+  fulls.forEach(function(f){
+   var day=days.find(function(dd){return dd.cap>=1&&consOK(f,addDays(state.start,dd.no-1))})
+        ||days.find(function(dd){return dd.cap>=1});
+   if(!day){res.unplaced.push(f);return}
+   if(f.cons&&!consOK(f,addDays(state.start,day.no-1)))day.notes.push(f.warn);
+   day.parts.push(f);day.cap-=1;
+   if(f.alsoEvening)day.evBlock=true;
+  });
+  halves.forEach(function(h){
+   var cand=days.filter(function(dd){return dd.cap>=0.5&&consOK(h,addDays(state.start,dd.no-1))});
+   if(!cand.length)cand=days.filter(function(dd){return dd.cap>=0.5});
+   if(!cand.length){res.unplaced.push(h);return}
+   cand.sort(function(a,b){return (a.arrive?1:0)-(b.arrive?1:0)||a.cap-b.cap||a.no-b.no});
+   var day=cand[0];
+   if(h.cons&&!consOK(h,addDays(state.start,day.no-1)))day.notes.push(h.warn);
+   day.parts.push(h);day.cap-=0.5;
+  });
+  eves.forEach(function(e){
+   var day=null;
+   if(e.after)day=days.find(function(dd){return !dd.evening&&!dd.evBlock&&dd.parts.some(function(p){return p.id===e.after})});
+   if(!day)day=days.find(function(dd){return !dd.evening&&!dd.evBlock});
+   if(!day){res.unplaced.push(e);return}
+   day.evening=e;
+  });
+  res.days=res.days.concat(days);
+  dayNo+=n;
+ });
+ return res;
+}
+
+/* ---------- рендер карточек ---------- */
+function renderPlaces(){
+ var host=$("#placeGrid");host.innerHTML="";
+ ORDER.forEach(function(c){
+  var items=PLACES.filter(function(p){return p.city===c});
+  if(!items.length)return;
+  var selN=items.filter(function(p){return state.sel[p.id]}).length;
+  var g=document.createElement("div");g.className="pgroup";
+  g.innerHTML='<div class="gh"><div class="bar" style="background:'+CITIES[c].color+'"></div><h3>'+CITIES[c].ghead+'</h3><span class="cnt">'+selN+' / '+items.length+'</span></div>';
+  var grid=document.createElement("div");grid.className="pgrid";
+  items.forEach(function(p){
+   var b=document.createElement("button");
+   b.type="button";b.className="pcard"+(state.sel[p.id]?" sel":"");
+   b.style.setProperty("--pc",CITIES[c].color);
+   b.setAttribute("aria-pressed",state.sel[p.id]?"true":"false");
+   b.dataset.pid=p.id;
+   var rib=p.tag==="wish"?'<span class="ribbon wish">из твоего списка</span>':(p.tag==="winter"?'<span class="ribbon winter">только зимой</span>':"");
+   var costTxt=p.cost[1]===0?"бесплатно":"¥"+p.cost[0]+(p.cost[1]>p.cost[0]?"–"+p.cost[1]:"")+" на двоих";
+   b.innerHTML='<div class="im"><img loading="lazy" alt="" src="'+p.img+'" onerror="this.style.display=\'none\'"></div>'+rib+
+    '<span class="chk" aria-hidden="true">✓</span>'+
+    '<div class="bd"><div class="nm">'+p.name+'</div><div class="meta"><span>'+p.hrs+'</span><span>'+costTxt+'</span></div><div class="why">'+p.why+'</div></div>';
+   grid.appendChild(b);
+  });
+  g.appendChild(grid);host.appendChild(g);
  });
 }
 
-function renderBalance(){
- var t=totalDays(),diff=TOTAL-t;
- var end=addDays(state.start,TOTAL-1);
- $("#endDateOut").textContent="→ финиш "+fmtDate(end)+" ("+WD[end.getDay()]+"), "+TOTAL+" дней / "+(TOTAL-1)+" ночей";
- if(diff===0){balanceEl.className="balance";balanceEl.innerHTML="✅ <b>Ровно "+TOTAL+" дней</b> — маршрут собран. Дни, даты и бюджет ниже обновлены.";}
- else{balanceEl.className="balance err";
-  balanceEl.innerHTML=(diff>0?"🧩 Свободно <b>"+diff+" "+plural(diff)+"</b>":"⚠️ Перебор <b>"+(-diff)+" "+plural(-diff)+"</b>")+
-  '<button class="btn fix" type="button" id="autofix">Выровнять автоматически</button>';}
-}
-
-function autofix(){
- var order=["guangzhou","beijing","shanghai","harbin"];
- var guard=0;
- while(totalDays()!==TOTAL&&guard<40){
-  var diff=TOTAL-totalDays(),moved=false;
-  for(var i=0;i<order.length;i++){
-   var m=MODULES.find(function(x){return x.id===order[i]});
-   if(!state.on[m.id])continue;
-   if(diff>0&&state.days[m.id]<m.max){state.days[m.id]++;moved=true;break;}
-   if(diff<0&&state.days[m.id]>m.min){state.days[m.id]--;moved=true;break;}
+/* ---------- рендер маршрута ---------- */
+function renderItin(sch){
+ var itin=$("#itin");itin.innerHTML="";
+ if(!sch.cities.length){itin.innerHTML='<p style="color:var(--dim)">Отметь хотя бы одну карточку — и маршрут соберётся.</p>';return}
+ var first=CITIES[sch.cities[0]].name;
+ var arr=document.createElement("div");arr.className="leg";
+ arr.innerHTML='<div class="ic">✈️</div><div>Вылет из Москвы вечером 31 декабря — Новый год встречаете в небе (прямой до '+(sch.cities[0]==="beijing"?"Пекина ~7,5 ч":first)+'), либо утром 1 января</div>';
+ itin.appendChild(arr);
+ var prev=null;
+ sch.days.forEach(function(day){
+  if(day.city!==prev){
+   if(prev){var leg=LEGS[prev+"-"+day.city];
+    if(leg){var lg=document.createElement("div");lg.className="leg";lg.innerHTML='<div class="ic">'+leg.t+'</div><div>'+leg.txt+'</div>';itin.appendChild(lg);}}
+   prev=day.city;
   }
-  if(!moved)break;
-  guard++;
+  var d=addDays(state.start,day.no-1);
+  var pieces=[];
+  if(day.arrive&&day.parts.length===0)pieces.push(day.no===1?"Прилёт и заселение — день на адаптацию":"Переезд, заселение — полдня в запасе");
+  day.parts.forEach(function(p){pieces.push(p.name)});
+  var what=pieces.join(" → ");
+  if(day.evening)what+=(what?" · ":"")+'<span class="eve">вечер: '+day.evening.name+"</span>";
+  if(!what&&!day.evening)what=day.depart?"Утро на сборы и сувениры → вылет домой":"Свободный день: спонтанность, догулять любимое, кофейни";
+  else if(day.depart)what+=' <span class="eve">→ вылет домой</span>';
+  var el=document.createElement("div");
+  el.className="day"+(day.no>TOTAL?" over":"");
+  el.style.setProperty("--dc",CITIES[day.city].color);
+  el.innerHTML='<div class="stamp"><b>'+(day.no<10?"0":"")+day.no+'</b><span>'+CITIES[day.city].key+'</span></div>'+
+   '<div class="body"><div class="city">'+CITIES[day.city].name+' · <span class="date">'+fmtDate(d)+", "+WD[d.getDay()]+'</span></div><div class="what">'+what+'</div>'+
+   (day.notes.length?'<div class="warn">'+day.notes.join("<br>")+'</div>':"")+'</div>';
+  itin.appendChild(el);
+ });
+ var last=sch.cities[sch.cities.length-1];
+ var dep=document.createElement("div");dep.className="leg";
+ dep.innerHTML='<div class="ic">✈️</div><div>'+(last==="guangzhou"?"Вылет домой: прямой China Southern Гуанчжоу → Москва, ~10,5 ч":"Вылет домой: "+CITIES[last].name+" → Москва (прямой или с пересадкой — смотри Aviasales)")+'</div>';
+ itin.appendChild(dep);
+ if(sch.unplaced.length){
+  var w=document.createElement("div");w.className="note danger";
+  w.innerHTML="<b>Не влезло в дни:</b> "+sch.unplaced.map(function(p){return p.name}).join(", ")+". Сними что-то из карточек этого города — или прими, что будет бегом.";
+  itin.appendChild(w);
  }
 }
 
-function renderItin(){
- var mods=activeModules();
- itinEl.innerHTML="";
- if(mods.length===0){itinEl.innerHTML='<p style="color:var(--dim)">Включи хотя бы один город — и план соберётся.</p>';return;}
- var arr=document.createElement("div");arr.className="leg";
- arr.innerHTML='<div class="ic">✈️</div><div>Вылет из Москвы вечером 31 декабря — Новый год встречаете в небе (прямой до Пекина ~7,5 ч), либо утром 1 января</div>';
- itinEl.appendChild(arr);
- var day=1,prev=null;
- mods.forEach(function(m){
-  if(prev){
-   var leg=LEGS[prev.id+"-"+m.id];
-   if(leg){var lg=document.createElement("div");lg.className="leg";lg.innerHTML='<div class="ic">'+leg.t+'</div><div>'+leg.txt+'</div>';itinEl.appendChild(lg);}
-  }
-  var plans=PLANS[m.id][state.days[m.id]]||PLANS[m.id][m.def];
-  plans.forEach(function(txt,i){
-   if(i>=state.days[m.id])return;
-   var d=addDays(state.start,day-1);
-   var el=document.createElement("div");
-   el.className="day";el.style.setProperty("--dc",m.color);
-   el.innerHTML='<div class="stamp"><b>'+(day<10?"0":"")+day+'</b><span>'+m.key+'</span></div><div class="body"><div class="city">'+m.name+' · <span class="date">'+fmtDate(d)+", "+WD[d.getDay()]+'</span></div><div class="what">'+txt+'</div></div>';
-   itinEl.appendChild(el);day++;
-  });
-  prev=m;
- });
- var last=mods[mods.length-1];
- var dep=document.createElement("div");dep.className="leg";
- dep.innerHTML='<div class="ic">✈️</div><div>'+(last.id==="guangzhou"?"Вылет домой: прямой China Southern Гуанчжоу → Москва, ~10,5 ч":"Вылет домой: "+last.name+" → Москва (прямой или с пересадкой — смотри Aviasales)")+'</div>';
- itinEl.appendChild(dep);
+function renderMeter(sch){
+ var m=$("#meter");
+ var end=addDays(state.start,TOTAL-1);
+ $("#endDateOut").textContent="→ финиш "+fmtDate(end)+" ("+WD[end.getDay()]+"), "+TOTAL+" дней / "+(TOTAL-1)+" ночей";
+ var n=sch.needed,over=n>TOTAL;
+ m.className="meter"+(over?" err":"");
+ var msg;
+ if(!sch.cities.length)msg="Пока пусто — отмечай карточки выше.";
+ else if(over)msg="⚠️ Выбранного — на <b>"+n+" "+plural(n,"день","дня","дней")+"</b> при "+TOTAL+" доступных. Дни после 10-го помечены пунктиром: сними "+(n-TOTAL)+" "+plural(n-TOTAL,"день","дня","дней")+" карточек — или сдвинь обратный вылет.";
+ else if(n===TOTAL)msg="✅ Идеально: выбранного ровно на <b>"+TOTAL+" дней</b>. Маршрут ниже собран.";
+ else msg="🧩 Выбранного — на <b>"+n+" "+plural(n,"день","дня","дней")+"</b>. Свободные "+(TOTAL-n)+" "+plural(TOTAL-n,"день","дня","дней")+" отданы финальному городу как «дни спонтанности» — или добавь карточек.";
+ m.innerHTML='<div class="mtop"><span>'+msg+'</span><span class="mono">'+Math.min(n,TOTAL)+' / '+TOTAL+'</span></div><div class="mbar"><i style="width:'+Math.min(n/TOTAL*100,100)+'%"></i></div>';
 }
 
-function renderBudget(){
+function renderBudget(sch){
  var rate=state.rate||13;
- var lo=0,hi=0,mods=activeModules(),prev=null;
- mods.forEach(function(m,idx){
-  var d=state.days[m.id];
-  var nights=(idx===mods.length-1)?Math.max(d-1,1):d;
-  lo+=m.hotel[0]*nights+m.daily[0]*d+m.fixed[0];
-  hi+=m.hotel[1]*nights+m.daily[1]*d+m.fixed[1];
-  if(prev){var leg=LEGS[prev.id+"-"+m.id];if(leg){lo+=leg.cost[0];hi+=leg.cost[1];}}
-  prev=m;
+ var lo=0,hi=0;
+ /* билеты и активности */
+ PLACES.forEach(function(p){if(state.sel[p.id]){lo+=p.cost[0];hi+=p.cost[1]}});
+ /* отели и еда */
+ sch.cities.forEach(function(c,ci){
+  var d=sch.perCity[c];
+  var nights=(ci===sch.cities.length-1)?Math.max(d-1,1):d;
+  lo+=CITIES[c].hotel[0]*nights+CITIES[c].daily[0]*d;
+  hi+=CITIES[c].hotel[1]*nights+CITIES[c].daily[1]*d;
  });
+ /* переезды между городами */
+ for(var i=1;i<sch.cities.length;i++){
+  var leg=LEGS[sch.cities[i-1]+"-"+sch.cities[i]];
+  if(leg){lo+=leg.cost[0];hi+=leg.cost[1]}
+ }
  var rubLo=lo*rate+100000+6000, rubHi=hi*rate+150000+12000;
- $("#budgetOut").textContent="≈ "+fmtRange(rubLo,rubHi);
- $("#budgetDetail").textContent="Внутри Китая: ¥"+lo.toLocaleString("ru-RU")+"–"+hi.toLocaleString("ru-RU")+" + перелёты из Москвы 100–150 т.₽ (новогодний пик) + eSIM и страховка. Без шопинга.";
+ $("#budgetOut").textContent=sch.cities.length?"≈ "+fmtRange(rubLo,rubHi):"—";
+ $("#budgetDetail").textContent=sch.cities.length?("Внутри Китая: ¥"+lo.toLocaleString("ru-RU")+"–"+hi.toLocaleString("ru-RU")+" (билеты по выбранным карточкам + отели + еда + переезды) + перелёты из Москвы 100–150 т.₽ + eSIM и страховка. Без шопинга."):"";
 }
 
-function renderAll(){renderTickets();renderBalance();renderItin();renderBudget();store.set("cn_route_v2",state);}
+function renderAll(){
+ renderPlaces();
+ var sch=schedule();
+ renderMeter(sch);renderItin(sch);renderBudget(sch);
+ store.set("cn_places_v3",state);
+}
 
 document.addEventListener("click",function(e){
- var t=e.target;
- if(t.dataset&&t.dataset.inc){var m=MODULES.find(function(x){return x.id===t.dataset.inc});if(state.days[m.id]<m.max){state.days[m.id]++;renderAll();}}
- if(t.dataset&&t.dataset.dec){var m2=MODULES.find(function(x){return x.id===t.dataset.dec});if(state.days[m2.id]>m2.min){state.days[m2.id]--;renderAll();}}
- if(t.id==="autofix"){autofix();renderAll();}
- if(t.id==="clReset"){clState={};store.set("cn_check_v2",clState);renderChecklist();}
+ var card=e.target.closest?e.target.closest(".pcard"):null;
+ if(card&&card.dataset.pid){state.sel[card.dataset.pid]=!state.sel[card.dataset.pid];renderAll();return}
+ if(e.target.id==="selReset"){state.sel={};PLACES.forEach(function(p){state.sel[p.id]=!!p.def});renderAll();return}
+ if(e.target.id==="clReset"){clState={};store.set("cn_check_v2",clState);renderChecklist();}
 });
 document.addEventListener("change",function(e){
  var t=e.target;
- if(t.dataset&&t.dataset.tgl){state.on[t.dataset.tgl]=t.checked;renderAll();}
  if(t.id==="startDate"){state.start=t.value||"2027-01-01";renderAll();}
- if(t.id==="rateInput"){var r=parseFloat(t.value);if(r>0){state.rate=r;renderBudget();store.set("cn_route_v2",state);}}
+ if(t.id==="rateInput"){var r=parseFloat(t.value);if(r>0){state.rate=r;renderBudget(schedule());store.set("cn_places_v3",state);}}
  if(t.dataset&&t.dataset.cl!==undefined){clState[t.dataset.cl]=t.checked;store.set("cn_check_v2",clState);updateProgress();
   t.closest(".cl-item").classList.toggle("done",t.checked);}
 });
@@ -759,7 +849,7 @@ var CHECK=[
   ["Шапки, перчатки, шарфы*",""],
   ["Тёплая нескользящая обувь*","лёд на Хоухае и брусчатка хутунов"],
   ["Слои для Гуанчжоу: там +15…18","футболка + лёгкая куртка, пуховик в рюкзак"],
-  ["Для Харбина (если едете): балаклава/бафф — докупить грелки HotHands на месте, ¥2–5","телефон на морозе держать во внутреннем кармане"]]},
+  ["Для Харбина (если едете): балаклава/бафф — грелки HotHands купить на месте, ¥2–5","телефон на морозе держать во внутреннем кармане"]]},
  {cat:"Техника",items:[
   ["Пауэрбанк с маркировкой CCC, только в ручную кладь*","на внутренних рейсах Китая без значка CCC изымают; мороз ест батарею вдвое быстрее"],
   ["Универсальный переходник для розеток","евровилка входит почти везде, но пусть будет"]]},
