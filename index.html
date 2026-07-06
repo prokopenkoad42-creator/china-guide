@@ -151,6 +151,10 @@ ul.tick li::before{content:"—";position:absolute;left:4px;color:var(--gold);fo
 .app{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px}
 .app b{display:block}
 .app .why{font-size:13.5px;color:var(--dim);margin-top:4px}
+.app .stores{display:flex;gap:8px;margin-top:10px}
+.app .stores a{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:600;padding:7px 8px;border-radius:9px;border:1px solid var(--line);background:var(--paper);color:var(--ink);text-decoration:none;white-space:nowrap}
+.app .stores a:hover{border-color:var(--ink);background:var(--ink);color:#fff}
+.app .stores a svg{width:14px;height:14px;flex:0 0 auto}
 .modal{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
 .modal[hidden]{display:none}
 .modal .mback{position:absolute;inset:0;background:rgba(20,24,30,.55);backdrop-filter:blur(3px)}
@@ -362,16 +366,7 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
     <div class="link-row"><a class="btn" href="https://www.airalo.com" target="_blank" rel="noopener">Airalo</a><a class="btn" href="https://www.getnomad.app" target="_blank" rel="noopener">Nomad</a><a class="btn" href="https://yesim.app" target="_blank" rel="noopener">Yesim</a></div>
   </div>
   <h3>Восемь приложений</h3>
-  <div class="apps">
-    <div class="app"><b>Alipay</b><div class="why">Платежи QR, такси DiDi внутри, метро. Регистрация по загранпаспорту до вылета</div></div>
-    <div class="app"><b>WeChat</b><div class="why">Мессенджер страны + миниапп для билетов в Запретный город</div></div>
-    <div class="app"><b>Amap (高德地图)</b><div class="why">Навигация №1, есть английский. На iPhone отлично работают и Apple Maps — они на данных Amap</div></div>
-    <div class="app"><b>12306</b><div class="why">Ж/д билеты, английская версия</div></div>
-    <div class="app"><b>Trip.com</b><div class="why">Отели, авиа, поезда, парки — один аккаунт</div></div>
-    <div class="app"><b>Яндекс Переводчик</b><div class="why">Офлайн-пакет ru↔zh: фото меню и голос без интернета</div></div>
-    <div class="app"><b>Dianping</b><div class="why">«2ГИС по еде» — рейтинги местных</div></div>
-    <div class="app"><b>Ostrovok / Яндекс Путешествия</b><div class="why">Отели с оплатой российской картой</div></div>
-  </div>
+  <div class="apps" id="appsGrid"></div>
   <div class="note"><b>Лайфхаки:</b> скрины адресов отелей иероглифами для таксистов; английский вне отелей не работает — переводчик решает; евровилка входит в китайские розетки почти везде.</div>
 </section>
 
@@ -1012,6 +1007,36 @@ document.addEventListener("change",function(e){
 $("#startDate").value=state.start;
 $("#rateInput").value=state.rate||13;
 
+/* ---------- приложения: прямые ссылки на магазины ---------- */
+var IOS="https://apps.apple.com/app/",GP="https://play.google.com/store/apps/details?id=";
+var SVG_A='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.04c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.88 2.65 3.22 2.6 1.29-.05 1.78-.83 3.34-.83 1.56 0 2 .83 3.37.81 1.39-.03 2.27-1.27 3.12-2.53.98-1.45 1.39-2.85 1.41-2.92-.03-.01-2.7-1.04-2.73-4.13-.02-.01.03-.29.01-.47zM14.6 4.7c.71-.86 1.19-2.06 1.06-3.25-1.02.04-2.26.68-3 1.54-.66.76-1.24 1.98-1.08 3.15 1.14.09 2.3-.58 3.02-1.44z"/></svg>';
+var SVG_G='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 2.3c-.2.2-.3.6-.3 1v17.4c0 .4.1.8.4 1l.1.1L13 12.9v-.2L3.6 2.3zm12.9 7.3l-3-1.7-2.4 2.4 2.4 2.4 3-1.7c.9-.5.9-1.4 0-1.4zM4.5 21.9c.3.3.8.3 1.3 0l10.7-6.1-2.4-2.4-9.6 8.5zM5.8 2.1c-.5-.3-1-.3-1.3 0l9.6 8.5 2.4-2.4L5.8 2.1z"/></svg>';
+function stores(ios,gp){
+ var out='<div class="stores">';
+ out+=ios?'<a href="'+ios+'" target="_blank" rel="noopener">'+SVG_A+' App Store</a>':'';
+ out+=gp?'<a href="'+gp+'" target="_blank" rel="noopener">'+SVG_G+' Google Play</a>':'';
+ return out+'</div>';
+}
+var APPS=[
+ {n:"Alipay",w:"Платежи QR, такси DiDi внутри, метро. Регистрация по загранпаспорту до вылета",ios:IOS+"id333206289",gp:GP+"com.eg.android.AlipayGphone"},
+ {n:"WeChat",w:"Мессенджер страны + миниапп для билетов в Запретный город",ios:IOS+"id414478124",gp:GP+"com.tencent.mm"},
+ {n:"Amap Global (高德地图)",w:"Навигация №1, есть английский. На iPhone отлично работают и Apple Maps — они на данных Amap",ios:IOS+"id461703208",gp:GP+"com.autonavi.minimap"},
+ {n:"12306",w:"Официальные ж/д билеты. На Android офиц. приложения нет в Google Play — бери билеты через Trip.com",ios:IOS+"id564818797",gp:GP+"ctrip.english",gpAlt:"Trip.com"},
+ {n:"Trip.com",w:"Отели, авиа, поезда, парки — один аккаунт, русская версия есть",ios:IOS+"id681752345",gp:GP+"ctrip.english"},
+ {n:"Яндекс Переводчик",w:"Офлайн-пакет ru↔zh: фото меню и голос без интернета",ios:IOS+"id584291439",gp:GP+"ru.yandex.translate"},
+ {n:"Dianping (大众点评)",w:"«2ГИС по еде» — рейтинги местных, где вкусно на самом деле",ios:IOS+"id351091731",gp:GP+"com.dianping.v1"},
+ {n:"Ostrovok",w:"Отели с оплатой российской картой",ios:IOS+"id564204730",gp:GP+"ru.ostrovok.android"},
+ {n:"Яндекс Путешествия",w:"Отели и авиа с оплатой российской картой",ios:IOS+"id1632443454",gp:GP+"ru.yandex.travel"}
+];
+function renderApps(){
+ var host=$("#appsGrid");if(!host)return;host.innerHTML="";
+ APPS.forEach(function(a){
+  var el=document.createElement("div");el.className="app";
+  el.innerHTML="<b>"+a.n+"</b><div class=\"why\">"+a.w+"</div>"+stores(a.ios,a.gp);
+  host.appendChild(el);
+ });
+}
+
 /* ---------- чек-лист ---------- */
 var CHECK=[
  {cat:"Документы",items:[
@@ -1074,7 +1099,7 @@ function updateProgress(){
  $("#ptext").textContent=done+" из "+total+" собрано";
 }
 
-renderAll();renderChecklist();
+renderAll();renderChecklist();renderApps();
 })();
 </script>
 </body>
