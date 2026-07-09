@@ -1,457 +1,685 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Китай на двоих — конструктор путешествия</title>
-<meta name="description" content="Выбираешь места по всему Китаю — движок сам строит оптимальный маршрут, города, даты и бюджет. 10 направлений, 40+ мест, зимняя специфика.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Prata&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap&subset=cyrillic" rel="stylesheet">
+<title>Китай на двоих — маршрут длиной в сорок два градуса</title>
+<meta name="description" content="Январский Китай от льда Харбина до субтропиков Гуанчжоу. Выбираешь места — движок строит оптимальный маршрут, даты и бюджет.">
+<meta name="color-scheme" content="dark light">
+<link rel="preload" href="assets/fonts/golostext-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/unbounded-800-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<script>(function(){try{var t=localStorage.getItem("cn_theme");if(t)t=t.replace(/"/g,"");if(!t)t=(window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches)?"light":"dark";document.documentElement.setAttribute("data-theme",t)}catch(e){}})();</script>
 <style>
+/* ===== Self-hosted fonts: fonts.googleapis.com заблокирован в Китае, а гайд читают там ===== */
+@font-face{font-family:'Unbounded';font-style:normal;font-weight:800;font-display:swap;src:url(assets/fonts/unbounded-800-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Unbounded';font-style:normal;font-weight:800;font-display:swap;src:url(assets/fonts/unbounded-800-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Golos Text';font-style:normal;font-weight:400 700;font-display:swap;src:url(assets/fonts/golostext-var-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Golos Text';font-style:normal;font-weight:400 700;font-display:swap;src:url(assets/fonts/golostext-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url(assets/fonts/jetbrainsmono-500-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url(assets/fonts/jetbrainsmono-500-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
+/* ===== Tokens =====
+   Палитра: холодная тёмная база (синий подтон, не чёрная), ОДИН акцент — янтарь «тепла прибытия».
+   Температурная шкала (--t-*) применяется ТОЛЬКО к данным: города, узлы маршрута, дуга. Не к хрому.
+   Радиусы, документированное правило: контейнеры 16px, контролы 10px, чипы/кнопки-таблетки — pill.
+   z-index: grain 1 → nav 100 → backdrop 200 → modal 210. Произвольных значений нет. */
 :root{
-  --ink:#1D2126; --dim:#6E6C66; --paper:#FAF8F3; --card:#FFFFFF; --line:#E7E1D5;
-  --lacquer:#B3271E; --iceblue:#2E7FB8; --shanghai:#2F4FBF; --amber:#C07A1D;
-  --jade:#1E7F6B; --gold:#C9A227;
-  --r:14px; --shadow:0 1px 2px rgba(29,33,38,.05),0 6px 24px rgba(29,33,38,.06);
+  --bg:oklch(0.16 0.019 252);
+  --surface:oklch(0.205 0.021 252);
+  --surface-2:oklch(0.25 0.023 252);
+  --line:oklch(0.32 0.02 252);
+  --line-soft:oklch(0.27 0.018 252);
+  --ink:oklch(0.96 0.004 252);
+  --ink-2:oklch(0.79 0.012 252);
+  --ink-3:oklch(0.68 0.014 252);
+  --ember:oklch(0.79 0.15 62);
+  --ember-2:oklch(0.72 0.17 55);
+  --on-ember:oklch(0.18 0.04 60);
+  --ember-wash:oklch(0.79 0.15 62 / .12);
+  --alarm:oklch(0.70 0.17 25);
+  --alarm-wash:oklch(0.70 0.17 25 / .12);
+  --t-frozen:oklch(0.76 0.13 242);
+  --t-cold:oklch(0.75 0.10 218);
+  --t-cool:oklch(0.77 0.08 196);
+  --t-mild:oklch(0.79 0.11 148);
+  --t-warm:oklch(0.80 0.14 66);
+  --shadow:0 1px 2px oklch(0.10 0.02 252 / .5), 0 12px 40px oklch(0.08 0.02 252 / .35);
+  --r-box:16px; --r-ctl:10px;
+  --e-out:cubic-bezier(0.23,1,0.32,1);
+  --e-io:cubic-bezier(0.77,0,0.175,1);
+  --z-grain:1; --z-nav:100; --z-backdrop:200; --z-modal:210;
+  --f-display:'Unbounded','Golos Text',system-ui,sans-serif;
+  --f-text:'Golos Text',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;
+}
+[data-theme="light"]{
+  --bg:oklch(0.975 0.006 252);
+  --surface:oklch(1 0 0);
+  --surface-2:oklch(0.955 0.008 252);
+  --line:oklch(0.87 0.012 252);
+  --line-soft:oklch(0.92 0.01 252);
+  --ink:oklch(0.21 0.02 252);
+  --ink-2:oklch(0.43 0.02 252);
+  --ink-3:oklch(0.52 0.02 252);
+  --ember:oklch(0.58 0.15 52);
+  --ember-2:oklch(0.52 0.16 48);
+  --on-ember:oklch(0.99 0.008 60);
+  --ember-wash:oklch(0.58 0.15 52 / .10);
+  --alarm:oklch(0.52 0.19 25);
+  --alarm-wash:oklch(0.52 0.19 25 / .09);
+  --t-frozen:oklch(0.55 0.15 242);
+  --t-cold:oklch(0.53 0.13 218);
+  --t-cool:oklch(0.52 0.10 196);
+  --t-mild:oklch(0.50 0.13 148);
+  --t-warm:oklch(0.56 0.15 60);
+  --shadow:0 1px 2px oklch(0.5 0.02 252 / .07), 0 12px 36px oklch(0.5 0.02 252 / .10);
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:64px}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
-body{font-family:'IBM Plex Sans',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.55;font-size:16px}
-.wrap{max-width:780px;margin:0 auto;padding:0 18px}
-h1,h2{font-family:'Prata',serif;font-weight:400;line-height:1.15}
-.mono{font-family:'IBM Plex Mono',monospace}
-a{color:var(--shanghai);text-underline-offset:3px}
-a:hover{color:var(--lacquer)}
-:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:4px}
+html{scroll-behavior:smooth;scroll-padding-top:84px;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--f-text);background:var(--bg);color:var(--ink);
+  font-size:16.5px;line-height:1.6;
+  transition:background-color 200ms ease,color 200ms ease;
+  overflow-x:hidden;
+}
 img{display:block;max-width:100%}
-nav{position:sticky;top:0;z-index:50;background:rgba(250,248,243,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.chips{display:flex;gap:8px;overflow-x:auto;padding:10px 18px;max-width:780px;margin:0 auto;scrollbar-width:none}
-.chips::-webkit-scrollbar{display:none}
-.chip{flex:0 0 auto;font-size:13px;font-weight:600;padding:7px 13px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;white-space:nowrap}
-.chip:hover{border-color:var(--gold)}
-header{position:relative;color:#fff;overflow:hidden}
-header .bg{position:absolute;inset:0;background:#22303c}
-header .bg img{width:100%;height:100%;object-fit:cover;opacity:.9}
-header .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,24,32,.3) 0%,rgba(16,24,32,.55) 60%,rgba(16,24,32,.85) 100%)}
-.hero{position:relative;padding:88px 18px 46px;max-width:780px;margin:0 auto}
-.hero .eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#F5D57A;font-weight:600}
-.hero h1{font-size:clamp(36px,8.5vw,60px);margin:12px 0 14px;text-shadow:0 2px 20px rgba(0,0,0,.4)}
-.hero p{max-width:560px;font-size:17px;color:#EDEAE2}
-section{padding:44px 0 8px}
-.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
-.sec-head .bar{width:34px;height:10px;border-radius:3px;flex:0 0 auto;transform:translateY(-2px)}
-h2{font-size:clamp(26px,5.5vw,34px)}
-.lead{color:var(--dim);margin:8px 0 20px;max-width:660px}
-h3{font-size:19px;margin:26px 0 10px;font-weight:700}
-p+p{margin-top:10px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
-.card+.card{margin-top:14px}
-.ph{border-radius:var(--r);overflow:hidden;margin:18px 0;border:1px solid var(--line);background:#e9e5db}
-.ph img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
-.ph figcaption{font-size:12.5px;color:var(--dim);padding:8px 12px}
-table{width:100%;border-collapse:collapse;font-size:14.5px;margin:12px 0}
-th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);padding:8px 10px;border-bottom:2px solid var(--line)}
-td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
-tr:last-child td{border-bottom:none}
-.num{font-family:'IBM Plex Mono',monospace;font-size:13.5px;white-space:nowrap}
-.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.tbl-scroll table{min-width:560px}
-.badge{display:inline-block;font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:99px;white-space:nowrap;line-height:1.5}
-.b-cash{background:#F6E8C9;color:#7A5A12}
-.b-qr{background:#DCEBFF;color:#1F4FA8}
-.b-up{background:#E2F2EA;color:#14684F}
-.b-ru{background:#F3E3F5;color:#7A2E86}
-.b-ok{background:#E2F2EA;color:#14684F}
-.note{border-left:4px solid var(--gold);background:#FBF4E0;padding:12px 14px;border-radius:0 10px 10px 0;font-size:14.5px;margin:14px 0}
-.danger{border-left-color:var(--lacquer);background:#FBEAE8}
-.good{border-left-color:var(--jade);background:#E9F4EF}
-.cold{border-left-color:var(--iceblue);background:#E8F2F9}
-ul.tick{list-style:none;margin:10px 0}
-ul.tick li{padding:4px 0 4px 26px;position:relative}
-ul.tick li::before{content:"—";position:absolute;left:4px;color:var(--gold);font-weight:700}
-.link-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-.btn{display:inline-block;font-size:13.5px;font-weight:600;padding:9px 14px;border-radius:10px;text-decoration:none;border:1.5px solid var(--ink);color:var(--ink);background:transparent;cursor:pointer;font-family:inherit}
-.btn:hover{background:var(--ink);color:#fff}
-.btn.solid{background:var(--ink);color:#fff}
-.btn.solid:hover{background:#000;color:#fff}
-.btn.mini{padding:6px 11px;font-size:12.5px;border-width:1px}
-.btn.mini.on{background:var(--ink);color:#fff}
-.pgroup{margin-top:26px}
-.pgroup .gh{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
-.pgroup .gh .bar{width:26px;height:9px;border-radius:3px}
-.pgroup .gh h3{margin:0}
-.pgroup .gh .cnt{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--dim)}
-.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:640px){.pgrid{grid-template-columns:1fr}}
-.pcard{position:relative;display:flex;flex-direction:column;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:var(--r);overflow:hidden;cursor:pointer;box-shadow:var(--shadow);font:inherit;color:inherit;transition:border-color .15s}
-.pcard .im{aspect-ratio:3/2;background:#E8E3D8;overflow:hidden}
-.pcard .im img{width:100%;height:100%;object-fit:cover;filter:saturate(.92)}
-.pcard .bd{padding:12px 14px 10px;display:flex;flex-direction:column;flex:1}
-.pcard .nm{font-weight:700;font-size:15.5px;line-height:1.3}
-.pcard .meta{display:flex;flex-wrap:wrap;gap:6px;margin:7px 0}
-.pcard .meta span{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--dim);border:1px solid var(--line);padding:2px 8px;border-radius:99px}
-.pcard .why{font-size:13.5px;color:var(--dim)}
-.pfoot{margin-top:auto;padding-top:10px;display:flex;justify-content:flex-end}
-.pmore{font:inherit;font-size:12.5px;font-weight:700;color:var(--shanghai);background:none;border:none;cursor:pointer;padding:6px 4px;text-decoration:underline;text-underline-offset:3px}
-.pmore:hover{color:var(--lacquer)}
-.pcard .ribbon{position:absolute;top:10px;left:10px;font-size:11px;font-weight:700;padding:4px 9px;border-radius:8px;background:#DCEEFB;color:#1D5E8C;box-shadow:0 1px 4px rgba(0,0,0,.18)}
-.pcard .chk{position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:50%;background:rgba(250,248,243,.95);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:800;color:transparent;box-shadow:0 1px 4px rgba(0,0,0,.18);transition:.15s}
-.pcard.sel{border-color:var(--pc)}
-.pcard.sel .chk{background:var(--pc);border-color:var(--pc);color:#fff}
-.meter{margin:18px 0;padding:14px 16px;border-radius:var(--r);border:1px dashed var(--gold);background:#FBF4E0}
-.meter.err{border-color:var(--lacquer);background:#FBEAE8}
-.meter .mtop{display:flex;justify-content:space-between;gap:10px;font-size:14.5px;flex-wrap:wrap}
-.meter .mbar{height:10px;border-radius:99px;background:#EFE8D6;overflow:hidden;margin-top:10px}
-.meter .mbar i{display:block;height:100%;background:linear-gradient(90deg,var(--jade),var(--gold));transition:width .25s}
-.meter.err .mbar i{background:linear-gradient(90deg,var(--gold),var(--lacquer))}
-.date-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:6px 0 4px;font-size:14.5px}
-.date-row input[type=date]{font:inherit;font-family:'IBM Plex Mono',monospace;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
-.date-row input[type=number]{font:inherit;font-family:'IBM Plex Mono',monospace;width:64px;padding:8px 6px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);text-align:center}
-#itin{margin-top:22px}
-.day{display:grid;grid-template-columns:64px 1fr;gap:14px;position:relative;padding-bottom:18px}
-.day::before{content:"";position:absolute;left:31px;top:44px;bottom:-2px;width:2px;background:var(--line)}
+svg.ic{width:1em;height:1em;fill:currentColor;flex:0 0 auto;vertical-align:-0.135em}
+:focus-visible{outline:2.5px solid var(--ember);outline-offset:3px;border-radius:6px}
+::selection{background:var(--ember);color:var(--on-ember)}
+.wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 clamp(16px,4vw,32px)}
+.narrow{max-width:760px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums;letter-spacing:-0.02em}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Зерно: только фиксированный слой без событий — иначе GPU перерисовывает при скролле */
+.grain{position:fixed;inset:0;z-index:var(--z-grain);pointer-events:none;opacity:.055;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+[data-theme="light"] .grain{opacity:.04}
+
+h1,h2,h3{font-family:var(--f-display);font-weight:800;line-height:1.06;letter-spacing:-0.03em;text-wrap:balance}
+h1{font-size:clamp(2.15rem,5.6vw,4.25rem)}
+h2{font-size:clamp(1.55rem,3.3vw,2.35rem);letter-spacing:-0.028em}
+h3{font-size:clamp(1.05rem,1.7vw,1.28rem);letter-spacing:-0.02em;font-weight:800}
+p{text-wrap:pretty}
+.prose{max-width:68ch;color:var(--ink-2)}
+.prose strong,.prose b{color:var(--ink);font-weight:600}
+a{color:var(--ember);text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover{color:var(--ember-2)}
+
+/* ===== Nav (одна строка, ≤72px) ===== */
+nav{position:sticky;top:0;z-index:var(--z-nav);background:color-mix(in oklch,var(--bg) 86%,transparent);
+  backdrop-filter:blur(14px) saturate(1.4);border-bottom:1px solid var(--line-soft)}
+.navin{display:flex;align-items:center;gap:18px;height:66px;max-width:1120px;margin:0 auto;padding:0 clamp(16px,4vw,32px)}
+.brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:14.5px;letter-spacing:-0.01em;color:var(--ink);text-decoration:none;flex:0 0 auto}
+.brand svg{width:19px;height:19px;color:var(--ember)}
+.navlinks{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{flex:0 0 auto;font-size:13.5px;font-weight:500;color:var(--ink-3);text-decoration:none;padding:7px 11px;border-radius:99px;
+  transition:color 160ms ease,background-color 160ms ease}
+.navlinks a:hover{color:var(--ink);background:var(--surface-2)}
+.tglt{flex:0 0 auto;width:38px;height:38px;display:grid;place-items:center;border-radius:99px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;font-size:16px;transition:color 160ms ease,border-color 160ms ease,transform 140ms var(--e-out)}
+.tglt:hover{color:var(--ember);border-color:var(--ember)}
+.tglt:active{transform:scale(0.94)}
+[data-theme="dark"] .tglt .i-sun{display:none}
+[data-theme="light"] .tglt .i-moon{display:none}
+
+/* ===== Hero: split, не центр ===== */
+.hero{padding:clamp(40px,7vw,84px) 0 clamp(28px,4vw,44px);position:relative}
+.herogrid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:clamp(24px,4vw,56px);align-items:center}
+@media(max-width:900px){.herogrid{grid-template-columns:1fr;gap:32px}}
+.dates{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:12.5px;color:var(--ink-3);
+  border:1px solid var(--line);background:var(--surface);padding:6px 12px;border-radius:99px}
+.dates svg{width:14px;height:14px;color:var(--t-cold)}
+h1.head{margin:20px 0 18px}
+h1.head .warm{color:var(--ember)}
+h1.head .cold{color:var(--t-frozen)}
+.sub{font-size:clamp(16px,1.35vw,18.5px);color:var(--ink-2);max-width:48ch}
+.herocta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+
+/* ===== Подпись проекта: температурная дуга маршрута ===== */
+.arc{position:relative;border:1px solid var(--line);border-radius:var(--r-box);background:
+  linear-gradient(180deg,color-mix(in oklch,var(--t-frozen) 7%,transparent),transparent 55%),var(--surface);
+  padding:18px 18px 12px;box-shadow:var(--shadow)}
+.arc h2{font-family:var(--f-text);font-size:12.5px;font-weight:600;letter-spacing:0;color:var(--ink-3);margin-bottom:2px}
+.arc .arcnum{font-family:var(--f-mono);font-size:26px;color:var(--ink);letter-spacing:-0.03em}
+.arc .arcnum b{color:var(--ember);font-weight:500}
+.arc svg.plot{width:100%;height:auto;display:block;margin-top:6px;overflow:visible}
+.arc .axis{stroke:var(--line);stroke-width:1;stroke-dasharray:2 4}
+.arc .axlab{font-family:var(--f-mono);font-size:9px;fill:var(--ink-3)}
+.arc .citylab{font-family:var(--f-mono);font-size:9.5px;fill:var(--ink-3)}
+.trace{fill:none;stroke:url(#tgrad);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.tnode{stroke:var(--surface);stroke-width:2.5}
+.arcfoot{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:10.5px;color:var(--ink-3);margin-top:8px}
+
+/* ===== Buttons ===== */
+.btn{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:14.5px;font-weight:600;
+  padding:11px 18px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--ink);
+  cursor:pointer;text-decoration:none;white-space:nowrap;
+  transition:transform 140ms var(--e-out),background-color 160ms ease,border-color 160ms ease,color 160ms ease}
+.btn:active{transform:scale(0.975)}
+.btn:hover{border-color:var(--ink-3);color:var(--ink)}
+.btn.primary{background:var(--ember);color:var(--on-ember);border-color:transparent}
+.btn.primary:hover{background:var(--ember-2);color:var(--on-ember)}
+.btn.ghost{background:transparent}
+.btn.sm{font-size:13px;padding:8px 13px;gap:6px}
+.btn.sm.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn svg{width:1.05em;height:1.05em}
+
+/* ===== Section shell ===== */
+section{padding:clamp(48px,6.5vw,92px) 0 0;position:relative}
+.shead{max-width:70ch;margin-bottom:clamp(20px,2.6vw,34px)}
+.shead p{color:var(--ink-2);margin-top:12px;max-width:64ch}
+
+/* ===== Picker ===== */
+.citygroup{margin-top:clamp(28px,3.4vw,44px)}
+.cghead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-bottom:12px;border-bottom:1px solid var(--line-soft);margin-bottom:18px}
+.cghead h3{flex:1;min-width:200px}
+.temp{font-family:var(--f-mono);font-size:11.5px;color:var(--tc);border:1px solid color-mix(in oklch,var(--tc) 40%,transparent);
+  background:color-mix(in oklch,var(--tc) 12%,transparent);padding:3px 9px;border-radius:99px;white-space:nowrap}
+.cnt{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-3)}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:16px}
+.pcard{position:relative;display:flex;flex-direction:column;text-align:left;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--r-box);overflow:hidden;cursor:pointer;color:inherit;font:inherit;
+  transition:transform 180ms var(--e-out),border-color 180ms ease,box-shadow 220ms var(--e-out)}
+@media(hover:hover) and (pointer:fine){.pcard:hover{transform:translateY(-3px);border-color:var(--ink-3);box-shadow:var(--shadow)}}
+.pcard:active{transform:scale(0.988)}
+.pcard.sel{border-color:var(--ember);box-shadow:0 0 0 1px var(--ember)}
+.pcard .im{aspect-ratio:16/10;overflow:hidden;background:var(--surface-2);position:relative}
+.pcard .im img{width:100%;height:100%;object-fit:cover;transition:transform 500ms var(--e-out);filter:saturate(.85) contrast(1.03)}
+[data-theme="dark"] .pcard .im img{opacity:.88}
+@media(hover:hover){.pcard:hover .im img{transform:scale(1.035)}}
+.pcard.sel .im img{opacity:1;filter:saturate(1)}
+.pcard .im::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,color-mix(in oklch,var(--surface) 90%,transparent))}
+.tstrip{position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--tc);z-index:1}
+.chk{position:absolute;top:11px;right:11px;width:27px;height:27px;border-radius:99px;display:grid;place-items:center;
+  background:color-mix(in oklch,var(--bg) 70%,transparent);backdrop-filter:blur(6px);border:1px solid var(--line);
+  color:transparent;z-index:2;transition:background-color 180ms ease,border-color 180ms ease}
+.chk svg{width:14px;height:14px;transform:scale(0.86);opacity:0;transition:transform 200ms var(--e-out),opacity 160ms ease}
+.pcard.sel .chk{background:var(--ember);border-color:var(--ember);color:var(--on-ember)}
+.pcard.sel .chk svg{transform:scale(1);opacity:1}
+.season{position:absolute;top:11px;left:11px;z-index:2;display:inline-flex;align-items:center;gap:5px;
+  font-family:var(--f-mono);font-size:10.5px;color:var(--t-frozen);
+  background:color-mix(in oklch,var(--bg) 78%,transparent);backdrop-filter:blur(6px);
+  border:1px solid color-mix(in oklch,var(--t-frozen) 35%,transparent);padding:4px 9px;border-radius:99px}
+.season svg{width:11px;height:11px}
+.pbd{padding:14px 15px 12px;display:flex;flex-direction:column;flex:1;gap:7px}
+.pcard .nm{font-weight:600;font-size:15.5px;line-height:1.28;letter-spacing:-0.01em}
+.pmeta{display:flex;flex-wrap:wrap;gap:10px;font-family:var(--f-mono);font-size:11px;color:var(--ink-3)}
+.pcard .why{font-size:13.8px;color:var(--ink-2);line-height:1.48}
+.pfoot{margin-top:auto;padding-top:10px}
+.more{font:inherit;font-size:12.5px;font-weight:600;color:var(--ink-3);background:none;border:none;cursor:pointer;
+  padding:4px 0;display:inline-flex;align-items:center;gap:5px;transition:color 160ms ease,gap 160ms var(--e-out)}
+.more:hover{color:var(--ember);gap:8px}
+.more svg{width:12px;height:12px}
+.tools{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+
+/* ===== Controls ===== */
+.ctrlbar{display:flex;flex-wrap:wrap;gap:22px;padding:18px;border:1px solid var(--line);border-radius:var(--r-box);background:var(--surface);margin-bottom:20px}
+.ctrl{display:flex;flex-wrap:wrap;align-items:center;gap:9px}
+.ctrl > span:first-child{font-size:13px;font-weight:600;color:var(--ink-2);margin-right:2px}
+input[type=date],input[type=number]{font:inherit;font-family:var(--f-mono);font-size:13.5px;background:var(--surface-2);
+  color:var(--ink);border:1px solid var(--line);border-radius:var(--r-ctl);padding:8px 10px;transition:border-color 160ms ease}
+input[type=number]{width:70px;text-align:center}
+input:focus{border-color:var(--ember)}
+.hint{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-3)}
+
+/* ===== Meter (scaleX, не width — width дёргает layout) ===== */
+.meter{border:1px solid var(--line);border-radius:var(--r-box);background:var(--surface);padding:16px 18px;margin-bottom:24px}
+.meter.warn{border-color:color-mix(in oklch,var(--alarm) 55%,var(--line));background:var(--alarm-wash)}
+.mrow{display:flex;gap:14px;justify-content:space-between;align-items:flex-start;font-size:14.5px;color:var(--ink-2)}
+.mrow b{color:var(--ink)}
+.mrow .mval{font-family:var(--f-mono);font-size:13px;color:var(--ink-3);white-space:nowrap}
+.mbar{height:5px;border-radius:99px;background:var(--surface-2);margin-top:13px;overflow:hidden}
+.mbar i{display:block;height:100%;width:100%;transform-origin:left center;transform:scaleX(0);
+  background:linear-gradient(90deg,var(--t-cold),var(--ember));transition:transform 420ms var(--e-out)}
+.meter.warn .mbar i{background:linear-gradient(90deg,var(--ember),var(--alarm))}
+
+/* ===== Timeline: термометр маршрута (подпись проекта) ===== */
+.tl{position:relative;padding-left:8px}
+.leg{display:flex;align-items:center;gap:12px;color:var(--ink-3);font-size:13.5px;padding:8px 0 8px 4px}
+.leg .lic{width:34px;height:34px;border-radius:99px;display:grid;place-items:center;flex:0 0 auto;
+  border:1px dashed var(--line);background:var(--surface);color:var(--ink-2)}
+.leg .lic svg{width:16px;height:16px}
+.day{display:grid;grid-template-columns:52px 1fr;gap:16px;position:relative;padding-bottom:20px}
+.day::before{content:"";position:absolute;left:25px;top:46px;bottom:-4px;width:2px;
+  background:linear-gradient(180deg,var(--tc),var(--tc-next,var(--tc)));opacity:.35}
 .day:last-child::before{display:none}
-.stamp{width:64px;height:64px;border-radius:14px;border:2.5px solid var(--dc);color:var(--dc);display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--card);transform:rotate(-2deg)}
-.stamp b{font-family:'IBM Plex Mono',monospace;font-size:19px;line-height:1}
-.stamp span{font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
-.day .body{padding-top:4px}
-.day .city{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dc)}
-.day .what{margin-top:3px;font-size:15px}
-.day .what .eve{color:var(--dim)}
-.day .warn{margin-top:5px;font-size:13px;color:var(--lacquer)}
-.day.over .stamp{border-style:dashed;opacity:.75}
-.day.over .body{opacity:.8}
-.leg{display:flex;align-items:center;gap:10px;margin:2px 0 18px 14px;color:var(--dim);font-size:13.5px}
-.leg .ic{width:34px;height:34px;border-radius:50%;border:1.5px dashed var(--gold);display:flex;align-items:center;justify-content:center;background:var(--card);flex:0 0 auto}
-.budget-pill{margin-top:22px;padding:18px;border-radius:var(--r);background:linear-gradient(135deg,#1D2C4B,#2E7FB8);color:#fff}
-.budget-pill .sum{font-family:'IBM Plex Mono',monospace;font-size:clamp(22px,5vw,30px);font-weight:600;margin-top:4px}
-.budget-pill small{color:#CFE0F0;display:block;margin-top:6px;font-size:12.5px}
-.rate-row{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;color:#CFE0F0}
-.rate-row input{width:64px;font:inherit;font-family:'IBM Plex Mono',monospace;padding:5px 8px;border-radius:8px;border:none;text-align:center}
-.hotel{display:grid;grid-template-columns:1fr auto;gap:6px 12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.node{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;position:relative;
+  border:1.5px solid color-mix(in oklch,var(--tc) 55%,transparent);
+  background:color-mix(in oklch,var(--tc) 13%,var(--surface));color:var(--tc)}
+.node b{font-family:var(--f-mono);font-size:16px;font-weight:500;letter-spacing:-0.04em}
+.node .nt{position:absolute;bottom:-7px;font-family:var(--f-mono);font-size:9px;padding:1px 5px;border-radius:99px;
+  background:var(--bg);border:1px solid color-mix(in oklch,var(--tc) 40%,transparent);color:var(--tc)}
+.dbody{padding-top:3px;min-width:0}
+.dtop{display:flex;flex-wrap:wrap;gap:9px;align-items:baseline}
+.dcity{font-weight:600;font-size:14px;color:var(--tc);letter-spacing:-0.01em}
+.ddate{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-3)}
+.dwhat{margin-top:5px;font-size:15px;line-height:1.5}
+.dwhat .eve{color:var(--ink-3)}
+.dwarn{margin-top:8px;font-size:13px;color:var(--alarm);display:flex;gap:7px;align-items:flex-start}
+.dwarn svg{width:15px;height:15px;margin-top:2px}
+.day.over{opacity:.5}
+.day.over .node{border-style:dashed}
+
+/* ===== Budget ===== */
+.money{margin-top:30px;border:1px solid var(--line);border-radius:var(--r-box);overflow:hidden;background:var(--surface)}
+.mtop2{padding:22px;background:linear-gradient(135deg,color-mix(in oklch,var(--t-cold) 12%,var(--surface)),color-mix(in oklch,var(--ember) 9%,var(--surface)))}
+.mlabel{font-size:12.5px;color:var(--ink-3);font-weight:500}
+.msum{font-family:var(--f-mono);font-size:clamp(28px,4.6vw,44px);letter-spacing:-0.045em;margin-top:4px;color:var(--ink)}
+.msum .cur{color:var(--ink-3);font-size:.55em;margin-left:6px}
+.mdet{font-size:13px;color:var(--ink-2);margin-top:10px;max-width:62ch;line-height:1.5}
+.mfoot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:14px 22px;border-top:1px solid var(--line-soft);font-size:12.5px;color:var(--ink-3)}
+
+/* ===== Data table ===== */
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:var(--r-box);background:var(--surface)}
+table{width:100%;border-collapse:collapse;font-size:14.5px;min-width:540px}
+th{text-align:left;font-size:12.5px;font-weight:600;color:var(--ink-3);padding:13px 16px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:13px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink-2)}
+tbody tr:last-child td{border-bottom:none}
+td b,td strong{color:var(--ink);font-weight:600}
+td.num{font-family:var(--f-mono);font-size:13px;white-space:nowrap;font-variant-numeric:tabular-nums}
+tbody tr{transition:background-color 140ms ease}
+tbody tr:hover{background:var(--surface-2)}
+
+/* ===== Notes: полная рамка + иконка. Боковая полоса — запрещённый приём ===== */
+.note{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);background:var(--surface);
+  border-radius:var(--r-ctl);padding:14px 16px;margin:18px 0;font-size:14.5px;color:var(--ink-2)}
+.note svg{width:18px;height:18px;margin-top:2px;flex:0 0 auto;color:var(--ink-3)}
+.note b{color:var(--ink)}
+.note.hot{border-color:color-mix(in oklch,var(--ember) 42%,var(--line));background:var(--ember-wash)}
+.note.hot svg{color:var(--ember)}
+.note.cold{border-color:color-mix(in oklch,var(--t-cold) 42%,var(--line));background:color-mix(in oklch,var(--t-cold) 9%,var(--surface))}
+.note.cold svg{color:var(--t-cold)}
+.note.bad{border-color:color-mix(in oklch,var(--alarm) 45%,var(--line));background:var(--alarm-wash)}
+.note.bad svg{color:var(--alarm)}
+
+/* ===== Accordion (родной details, анимируем только поворот шеврона) ===== */
+details{border:1px solid var(--line);border-radius:var(--r-box);background:var(--surface);margin-top:12px;overflow:hidden}
+summary{list-style:none;cursor:pointer;padding:16px 18px;display:flex;align-items:center;gap:12px;font-weight:600;font-size:15.5px;
+  transition:background-color 150ms ease}
+summary::-webkit-details-marker{display:none}
+summary:hover{background:var(--surface-2)}
+summary .chev{margin-left:auto;width:16px;height:16px;color:var(--ink-3);transition:transform 220ms var(--e-out)}
+details[open] summary .chev{transform:rotate(90deg)}
+.dcont{padding:0 18px 18px;color:var(--ink-2);font-size:14.5px}
+.dcont p+p{margin-top:10px}
+.hotel{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid var(--line-soft)}
 .hotel:last-child{border-bottom:none}
-.hotel .nm{font-weight:600}
-.hotel .ds{font-size:13.5px;color:var(--dim)}
-.hotel .pr{font-family:'IBM Plex Mono',monospace;font-size:13.5px;text-align:right;white-space:nowrap}
-.trap{border:1px solid #F0C9C3;background:#FDF3F1;border-radius:var(--r);padding:14px 16px;margin-top:12px}
-.trap b{color:var(--lacquer)}
-.progress{height:10px;border-radius:99px;background:#E7E1D5;overflow:hidden;margin:10px 0 4px}
-.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--jade),var(--gold));transition:width .25s}
-.cl-cat{margin-top:20px}
-.cl-cat h3{margin:0 0 6px}
-.cl-item{display:flex;gap:12px;align-items:flex-start;padding:9px 10px;border-radius:10px;cursor:pointer}
-.cl-item:hover{background:#F2EEE4}
-.cl-item input{width:20px;height:20px;accent-color:var(--jade);margin-top:2px;flex:0 0 auto}
-.cl-item.done .tx{color:var(--dim);text-decoration:line-through}
-.cl-item small{display:block;color:var(--dim);font-size:12.5px}
-.apps{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:640px){.apps{grid-template-columns:1fr}}
-.app{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px}
-.app b{display:block}
-.app .why{font-size:13.5px;color:var(--dim);margin-top:4px}
-.app .stores{display:flex;gap:8px;margin-top:10px}
-.app .stores a{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:600;padding:7px 8px;border-radius:9px;border:1px solid var(--line);background:var(--paper);color:var(--ink);text-decoration:none;white-space:nowrap}
-.app .stores a:hover{border-color:var(--ink);background:var(--ink);color:#fff}
-.app .stores a svg{width:14px;height:14px;flex:0 0 auto}
-.modal{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
+.hotel .hn{font-weight:600;color:var(--ink);font-size:14.5px}
+.hotel .hd{font-size:13px;color:var(--ink-3);margin-top:2px}
+.hotel .hp{font-family:var(--f-mono);font-size:12.5px;color:var(--ink-2);white-space:nowrap;text-align:right}
+
+/* ===== Traps ===== */
+.traps{display:grid;gap:12px}
+.trap{border:1px solid var(--line);border-radius:var(--r-ctl);background:var(--surface);padding:15px 17px;font-size:14.5px;color:var(--ink-2)}
+.trap b{color:var(--ink);display:block;margin-bottom:3px;font-weight:600}
+
+/* ===== Apps ===== */
+.apps{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.app{border:1px solid var(--line);border-radius:var(--r-box);background:var(--surface);padding:16px;display:flex;flex-direction:column}
+.app .an{font-weight:600;font-size:15px;letter-spacing:-0.01em}
+.app .aw{font-size:13.3px;color:var(--ink-2);margin-top:5px;line-height:1.45;flex:1}
+.stores{display:flex;gap:8px;margin-top:14px}
+.stores a{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:12.3px;font-weight:600;
+  padding:9px 8px;border-radius:var(--r-ctl);border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2);
+  text-decoration:none;white-space:nowrap;transition:transform 140ms var(--e-out),color 160ms ease,border-color 160ms ease}
+.stores a:hover{color:var(--ink);border-color:var(--ink-3)}
+.stores a:active{transform:scale(0.97)}
+.stores svg{width:14px;height:14px}
+
+/* ===== Checklist ===== */
+.prog{height:5px;border-radius:99px;background:var(--surface-2);overflow:hidden;margin:14px 0 6px}
+.prog i{display:block;height:100%;width:100%;transform-origin:left;transform:scaleX(0);
+  background:linear-gradient(90deg,var(--t-cool),var(--ember));transition:transform 420ms var(--e-out)}
+.clcat{margin-top:24px}
+.clcat h3{font-size:14.5px;font-family:var(--f-text);font-weight:700;letter-spacing:-0.01em;margin-bottom:6px}
+.cli{display:flex;gap:12px;align-items:flex-start;padding:9px 11px;border-radius:var(--r-ctl);cursor:pointer;
+  transition:background-color 140ms ease}
+.cli:hover{background:var(--surface-2)}
+.cli input{width:19px;height:19px;accent-color:var(--ember);margin-top:2px;flex:0 0 auto;cursor:pointer}
+.cli .tx{font-size:14.5px;transition:color 180ms ease}
+.cli.done .tx{color:var(--ink-3);text-decoration:line-through}
+.cli small{display:block;color:var(--ink-3);font-size:12.5px;margin-top:2px}
+
+/* ===== Modal ===== */
+.modal{position:fixed;inset:0;z-index:var(--z-backdrop);display:grid;place-items:center;padding:16px}
 .modal[hidden]{display:none}
-.modal .mback{position:absolute;inset:0;background:rgba(20,24,30,.55);backdrop-filter:blur(3px)}
-.modal .mcard{position:relative;background:var(--paper);border-radius:16px;max-width:600px;width:100%;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.35)}
-.modal .mim{aspect-ratio:16/9;background:#E8E3D8;overflow:hidden;border-radius:16px 16px 0 0}
-.modal .mim img{width:100%;height:100%;object-fit:cover}
-.modal .mbody{padding:18px 20px 22px}
-.modal .mcity{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mc)}
-.modal h3{margin:4px 0 8px;font-size:23px;font-family:'Prata',serif;font-weight:400}
-.modal .mmeta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-.modal .mmeta span{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--dim);border:1px solid var(--line);padding:3px 9px;border-radius:99px;background:var(--card)}
-.modal .mtext{font-size:15px}
-.modal .mlinks{margin:16px 0}
-.modal .msel{width:100%}
-.modal .mclose{position:absolute;top:10px;right:10px;z-index:2;width:36px;height:36px;border-radius:50%;border:none;background:rgba(250,248,243,.95);font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.25)}
-footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);color:var(--dim);font-size:13px}
-.updated{font-family:'IBM Plex Mono',monospace;font-size:12px}
+.mback{position:absolute;inset:0;background:oklch(0.10 0.02 252 / .7);backdrop-filter:blur(5px);
+  opacity:0;transition:opacity 220ms ease}
+.mcard{position:relative;z-index:var(--z-modal);width:100%;max-width:600px;max-height:90vh;overflow-y:auto;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-box);box-shadow:var(--shadow);
+  opacity:0;transform:scale(0.96) translateY(8px);transform-origin:center;
+  transition:opacity 240ms var(--e-out),transform 240ms var(--e-out)}
+.modal.in .mback{opacity:1}
+.modal.in .mcard{opacity:1;transform:none}
+.mim{aspect-ratio:16/9;overflow:hidden;background:var(--surface-2);border-radius:15px 15px 0 0;position:relative}
+.mim img{width:100%;height:100%;object-fit:cover}
+.mim::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,color-mix(in oklch,var(--surface) 92%,transparent))}
+.mx{position:absolute;top:12px;right:12px;z-index:3;width:36px;height:36px;border-radius:99px;display:grid;place-items:center;
+  border:1px solid var(--line);background:color-mix(in oklch,var(--bg) 72%,transparent);backdrop-filter:blur(8px);
+  color:var(--ink);cursor:pointer;transition:transform 140ms var(--e-out),background-color 160ms ease}
+.mx:hover{background:var(--bg)}
+.mx:active{transform:scale(0.92)}
+.mx svg{width:16px;height:16px}
+.mbody{padding:20px 22px 24px}
+.mcity{font-family:var(--f-mono);font-size:11.5px;color:var(--tc)}
+.mcard h3{margin:6px 0 12px;font-size:clamp(1.25rem,2.4vw,1.6rem)}
+.mmeta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.mmeta span{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-3);border:1px solid var(--line);
+  background:var(--surface-2);padding:4px 10px;border-radius:99px}
+.mtext{font-size:15px;color:var(--ink-2);line-height:1.62}
+.mlinks{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0}
+.msel{width:100%;justify-content:center}
+
+footer{margin-top:clamp(60px,8vw,110px);padding:32px 0 56px;border-top:1px solid var(--line-soft);color:var(--ink-3);font-size:13px}
+footer p+p{margin-top:8px}
+
+/* ===== Motion ===== */
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.stag{animation:rise 460ms var(--e-out) backwards;animation-delay:calc(var(--i,0) * 40ms)}
+.dayin{animation:rise 380ms var(--e-out) backwards;animation-delay:calc(var(--i,0) * 30ms)}
+.trace{stroke-dasharray:var(--len,1000);stroke-dashoffset:var(--len,1000);transition:stroke-dashoffset 1100ms var(--e-io)}
+.arc.drawn .trace{stroke-dashoffset:0}
+.tnode{opacity:0;transition:opacity 300ms ease}
+.arc.drawn .tnode{opacity:1;transition-delay:calc(700ms + var(--i,0) * 60ms)}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:1ms!important;animation-delay:0ms!important;transition-duration:1ms!important}
+  .pcard:hover{transform:none}
+  .trace{stroke-dashoffset:0!important}
+  .tnode{opacity:1!important}
+  .mcard{transform:none}
+  .stag,.dayin{animation:fadein 1ms both}
+}
 </style>
 </head>
 <body>
+<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"><symbol id="i-train-simple" viewBox="0 0 256 256"><path d="M184,24H72A32,32,0,0,0,40,56V184a32,32,0,0,0,32,32h8L65.6,235.2a8,8,0,1,0,12.8,9.6L100,216h56l21.6,28.8a8,8,0,1,0,12.8-9.6L176,216h8a32,32,0,0,0,32-32V56A32,32,0,0,0,184,24ZM72,40H184a16,16,0,0,1,16,16v64H56V56A16,16,0,0,1,72,40ZM184,200H72a16,16,0,0,1-16-16V136H200v48A16,16,0,0,1,184,200ZM96,172a12,12,0,1,1-12-12A12,12,0,0,1,96,172Zm88,0a12,12,0,1,1-12-12A12,12,0,0,1,184,172Z"/></symbol><symbol id="i-airplane-takeoff" viewBox="0 0 256 256"><path d="M176,216a8,8,0,0,1-8,8H24a8,8,0,0,1,0-16H168A8,8,0,0,1,176,216ZM247.86,93.15a8,8,0,0,1-3.76,5.39l-147.41,88a40.18,40.18,0,0,1-20.26,5.52,39.78,39.78,0,0,1-27.28-10.87l-.12-.12L13,145.8a16,16,0,0,1,4.49-26.21l3-1.47a8,8,0,0,1,6.08-.4l28.26,9.54L75,115.06,53.17,93.87A16,16,0,0,1,57.7,67.4l.32-.13,7.15-2.71a8,8,0,0,1,5.59,0L124.7,84.38,176.27,53.6a39.82,39.82,0,0,1,51.28,9.12l.12.15,18.64,23.89A8,8,0,0,1,247.86,93.15Zm-19.74-3.7-13-16.67a23.88,23.88,0,0,0-30.68-5.42l-54.8,32.72a8.06,8.06,0,0,1-6.87.64L68,80.58l-4,1.53.21.2L93.57,110.8a8,8,0,0,1-1.43,12.58L59.93,142.87a8,8,0,0,1-6.7.73l-28.67-9.67-.19.1-.37.17a.71.71,0,0,1,.13.12l36,35.26a23.85,23.85,0,0,0,28.42,3.18Z"/></symbol><symbol id="i-bus" viewBox="0 0 256 256"><path d="M184,32H72A32,32,0,0,0,40,64V208a16,16,0,0,0,16,16H80a16,16,0,0,0,16-16V192h64v16a16,16,0,0,0,16,16h24a16,16,0,0,0,16-16V64A32,32,0,0,0,184,32ZM56,176V120H200v56Zm0-96H200v24H56ZM72,48H184a16,16,0,0,1,16,16H56A16,16,0,0,1,72,48Zm8,160H56V192H80Zm96,0V192h24v16Zm-72-60a12,12,0,1,1-12-12A12,12,0,0,1,104,148Zm72,0a12,12,0,1,1-12-12A12,12,0,0,1,176,148Zm72-68v24a8,8,0,0,1-16,0V80a8,8,0,0,1,16,0ZM24,80v24a8,8,0,0,1-16,0V80a8,8,0,0,1,16,0Z"/></symbol><symbol id="i-snowflake" viewBox="0 0 256 256"><path d="M223.77,150.09a8,8,0,0,1-5.86,9.68l-24.64,6,6.46,24.11a8,8,0,0,1-5.66,9.8A8.25,8.25,0,0,1,192,200a8,8,0,0,1-7.72-5.93l-7.72-28.8L136,141.86v46.83l21.66,21.65a8,8,0,0,1-11.32,11.32L128,203.31l-18.34,18.35a8,8,0,0,1-11.32-11.32L120,188.69V141.86L79.45,165.27l-7.72,28.8A8,8,0,0,1,64,200a8.25,8.25,0,0,1-2.08-.27,8,8,0,0,1-5.66-9.8l6.46-24.11-24.64-6a8,8,0,0,1,3.82-15.54l29.45,7.23L112,128,71.36,104.54l-29.45,7.23A7.85,7.85,0,0,1,40,112a8,8,0,0,1-1.91-15.77l24.64-6L56.27,66.07a8,8,0,0,1,15.46-4.14l7.72,28.8L120,114.14V67.31L98.34,45.66a8,8,0,0,1,11.32-11.32L128,52.69l18.34-18.35a8,8,0,0,1,11.32,11.32L136,67.31v46.83l40.55-23.41,7.72-28.8a8,8,0,0,1,15.46,4.14l-6.46,24.11,24.64,6A8,8,0,0,1,216,112a7.85,7.85,0,0,1-1.91-.23l-29.45-7.23L144,128l40.64,23.46,29.45-7.23A8,8,0,0,1,223.77,150.09Z"/></symbol><symbol id="i-thermometer-simple" viewBox="0 0 256 256"><path d="M136,153V88a8,8,0,0,0-16,0v65a32,32,0,1,0,16,0Zm-8,47a16,16,0,1,1,16-16A16,16,0,0,1,128,200Zm40-66V48a40,40,0,0,0-80,0v86a64,64,0,1,0,80,0Zm-40,98a48,48,0,0,1-27.42-87.4A8,8,0,0,0,104,138V48a24,24,0,0,1,48,0v90a8,8,0,0,0,3.42,6.56A48,48,0,0,1,128,232Z"/></symbol><symbol id="i-sun" viewBox="0 0 256 256"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/></symbol><symbol id="i-moon-stars" viewBox="0 0 256 256"><path d="M240,96a8,8,0,0,1-8,8H216v16a8,8,0,0,1-16,0V104H184a8,8,0,0,1,0-16h16V72a8,8,0,0,1,16,0V88h16A8,8,0,0,1,240,96ZM144,56h8v8a8,8,0,0,0,16,0V56h8a8,8,0,0,0,0-16h-8V32a8,8,0,0,0-16,0v8h-8a8,8,0,0,0,0,16Zm72.77,97a8,8,0,0,1,1.43,8A96,96,0,1,1,95.07,37.8a8,8,0,0,1,10.6,9.06A88.07,88.07,0,0,0,209.14,150.33,8,8,0,0,1,216.77,153Zm-19.39,14.88c-1.79.09-3.59.14-5.38.14A104.11,104.11,0,0,1,88,64c0-1.79,0-3.59.14-5.38A80,80,0,1,0,197.38,167.86Z"/></symbol><symbol id="i-ticket" viewBox="0 0 256 256"><path d="M232,104a8,8,0,0,0,8-8V64a16,16,0,0,0-16-16H32A16,16,0,0,0,16,64V96a8,8,0,0,0,8,8,24,24,0,0,1,0,48,8,8,0,0,0-8,8v32a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V160a8,8,0,0,0-8-8,24,24,0,0,1,0-48ZM32,167.2a40,40,0,0,0,0-78.4V64H88V192H32Zm192,0V192H104V64H224V88.8a40,40,0,0,0,0,78.4Z"/></symbol><symbol id="i-wallet" viewBox="0 0 256 256"><path d="M216,64H56a8,8,0,0,1,0-16H192a8,8,0,0,0,0-16H56A24,24,0,0,0,32,56V184a24,24,0,0,0,24,24H216a16,16,0,0,0,16-16V80A16,16,0,0,0,216,64Zm0,128H56a8,8,0,0,1-8-8V78.63A23.84,23.84,0,0,0,56,80H216Zm-48-60a12,12,0,1,1,12,12A12,12,0,0,1,168,132Z"/></symbol><symbol id="i-wifi-high" viewBox="0 0 256 256"><path d="M140,204a12,12,0,1,1-12-12A12,12,0,0,1,140,204ZM237.08,87A172,172,0,0,0,18.92,87,8,8,0,0,0,29.08,99.37a156,156,0,0,1,197.84,0A8,8,0,0,0,237.08,87ZM205,122.77a124,124,0,0,0-153.94,0A8,8,0,0,0,61,135.31a108,108,0,0,1,134.06,0,8,8,0,0,0,11.24-1.3A8,8,0,0,0,205,122.77Zm-32.26,35.76a76.05,76.05,0,0,0-89.42,0,8,8,0,0,0,9.42,12.94,60,60,0,0,1,70.58,0,8,8,0,1,0,9.42-12.94Z"/></symbol><symbol id="i-warning" viewBox="0 0 256 256"><path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM222.93,203.8a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,144V104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,180Z"/></symbol><symbol id="i-check" viewBox="0 0 256 256"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></symbol><symbol id="i-x" viewBox="0 0 256 256"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></symbol><symbol id="i-arrow-up-right" viewBox="0 0 256 256"><path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z"/></symbol><symbol id="i-calendar-blank" viewBox="0 0 256 256"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Z"/></symbol><symbol id="i-backpack" viewBox="0 0 256 256"><path d="M168,40.58V32A24,24,0,0,0,144,8H112A24,24,0,0,0,88,32v8.58A56.09,56.09,0,0,0,40,96V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V96A56.09,56.09,0,0,0,168,40.58ZM112,24h32a8,8,0,0,1,8,8v8H104V32A8,8,0,0,1,112,24Zm56,136H88v-8a8,8,0,0,1,8-8h64a8,8,0,0,1,8,8ZM88,176h48v8a8,8,0,0,0,16,0v-8h16v40H88Zm112,40H184V152a24,24,0,0,0-24-24H96a24,24,0,0,0-24,24v64H56V96A40,40,0,0,1,96,56h64a40,40,0,0,1,40,40V216ZM152,88a8,8,0,0,1-8,8H112a8,8,0,0,1,0-16h32A8,8,0,0,1,152,88Z"/></symbol><symbol id="i-clock" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm64-88a8,8,0,0,1-8,8H128a8,8,0,0,1-8-8V72a8,8,0,0,1,16,0v48h48A8,8,0,0,1,192,128Z"/></symbol><symbol id="i-book-open-text" viewBox="0 0 256 256"><path d="M232,48H160a40,40,0,0,0-32,16A40,40,0,0,0,96,48H24a8,8,0,0,0-8,8V200a8,8,0,0,0,8,8H96a24,24,0,0,1,24,24,8,8,0,0,0,16,0,24,24,0,0,1,24-24h72a8,8,0,0,0,8-8V56A8,8,0,0,0,232,48ZM96,192H32V64H96a24,24,0,0,1,24,24V200A39.81,39.81,0,0,0,96,192Zm128,0H160a39.81,39.81,0,0,0-24,8V88a24,24,0,0,1,24-24h64ZM160,88h40a8,8,0,0,1,0,16H160a8,8,0,0,1,0-16Zm48,40a8,8,0,0,1-8,8H160a8,8,0,0,1,0-16h40A8,8,0,0,1,208,128Zm0,32a8,8,0,0,1-8,8H160a8,8,0,0,1,0-16h40A8,8,0,0,1,208,160Z"/></symbol><symbol id="i-youtube-logo" viewBox="0 0 256 256"><path d="M164.44,121.34l-48-32A8,8,0,0,0,104,96v64a8,8,0,0,0,12.44,6.66l48-32a8,8,0,0,0,0-13.32ZM120,145.05V111l25.58,17ZM234.33,69.52a24,24,0,0,0-14.49-16.4C185.56,39.88,131,40,128,40s-57.56-.12-91.84,13.12a24,24,0,0,0-14.49,16.4C19.08,79.5,16,97.74,16,128s3.08,48.5,5.67,58.48a24,24,0,0,0,14.49,16.41C69,215.56,120.4,216,127.34,216h1.32c6.94,0,58.37-.44,91.18-13.11a24,24,0,0,0,14.49-16.41c2.59-10,5.67-28.22,5.67-58.48S236.92,79.5,234.33,69.52Zm-15.49,113a8,8,0,0,1-4.77,5.49c-31.65,12.22-85.48,12-86,12H128c-.54,0-54.33.2-86-12a8,8,0,0,1-4.77-5.49C34.8,173.39,32,156.57,32,128s2.8-45.39,5.16-54.47A8,8,0,0,1,41.93,68c30.52-11.79,81.66-12,85.85-12h.27c.54,0,54.38-.18,86,12a8,8,0,0,1,4.77,5.49C221.2,82.61,224,99.43,224,128S221.2,173.39,218.84,182.47Z"/></symbol><symbol id="i-path" viewBox="0 0 256 256"><path d="M200,168a32.06,32.06,0,0,0-31,24H72a32,32,0,0,1,0-64h96a40,40,0,0,0,0-80H72a8,8,0,0,0,0,16h96a24,24,0,0,1,0,48H72a48,48,0,0,0,0,96h97a32,32,0,1,0,31-40Zm0,48a16,16,0,1,1,16-16A16,16,0,0,1,200,216Z"/></symbol><symbol id="i-shopping-bag" viewBox="0 0 256 256"><path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,160H40V56H216V200ZM176,88a48,48,0,0,1-96,0,8,8,0,0,1,16,0,32,32,0,0,0,64,0,8,8,0,0,1,16,0Z"/></symbol><symbol id="i-map-pin" viewBox="0 0 256 256"><path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"/></symbol><symbol id="i-sliders-horizontal" viewBox="0 0 256 256"><path d="M40,88H73a32,32,0,0,0,62,0h81a8,8,0,0,0,0-16H135a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16Zm64-24A16,16,0,1,1,88,80,16,16,0,0,1,104,64ZM216,168H199a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16h97a32,32,0,0,0,62,0h17a8,8,0,0,0,0-16Zm-48,24a16,16,0,1,1,16-16A16,16,0,0,1,168,192Z"/></symbol><symbol id="i-broom" viewBox="0 0 256 256"><path d="M235.5,216.81c-22.56-11-35.5-34.58-35.5-64.8V134.73a15.94,15.94,0,0,0-10.09-14.87L165,110a8,8,0,0,1-4.48-10.34l21.32-53a28,28,0,0,0-16.1-37,28.14,28.14,0,0,0-35.82,16,.61.61,0,0,0,0,.12L108.9,79a8,8,0,0,1-10.37,4.49L73.11,73.14A15.89,15.89,0,0,0,55.74,76.8C34.68,98.45,24,123.75,24,152a111.45,111.45,0,0,0,31.18,77.53A8,8,0,0,0,61,232H232a8,8,0,0,0,3.5-15.19ZM67.14,88l25.41,10.3a24,24,0,0,0,31.23-13.45l21-53c2.56-6.11,9.47-9.27,15.43-7a12,12,0,0,1,6.88,15.92L145.69,93.76a24,24,0,0,0,13.43,31.14L184,134.73V152c0,.33,0,.66,0,1L55.77,101.71A108.84,108.84,0,0,1,67.14,88Zm48,128a87.53,87.53,0,0,1-24.34-42,8,8,0,0,0-15.49,4,105.16,105.16,0,0,0,18.36,38H64.44A95.54,95.54,0,0,1,40,152a85.9,85.9,0,0,1,7.73-36.29l137.8,55.12c3,18,10.56,33.48,21.89,45.16Z"/></symbol><symbol id="i-apple-logo" viewBox="0 0 256 256"><path d="M223.3,169.59a8.07,8.07,0,0,0-2.8-3.4C203.53,154.53,200,134.64,200,120c0-17.67,13.47-33.06,21.5-40.67a8,8,0,0,0,0-11.62C208.82,55.74,187.82,48,168,48a72.2,72.2,0,0,0-40,12.13,71.56,71.56,0,0,0-90.71,9.09A74.63,74.63,0,0,0,16,123.4a127.06,127.06,0,0,0,40.14,89.73A39.8,39.8,0,0,0,83.59,224h87.68a39.84,39.84,0,0,0,29.12-12.57,125,125,0,0,0,17.82-24.6C225.23,174,224.33,172,223.3,169.59Zm-34.63,30.94a23.76,23.76,0,0,1-17.4,7.47H83.59a23.82,23.82,0,0,1-16.44-6.51A111.14,111.14,0,0,1,32,123,58.5,58.5,0,0,1,48.65,80.47,54.81,54.81,0,0,1,88,64h.78A55.45,55.45,0,0,1,123,76.28a8,8,0,0,0,10,0A55.44,55.44,0,0,1,168,64a70.64,70.64,0,0,1,36,10.35c-13,14.52-20,30.47-20,45.65,0,23.77,7.64,42.73,22.18,55.3A105.82,105.82,0,0,1,188.67,200.53ZM128.23,30A40,40,0,0,1,167,0h1a8,8,0,0,1,0,16h-1a24,24,0,0,0-23.24,18,8,8,0,1,1-15.5-4Z"/></symbol><symbol id="i-google-play-logo" viewBox="0 0 256 256"><path d="M239.82,114.19,72,18.16a16,16,0,0,0-16.12,0A15.68,15.68,0,0,0,48,31.87V224.13a15.68,15.68,0,0,0,7.92,13.67,16,16,0,0,0,16.12,0l167.78-96a15.75,15.75,0,0,0,0-27.62ZM64,212.67V43.33L148.69,128Zm96-73.36,18.92,18.92-88.5,50.66ZM90.4,47.1l88.53,50.67L160,116.69ZM193.31,150l-22-22,22-22,38.43,22Z"/></symbol></svg>
+<div class="grain" aria-hidden="true"></div>
 
-<header>
-  <div class="bg"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Forbidden%20City%20after%20snow%20(20200106114845).jpg?width=1600" alt="Запретный город в снегу" loading="eager" onerror="this.style.display='none'"></div>
-  <div class="hero">
-    <div class="eyebrow">Зимний Китай · <span id="heroDates">1–10 янв 2027</span></div>
-    <h1>Китай на двоих. Конструктор</h1>
-    <p>10 направлений и 40+ мест — от Хогвартса до гор «Аватара». Отмечай что зовёт: движок сам выберет аэропорт прилёта, построит оптимальный порядок городов, посчитает дни и бюджет. Хоть 6 дней, хоть 20.</p>
+<nav>
+  <div class="navin">
+    <a class="brand" href="#top"><svg class="ic"><use href="#i-thermometer-simple"/></svg><span>Китай, январь</span></a>
+    <div class="navlinks">
+      <a href="#builder">Места</a>
+      <a href="#plan">План</a>
+      <a href="#budget">Бюджет</a>
+      <a href="#cities">Города</a>
+      <a href="#trains">Поезда</a>
+      <a href="#money">Деньги</a>
+      <a href="#connect">Связь</a>
+      <a href="#traps">Ловушки</a>
+      <a href="#pack">Сборы</a>
+      <a href="#book">Брони</a>
+    </div>
+    <button class="tglt" id="themeBtn" type="button" aria-label="Сменить тему">
+      <svg class="ic i-sun"><use href="#i-sun"/></svg><svg class="ic i-moon"><use href="#i-moon-stars"/></svg>
+    </button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap herogrid">
+    <div>
+      <span class="dates"><svg class="ic"><use href="#i-calendar-blank"/></svg><span id="heroDates">1–10 янв 2027</span></span>
+      <h1 class="head">Маршрут длиной<br>в <span class="cold">сорок два</span> градуса</h1>
+      <p class="sub">Январский Китай от льда Харбина до субтропиков Гуанчжоу. Отмечай места — города, даты и бюджет соберутся сами.</p>
+      <div class="herocta">
+        <a class="btn primary" href="#builder"><svg class="ic"><use href="#i-path"/></svg>Собрать маршрут</a>
+        <a class="btn ghost" href="#cities"><svg class="ic"><use href="#i-snowflake"/></svg>Что в январе</a>
+      </div>
+    </div>
+    <div class="arc" id="arc">
+      <h2>Температура по маршруту</h2>
+      <div class="arcnum" id="arcNum">—</div>
+      <svg class="plot" id="plot" viewBox="0 0 440 200" role="img" aria-labelledby="plotTitle">
+        <title id="plotTitle">График средней январской температуры по городам маршрута</title>
+        <defs><linearGradient id="tgrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="var(--t-frozen)"/><stop offset="50%" stop-color="var(--t-cool)"/><stop offset="100%" stop-color="var(--ember)"/>
+        </linearGradient></defs>
+        <g id="plotAxis"></g><path class="trace" id="trace" d=""/><g id="plotNodes"></g><g id="plotLabels"></g>
+      </svg>
+      <div class="arcfoot"><span id="arcFrom">—</span><span id="arcTo">—</span></div>
+    </div>
   </div>
 </header>
 
-<nav aria-label="Разделы гида"><div class="chips">
-  <a class="chip" href="#when">Январь</a>
-  <a class="chip" href="#builder">Конструктор</a>
-  <a class="chip" href="#beijing">Пекин</a>
-  <a class="chip" href="#harbin">Харбин</a>
-  <a class="chip" href="#shanghai">Шанхай</a>
-  <a class="chip" href="#guangzhou">Гуанчжоу</a>
-  <a class="chip" href="#morecities">Ещё направления</a>
-  <a class="chip" href="#trains">Поезда</a>
-  <a class="chip" href="#money">Деньги</a>
-  <a class="chip" href="#connect">Связь</a>
-  <a class="chip" href="#budget">Бюджет</a>
-  <a class="chip" href="#traps">Ловушки</a>
-  <a class="chip" href="#pack">Чек-лист</a>
-  <a class="chip" href="#book">Брони</a>
-</div></nav>
-
-<div class="wrap">
-
-<section id="when">
-  <div class="sec-head"><div class="bar" style="background:var(--gold)"></div><h2>Январь в Китае: что вас ждёт</h2></div>
-  <p class="lead">Даты <b id="whenRange">1–10 янв</b> — разбираю, что вас ждёт, и где надо схитрить с расписанием.</p>
-  <div class="card">
-    <div class="tbl-scroll"><table>
-      <tr><th>Город</th><th>Погода в начале января</th><th>Как это ощущается</th></tr>
-      <tr><td><b>Пекин</b></td><td class="num">−9…+2°, сухо, солнечно</td><td>Морозная Москва без слякоти. Озёра замерзают — коньки в центре города. Запретный город в снегу — джекпот для фото</td></tr>
-      <tr><td><b>Харбин</b></td><td class="num">−24…−12°</td><td>Сибирь. Ради ледового фестиваля — оно того стоит</td></tr>
-      <tr><td><b>Шанхай</b></td><td class="num">+2…+9°, сыро</td><td>Промозгло, как Питер в ноябре. Пуховик + шарф, и город прекрасен</td></tr>
-      <tr><td><b>Гуанчжоу</b></td><td class="num">+11…+18°, сухо</td><td>Расстёгиваем куртки. Отличный тёплый финал маршрута</td></tr>
-      <tr><td colspan="3" style="color:var(--dim);font-size:13.5px">Погода остальных шести направлений — в разделе «Ещё направления» ниже</td></tr>
-    </table></div>
-  </div>
-  <div class="note" id="holidayNote"><b>1–3 января — государственные выходные в Китае.</b> Парки и главные музеи в эти дни штурмует вся страна. Конструктор это знает: Universal и Дисней он сам ставит на будни после 3 января. Если из-за твоего выбора парк всё же попадёт на плохой день — увидишь красное предупреждение в плане.</div>
-  <div class="note good"><b>Где повезло.</b> Китайский Новый год в 2027-м — 6 февраля: великая миграция чуньюнь начнётся позже ваших дат. Поезда и билеты — без ажиотажа. Бонус: январь — низкий сезон для отелей, цены на 10–20% мягче осенних.</div>
-</section>
-
+<main>
 <section id="builder">
-  <div class="sec-head"><div class="bar" style="background:linear-gradient(90deg,var(--lacquer),var(--iceblue),var(--shanghai),var(--jade),var(--amber))"></div><h2>Конструктор маршрута</h2></div>
-  <p class="lead"><b>Шаг 1.</b> Тап по карточке — место в маршруте (✓). Кнопка «Подробнее» внутри карточки — полное описание, фото, ссылки на Википедию и YouTube. Можно собрать хоть два города, хоть шесть: движок сам выберет аэропорты, порядок и посчитает дни. Выбор сохраняется в браузере.</p>
-
-  <div id="placeGrid"></div>
-  <div class="link-row" style="margin-top:16px"><button class="btn" id="selReset" type="button">Вернуть рекомендованный набор</button><button class="btn" id="selClear" type="button">Очистить всё</button></div>
-
-  <h3 style="margin-top:34px">Шаг 2 — маршрут собрался сам</h3>
-  <div class="date-row">
-    <label for="startDate"><b>Старт:</b></label>
-    <input type="date" id="startDate" value="2027-01-01">
-    <button type="button" class="btn mini" data-setstart="2027-01-01">1 янв</button>
-    <button type="button" class="btn mini" data-setstart="2027-01-03">3 янв</button>
-    <button type="button" class="btn mini" data-setstart="2027-01-04">4 янв</button>
-  </div>
-  <div class="date-row">
-    <span><b>Длительность:</b></span>
-    <button type="button" class="btn mini" id="lenAuto" data-lenmode="auto">Авто — по выбранному</button>
-    <button type="button" class="btn mini" id="lenFix" data-lenmode="fix">Фикс:</button>
-    <input type="number" id="lenInput" min="4" max="21" value="10"> <span style="color:var(--dim)">дней</span>
-    <span id="endDateOut" class="mono" style="color:var(--dim)"></span>
-  </div>
-
-  <div class="meter" id="meter" role="status"></div>
-  <div id="itin"></div>
-
-  <div class="budget-pill">
-    <div style="font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#CFE0F0">Оценка бюджета на двоих под выбранный маршрут</div>
-    <div class="sum" id="budgetOut">—</div>
-    <small id="budgetDetail"></small>
-    <div class="rate-row"><span>Курс юаня:</span><input type="number" id="rateInput" value="13" min="8" max="25" step="0.5"> <span>₽ за ¥1</span></div>
+  <div class="wrap">
+    <div class="shead">
+      <h2>Сорок мест, десять направлений</h2>
+      <p>Тап по карточке — место в маршруте. «Подробнее» откроет полное описание со ссылками на Википедию и видео. Движок сам выберет аэропорт прилёта, порядок городов и посчитает дни: хоть два города, хоть шесть.</p>
+    </div>
+    <div id="grid"></div>
+    <div class="tools">
+      <button class="btn" id="reset" type="button"><svg class="ic"><use href="#i-sliders-horizontal"/></svg>Рекомендованный набор</button>
+      <button class="btn ghost" id="clear" type="button"><svg class="ic"><use href="#i-broom"/></svg>Очистить всё</button>
+    </div>
   </div>
 </section>
 
-<section id="beijing">
-  <div class="sec-head"><div class="bar" style="background:var(--lacquer)"></div><h2>Пекин: детали и логистика</h2></div>
-  <p class="lead">Прямые из Москвы ~7,5 ч (Аэрофлот SU204, Air China). Мороз сухой и солнечный. Подробности мест — в карточках конструктора, здесь бытовое.</p>
-  <div class="card">
-    <p><b>Запретный город:</b> билеты <span class="num">¥60</span> ровно за 7 дней в 8:00 по Пекину (3:00 мск) в WeChat-миниаппе «故宫博物院» по загранпаспорту, понедельник — выходной (конструктор знает). <b>Стена:</b> только Мутяньюй, трансфер <span class="num">¥600–800 за машину</span>, выезд 7:30. <b>Universal:</b> датированный билет <span class="num">≈¥418–638</span>, зимой парк до ~19:00, термобельё обязательно.</p>
-    <p><b>Еда:</b> утка в <b>Siji Minfu</b> (¥238–288, приходить к 16:30), премиум — <b>Da Dong</b>; зимний спешл — <b>хого</b> в сети <b>Juqi (局气)</b>, ужин ¥200–350 на двоих.</p>
+<section id="plan">
+  <div class="wrap">
+    <div class="shead"><h2>План собрался сам</h2>
+      <p>Слева от каждого дня — узел термометра: цвет и число показывают, какая температура ждёт в этом городе.</p></div>
+    <div class="ctrlbar">
+      <div class="ctrl">
+        <span>Старт</span>
+        <input type="date" id="startDate" value="2027-01-01" aria-label="Дата старта">
+        <button class="btn sm" data-start="2027-01-01" type="button">1 янв</button>
+        <button class="btn sm" data-start="2027-01-03" type="button">3 янв</button>
+        <button class="btn sm" data-start="2027-01-04" type="button">4 янв</button>
+      </div>
+      <div class="ctrl">
+        <span>Длительность</span>
+        <button class="btn sm" id="lenAuto" data-len="auto" type="button">Авто</button>
+        <button class="btn sm" id="lenFix" data-len="fix" type="button">Фикс</button>
+        <input type="number" id="lenInput" min="4" max="21" value="10" aria-label="Дней">
+        <span class="hint" id="endOut"></span>
+      </div>
+    </div>
+    <div class="meter" id="meter" role="status"></div>
+    <div class="tl" id="tl"></div>
   </div>
-  <h3>Где жить</h3>
-  <div class="card">
-    <div class="hotel"><div><div class="nm">Hotel Kapok Forbidden City</div><div class="ds">4★, 10 минут пешком до Запретного города</div></div><div class="pr">¥500–750 / ночь</div></div>
-    <div class="hotel"><div><div class="nm">Pentahotel Beijing</div><div class="ds">4★ у метро Chongwenmen, большие номера</div></div><div class="pr">¥450–650</div></div>
-    <div class="hotel"><div><div class="nm">The Emperor Qianmen</div><div class="ds">Бутик в хутуне с террасой — романтика</div></div><div class="pr">¥650–900</div></div>
-    <p style="margin-top:10px;font-size:14px;color:var(--dim)">Апартаменты не советую: отель регистрирует иностранцев автоматически, хозяин квартиры — почти никогда. Бронь: Trip.com / Ostrovok.</p>
-  </div>
-</section>
-
-<section id="harbin">
-  <div class="sec-head"><div class="bar" style="background:var(--iceblue)"></div><h2>Харбин: ледяная авантюра</h2></div>
-  <p class="lead">Козырь новогоднего Китая: крупнейший ледовый фестиваль планеты. Отметь карточку — движок сам вставит крюк на север и поезд.</p>
-  <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Harbin%20Ice%20Festival.jpg?width=1200" alt="Ледовые дворцы Харбина" onerror="this.closest('.ph').style.display='none'"><figcaption>Harbin Ice and Snow World: дворцы в натуральную величину изо льда Сунгари</figcaption></figure>
-  <div class="card">
-    <p>Поезд-пуля Пекин → Харбин: 4 ч 40 мин, <span class="num">¥541</span> второй класс. Отели у Центральной улицы: <span class="num">¥400–700/ночь</span> (Ibis Central Street, Holiday Inn City Centre).</p>
-    <div class="note cold"><b>Честно про −25°:</b> совсем тёплая обувь, балаклава, химические грелки (¥2–5 на каждом углу). Телефон садится за час — во внутренний карман. Недостающую экипировку дёшево докупите на месте.</div>
-  </div>
-</section>
-
-<section id="shanghai">
-  <div class="sec-head"><div class="bar" style="background:var(--shanghai)"></div><h2>Шанхай: детали и логистика</h2></div>
-  <p class="lead">Промозгло, но именно в январе тут лучший Дисней года и сезон распродаж перед китайским НГ.</p>
-  <div class="card">
-    <p><b>Дисней:</b> датированный билет <span class="num">¥475–599</span> в январские будни, паспорт обязателен; стратегия — к открытию, сразу Zootopia → TRON; салют ~19:30. <b>Шопинг:</b> IAPM и Plaza 66 — люкс, TX Huaihai — молодёжное, флагманы Huawei/Xiaomi — техника дешевле московской; tax refund 11% от ¥200. <b>Сяолунбао:</b> Jia Jia Tang Bao (¥25–40 корзинка) или Din Tai Fung.</p>
-  </div>
-  <h3>Где жить</h3>
-  <div class="card">
-    <div class="hotel"><div><div class="nm">Sofitel Shanghai Hyland</div><div class="ds">Nanjing Road, 10 мин пешком до Бунда</div></div><div class="pr">¥650–900 / ночь</div></div>
-    <div class="hotel"><div><div class="nm">SSAW Boutique Hotel Bund</div><div class="ds">Бутик в ар-деко, район Бунда</div></div><div class="pr">¥550–800</div></div>
-    <div class="hotel"><div><div class="nm">Jinjiang Metropolo Classiq</div><div class="ds">4★ эконом у Народной площади</div></div><div class="pr">¥400–600</div></div>
-  </div>
-</section>
-
-<section id="guangzhou">
-  <div class="sec-head"><div class="bar" style="background:var(--amber)"></div><h2>Гуанчжоу: детали и логистика</h2></div>
-  <p class="lead">+11…18° и прямой рейс China Southern домой (~10,5 ч) — лучший тёплый финал любого зимнего маршрута.</p>
-  <div class="card">
-    <p><b>Chimelong Safari:</b> билет <span class="num">≈¥300/чел</span>, кормление жирафов ¥30–50. <b>Ночёвка у зверей:</b> Chimelong Hotel <span class="num">¥1200–1800</span> (белые тигры во дворе), бюджетнее Panda Hotel <span class="num">¥700–1000</span>. Честно: отеля формата кенийского Giraffe Manor в Китае нет — Chimelong самый надёжный способ «свидания с жирафом».</p>
-    <div class="link-row"><a class="btn" href="https://www.chimelong.com/gz/" target="_blank" rel="noopener">Chimelong — оф. сайт</a></div>
-  </div>
-</section>
-
-<section id="morecities">
-  <div class="sec-head"><div class="bar" style="background:linear-gradient(90deg,#8A5A2B,#5B8C3E,#556B7D,#7E5FA0,#2E7D6B,#2E8C5A)"></div><h2>Ещё направления: справка</h2></div>
-  <p class="lead">Шесть направлений за пределами классической четвёрки — карточки их мест уже в конструкторе. Здесь погода, жильё и как добраться.</p>
-  <div class="tbl-scroll"><table>
-    <tr><th>Город</th><th>Январь</th><th>Жильё, 4★</th><th>Зачем и как</th></tr>
-    <tr><td><b>Сиань</b></td><td class="num">−4…+5°, сухо</td><td class="num">¥350–600</td><td>Терракотовая армия и древняя столица. Поезд-пуля из Пекина 4,5 ч</td></tr>
-    <tr><td><b>Чэнду</b></td><td class="num">+3…+10°, пасмурно</td><td class="num">¥350–600</td><td>Панды (в прохладу активнее!), чайные, острая кухня. Поезд из Сианя 3,5 ч</td></tr>
-    <tr><td><b>Чжанцзяцзе</b></td><td class="num">0…+8°, туманы</td><td class="num">¥350–600</td><td>Горы «Аватара»: зимой пики в снегу и без толп. Канатки работают. Перелёты из большинства хабов</td></tr>
-    <tr><td><b>Сучжоу</b></td><td class="num">+2…+8°</td><td class="num">¥400–650</td><td>Классические сады и каналы. 25–40 мин поездом от Шанхая — идеальная связка</td></tr>
-    <tr><td><b>Ханчжоу</b></td><td class="num">+2…+9°</td><td class="num">¥450–750</td><td>Западное озеро («сломанный мост в снегу» — легендарный зимний вид) и чай лунцзин. 1 ч поездом от Шанхая</td></tr>
-    <tr><td><b>Гуйлинь · Яншо</b></td><td class="num">+8…+14°, дымка</td><td class="num">¥350–650</td><td>Карстовые горы с купюры ¥20, круиз по реке Ли. Поезд из Гуанчжоу 2,5–3 ч</td></tr>
-  </table></div>
-  <div class="note">Зимняя честность: Чжанцзяцзе и Гуйлинь в январе — «низкий сезон с характером»: туманы могут как подарить мистические кадры, так и спрятать пейзаж на полдня. Закладывайте гибкость и смотрите прогноз накануне.</div>
-</section>
-
-<section id="trains">
-  <div class="sec-head"><div class="bar" style="background:var(--lacquer)"></div><h2>Скоростные поезда</h2></div>
-  <p class="lead">350 км/ч за окном — аттракцион, который ты просил. Движок сам ставит поезд там, где он лучше самолёта.</p>
-  <figure class="ph"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Shanghai%20Hongqiao%20Railway%20Station%20platform%20with%20the%20Fuxing%20train%20(left).jpg?width=1200" alt="Поезд Fuxing" onerror="this.closest('.ph').style.display='none'"><figcaption>Fuxing CR400 — «пуля» Пекин → Шанхай каждые 10–20 минут</figcaption></figure>
-  <div class="card">
-    <div class="tbl-scroll"><table>
-      <tr><th>Класс (Пекин → Шанхай)</th><th>Цена / чел</th><th>Что это</th></tr>
-      <tr><td>Второй (2nd)</td><td class="num">¥553–662</td><td>Как «Сапсан»-эконом. Нормально</td></tr>
-      <tr><td>Первый (1st)</td><td class="num">¥933–1060</td><td>2+2, шире и тише. Золотая середина</td></tr>
-      <tr><td>Бизнес</td><td class="num">¥1750–2320</td><td>Капсулы-кровати, еда, свой вагон. Раз в жизни — оправдано</td></tr>
-    </table></div>
-    <ul class="tick">
-      <li>Продажи за <b>15 дней</b>: приложение <b>12306</b> (англ., по загранпаспорту) или Trip.com (+¥30–40 сбор).</li>
-      <li>Билет «записан» на паспорт — прикладываешь загран на турникете. За 40 минут: досмотр как в аэропорту.</li>
-      <li>Красивые ветки, если хочется больше рельсов: Пекин→Сиань 4,5 ч; Сиань→Чэнду 3,5 ч сквозь горы Циньлин; Гуйлинь→Гуанчжоу 2,5 ч среди карста; Шанхай→Сучжоу/Ханчжоу — пригородная классика.</li>
-    </ul>
-    <div class="link-row"><a class="btn" href="https://www.12306.cn/en/" target="_blank" rel="noopener">12306 — официальные билеты</a><a class="btn" href="https://www.trip.com/trains/" target="_blank" rel="noopener">Trip.com Trains</a></div>
-  </div>
-  <div class="card"><p><b>Маглев</b> — отдельной карточкой в Шанхае: 430 км/ч, 7,5 минут, ¥50.</p></div>
-</section>
-
-<section id="money">
-  <div class="sec-head"><div class="bar" style="background:var(--gold)"></div><h2>Деньги: как платить россиянину</h2></div>
-  <p class="lead">Главный стресс первой поездки. Снимаю его за пять пунктов.</p>
-  <div class="card">
-    <p><b>1. Виза не нужна:</b> взаимный безвиз до 30 дней по загранпаспорту (действителен 6+ мес). Распечатки броней и обратных билетов — с собой. <b>2. Российские Visa/MC мертвы</b> — страна живёт QR-кодами <b>Alipay</b>/<b>WeChat Pay</b>. <b>3. UnionPay российского банка</b> — ключ к Alipay и банкоматам; список работающих банков плавает, проверь за 2–3 недели (форум Винского, тг-чаты). <b>4. Наличные:</b> ¥4000–6000 из Москвы + доллары на обмен в Bank of China. <b>5. Брони из России:</b> Ostrovok / Яндекс Путешествия (росс. карты), Trip.com (UnionPay), авиа — Aviasales.</p>
-  </div>
-  <h3>Где чем платить</h3>
-  <div class="tbl-scroll"><table>
-    <tr><th>Ситуация</th><th>Способ</th></tr>
-    <tr><td>Рестораны, магазины, метро, DiDi, парки</td><td><span class="badge b-qr">QR · Alipay</span></td></tr>
-    <tr><td>Моллы, отели, tax free</td><td><span class="badge b-up">UnionPay</span> <span class="badge b-qr">QR</span></td></tr>
-    <tr><td>Рынки, мелкие лавки</td><td><span class="badge b-cash">наличные ¥</span></td></tr>
-    <tr><td>Брони заранее из России</td><td><span class="badge b-ru">Ostrovok / Aviasales / Яндекс</span></td></tr>
-    <tr><td>Чаевые</td><td>Не приняты — вообще</td></tr>
-  </table></div>
-  <div class="note danger"><b>Если UnionPay откажет:</b> наличные + «оплачу тебе наличкой — проведи мне QR» работает в 100% мелких мест. ¥500 неприкосновенных — в разных карманах.</div>
-</section>
-
-<section id="connect">
-  <div class="sec-head"><div class="bar" style="background:var(--shanghai)"></div><h2>Связь, интернет и приложения</h2></div>
-  <p class="lead">Google, Instagram и WhatsApp в Китае заблокированы. Решается одним действием до вылета.</p>
-  <div class="card">
-    <p><b>eSIM с гонконгским трафиком (Airalo / Nomad / Yesim)</b> — весь интернет работает без VPN. 10–20 ГБ ≈ <span class="num">$12–25</span>. Установить <b>до вылета</b>. Местная SIM дешевле, но за файрволом — для первой поездки не советую.</p>
-    <div class="link-row"><a class="btn" href="https://www.airalo.com" target="_blank" rel="noopener">Airalo</a><a class="btn" href="https://www.getnomad.app" target="_blank" rel="noopener">Nomad</a><a class="btn" href="https://yesim.app" target="_blank" rel="noopener">Yesim</a></div>
-  </div>
-  <h3>Восемь приложений</h3>
-  <div class="apps" id="appsGrid"></div>
-  <div class="note"><b>Лайфхаки:</b> скрины адресов отелей иероглифами для таксистов; английский вне отелей не работает — переводчик решает; евровилка входит в китайские розетки почти везде.</div>
 </section>
 
 <section id="budget">
-  <div class="sec-head"><div class="bar" style="background:var(--jade)"></div><h2>Бюджет: детальная раскладка</h2></div>
-  <p class="lead">Вилки на двоих. Живой итог под твой маршрут — в конструкторе; ниже — из чего он складывается.</p>
-  <div class="tbl-scroll"><table>
-    <tr><th>Статья</th><th>Вилка на двоих</th><th>Оплата</th></tr>
-    <tr><td>Перелёты Москва ⇄ Китай (open-jaw, новогодний пик)</td><td class="num">100 000–150 000 ₽ (+10–25 т. если города прилёта/вылета без прямых рейсов)</td><td><span class="badge b-ru">Aviasales</span></td></tr>
-    <tr><td>Переезды внутри страны</td><td class="num">поезд ¥80–2 120 за плечо · перелёт ¥1 100–3 400</td><td><span class="badge b-up">UnionPay</span> <span class="badge b-ru">Trip.com</span></td></tr>
-    <tr><td>Отели 4★</td><td class="num">¥350–900 / ночь (Chimelong ¥1 200–1 800)</td><td><span class="badge b-ru">Ostrovok / Trip.com</span></td></tr>
-    <tr><td>Еда</td><td class="num">¥400–800 / день</td><td><span class="badge b-qr">QR</span> <span class="badge b-cash">нал</span></td></tr>
-    <tr><td>Билеты и активности</td><td class="num">по карточкам: от бесплатных прогулок до ¥1 280 за Universal</td><td><span class="badge b-qr">QR</span> <span class="badge b-ru">Trip.com</span></td></tr>
-    <tr><td>Такси DiDi + метро</td><td class="num">¥100–200 / день</td><td><span class="badge b-qr">QR</span></td></tr>
-    <tr><td>eSIM ×2 + страховка ×2</td><td class="num">6 000–12 000 ₽</td><td><span class="badge b-ru">росс. карта</span></td></tr>
-    <tr><td>Шопинг и сувениры</td><td class="num">по аппетиту: 0–100 000 ₽+</td><td><span class="badge b-up">UnionPay</span> <span class="badge b-cash">нал</span></td></tr>
-  </table></div>
-  <div class="note good"><b>Ориентиры:</b> базовая десятидневка Пекин–Шанхай–Гуанчжоу ≈ 330–520 т.₽ на двоих; с Харбином +58–90 т.; каждая «глубинка» (Чжанцзяцзе, Гуйлинь) добавляет день-два и 25–45 т. Где не экономить: eSIM, датированные билеты парков, Мутяньюй вместо «дешёвого тура на Бадалин».</div>
+  <div class="wrap">
+    <div class="shead"><h2>Бюджет</h2><p>Считается от выбранных карточек, фактических ночей в городах и реальных переездов. Курс редактируется.</p></div>
+    <div class="money">
+      <div class="mtop2">
+        <div class="mlabel">На двоих, под текущий маршрут</div>
+        <div class="msum" id="sum">—</div>
+        <div class="mdet" id="sumDet"></div>
+      </div>
+      <div class="mfoot">
+        <span>Курс юаня</span>
+        <input type="number" id="rate" value="13" min="8" max="25" step="0.5" aria-label="Курс юаня в рублях">
+        <span>₽ за ¥1. Перелёты из Москвы считаются отдельно, шопинг не входит.</span>
+      </div>
+    </div>
+    <div class="tscroll" style="margin-top:20px">
+      <table><thead><tr><th>Статья</th><th>Вилка на двоих</th><th>Чем платить</th></tr></thead><tbody>
+        <tr><td><b>Перелёты Москва ⇄ Китай</b> (open-jaw, новогодний пик)</td><td class="num">100–150 т.₽</td><td>Российская карта, Aviasales</td></tr>
+        <tr><td>Переезды внутри страны</td><td class="num">поезд ¥80–2120<br>перелёт ¥1100–3400</td><td>UnionPay, Trip.com</td></tr>
+        <tr><td>Отели 4★ за ночь</td><td class="num">¥350–900<br>Chimelong ¥1200–1800</td><td>Ostrovok, Trip.com</td></tr>
+        <tr><td>Еда в день</td><td class="num">¥400–800</td><td>QR Alipay, наличные</td></tr>
+        <tr><td>Билеты и активности</td><td class="num">от 0 до ¥1280 за Universal</td><td>QR Alipay, Trip.com</td></tr>
+        <tr><td>Такси и метро в день</td><td class="num">¥100–200</td><td>QR Alipay</td></tr>
+        <tr><td>eSIM ×2 и страховка ×2</td><td class="num">6–12 т.₽</td><td>Российская карта</td></tr>
+        <tr><td>Шопинг и сувениры</td><td class="num">по аппетиту</td><td>UnionPay, наличные</td></tr>
+      </tbody></table>
+    </div>
+    <div class="note hot"><svg class="ic"><use href="#i-wallet"/></svg><div><b>Ориентиры.</b> Базовая десятидневка Пекин→Шанхай→Гуанчжоу выходит в 330–520 тысяч на двоих. Харбин добавляет 58–90 тысяч, каждая «глубинка» вроде Чжанцзяцзе или Гуйлиня — день-два и 25–45 тысяч. Не экономь на eSIM, датированных билетах в парки и на Мутяньюй вместо дешёвого тура на Бадалин.</div></div>
+  </div>
+</section>
+
+<section id="cities">
+  <div class="wrap">
+    <div class="shead"><h2>Города и январь</h2>
+      <p>Десять направлений, отсортированных по температуре: от сибирского Харбина до субтропиков. Цвет — тот же, что у карточек и узлов маршрута.</p></div>
+    <div class="tscroll"><table><thead><tr><th>Город</th><th>Январь</th><th>Отель 4★</th><th>Зачем ехать</th></tr></thead><tbody id="cityRows"></tbody></table></div>
+
+    <div class="note" id="holidayNote"><svg class="ic"><use href="#i-warning"/></svg><div></div></div>
+    <div class="note cold"><svg class="ic"><use href="#i-snowflake"/></svg><div><b>Где повезло.</b> Китайский Новый год в 2027-м приходится на 6 февраля: великая миграция чуньюнь начнётся уже после вашего отъезда. Поезда и отели без ажиотажа, январь — низкий сезон, цены мягче осенних на 10–20%.</div></div>
+
+    <details><summary><svg class="ic"><use href="#i-map-pin"/></svg>Пекин: билеты, стена, утка<svg class="ic chev"><use href="#i-arrow-up-right"/></svg></summary>
+      <div class="dcont">
+        <p><b>Запретный город.</b> Билет ¥60 продаётся ровно за 7 дней в 8:00 по Пекину, это 3:00 мск, в WeChat-миниаппе «故宫博物院» по загранпаспорту. Понедельник — выходной, планировщик это знает и обходит.</p>
+        <p><b>Стена.</b> Только Мутяньюй, не Бадалин. Трансфер туда-обратно ¥600–800 за машину, выезд в 7:30, наверху ветер — одевайся как на горнолыжку.</p>
+        <p><b>Universal.</b> Датированный билет ¥418–638, зимой парк работает до 19:00, в открытых зонах без термобелья тяжело.</p>
+        <p><b>Еда.</b> Утка в Siji Minfu (¥238–288, приходить к 16:30), премиальный вариант — Da Dong. Зимний спешл: хого в сети Juqi, ужин ¥200–350 на двоих.</p>
+        <div class="hotel"><div><div class="hn">Hotel Kapok Forbidden City</div><div class="hd">4★, десять минут пешком до дворца</div></div><div class="hp">¥500–750</div></div>
+        <div class="hotel"><div><div class="hn">Pentahotel Beijing</div><div class="hd">4★ у метро Chongwenmen, большие номера</div></div><div class="hp">¥450–650</div></div>
+        <div class="hotel"><div><div class="hn">The Emperor Qianmen</div><div class="hd">Бутик в хутуне с террасой на крыше</div></div><div class="hp">¥650–900</div></div>
+      </div>
+    </details>
+
+    <details><summary><svg class="ic"><use href="#i-map-pin"/></svg>Шанхай: Дисней и распродажи<svg class="ic chev"><use href="#i-arrow-up-right"/></svg></summary>
+      <div class="dcont">
+        <p><b>Дисней.</b> Датированный билет ¥475–599 в январские будни, паспортные данные обязательны. Стратегия: к открытию, сразу Zootopia, затем TRON. Салют около 19:30 — не уходить.</p>
+        <p><b>Шопинг.</b> Январь — сезон скидок перед китайским Новым годом. IAPM и Plaza 66 держат люкс, TX Huaihai — молодёжное, флагманы Huawei и Xiaomi на Nanjing East дешевле московских цен. Tax free 11% от чека ¥200.</p>
+        <div class="hotel"><div><div class="hn">Sofitel Shanghai Hyland</div><div class="hd">Nanjing Road, десять минут до Бунда</div></div><div class="hp">¥650–900</div></div>
+        <div class="hotel"><div><div class="hn">SSAW Boutique Hotel Bund</div><div class="hd">Бутик в здании ар-деко</div></div><div class="hp">¥550–800</div></div>
+        <div class="hotel"><div><div class="hn">Jinjiang Metropolo Classiq</div><div class="hd">Крепкий эконом у Народной площади</div></div><div class="hp">¥400–600</div></div>
+      </div>
+    </details>
+
+    <details><summary><svg class="ic"><use href="#i-map-pin"/></svg>Гуанчжоу: жирафы и тёплый финал<svg class="ic chev"><use href="#i-arrow-up-right"/></svg></summary>
+      <div class="dcont">
+        <p><b>Chimelong Safari.</b> Билет около ¥300 с человека, веник листьев для жирафов ¥30–50. Январские +15…18 комфортнее летнего пекла, звери активнее.</p>
+        <p><b>Ночёвка у зверей.</b> Chimelong Hotel — ¥1200–1800, во внутреннем дворе живут белые тигры. Бюджетнее Panda Hotel: ¥700–1000. Честно: отеля формата кенийского Giraffe Manor, где жираф суёт голову в окно, в Китае нет. Chimelong — самый надёжный способ получить свидание с жирафом.</p>
+        <p>Домой — прямым China Southern, около 10 с половиной часов без пересадок.</p>
+      </div>
+    </details>
+
+    <details><summary><svg class="ic"><use href="#i-snowflake"/></svg>Харбин: честно про −25°<svg class="ic chev"><use href="#i-arrow-up-right"/></svg></summary>
+      <div class="dcont">
+        <p>Поезд-пуля из Пекина идёт 4 часа 40 минут, второй класс ¥541, за окном снежная Маньчжурия. Отели у Центральной улицы: ¥400–700 за ночь, например Ibis Central Street или Holiday Inn City Centre.</p>
+        <p>Это другой уровень холода. Нужны по-настоящему тёплая обувь, балаклава и химические грелки — они лежат на каждом углу по ¥2–5. Телефон садится за час, держи во внутреннем кармане. Недостающую экипировку дёшево докупишь на месте.</p>
+      </div>
+    </details>
+
+    <div class="note"><svg class="ic"><use href="#i-warning"/></svg><div>Зимняя честность про юг: Чжанцзяцзе и Гуйлинь в январе — низкий сезон с характером. Туманы могут подарить мистические кадры, а могут спрятать пейзаж на полдня. Держи день гибким и смотри прогноз накануне.</div></div>
+  </div>
+</section>
+
+<section id="trains">
+  <div class="wrap">
+    <div class="shead"><h2>Скоростные поезда</h2><p>350 км/ч за окном — тот самый аттракцион. Движок ставит поезд там, где он выигрывает у самолёта.</p></div>
+    <div class="tscroll"><table><thead><tr><th>Класс, Пекин → Шанхай</th><th>Цена с человека</th><th>Что это</th></tr></thead><tbody>
+      <tr><td>Второй</td><td class="num">¥553–662</td><td>Как «Сапсан»-эконом, три плюс два кресла</td></tr>
+      <tr><td>Первый</td><td class="num">¥933–1060</td><td>Два плюс два, шире и тише. Золотая середина</td></tr>
+      <tr><td>Бизнес</td><td class="num">¥1750–2320</td><td>Капсулы-кровати, еда, отдельный вагон. Один раз в жизни — оправдано</td></tr>
+    </tbody></table></div>
+    <div class="note"><svg class="ic"><use href="#i-ticket"/></svg><div>Продажи открываются за <b>15 дней</b>. Билет записан на паспорт: на турникете прикладываешь загран. Приезжать за 40 минут — досмотр как в аэропорту. Красивые ветки, если хочется больше рельсов: Пекин→Сиань 4,5 часа, Сиань→Чэнду 3,5 часа сквозь тоннели Циньлина, Гуйлинь→Гуанчжоу 2,5 часа среди карстовых пиков.</div></div>
+    <div class="note"><svg class="ic"><use href="#i-train-simple"/></svg><div><b>Маглев</b> вынесен отдельной карточкой в Шанхае: 430 км/ч, семь с половиной минут, ¥50.</div></div>
+    <div class="tools">
+      <a class="btn" href="https://www.12306.cn/en/" target="_blank" rel="noopener">12306, официальные билеты<svg class="ic"><use href="#i-arrow-up-right"/></svg></a>
+      <a class="btn" href="https://www.trip.com/trains/" target="_blank" rel="noopener">Trip.com Trains<svg class="ic"><use href="#i-arrow-up-right"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<section id="money">
+  <div class="wrap">
+    <div class="shead"><h2>Деньги</h2><p>Главный стресс первой поездки. Снимается за пять пунктов.</p></div>
+    <div class="prose">
+      <p><b>Виза не нужна.</b> Взаимный безвиз до 30 дней по загранпаспорту, действительному ещё полгода. Распечатки броней и обратных билетов держи с собой.</p>
+      <p><b>Российские Visa и Mastercard в Китае мертвы.</b> Страна живёт QR-кодами Alipay и WeChat Pay.</p>
+      <p><b>Карта UnionPay российского банка</b> — ключ к Alipay и банкоматам. Список работающих банков плавает, проверь за две-три недели до вылета в свежих ветках форума Винского.</p>
+      <p><b>Наличные.</b> ¥4000–6000 из Москвы плюс доллары на обмен в Bank of China по паспорту.</p>
+      <p><b>Брони из России.</b> Отели через Ostrovok или Яндекс Путешествия, авиабилеты через Aviasales, всё остальное — Trip.com по UnionPay.</p>
+    </div>
+    <div class="tscroll" style="margin-top:22px"><table><thead><tr><th>Ситуация</th><th>Способ</th></tr></thead><tbody>
+      <tr><td>Рестораны, магазины, метро, такси, парки</td><td>QR Alipay</td></tr>
+      <tr><td>Моллы, отели, tax free</td><td>UnionPay или QR</td></tr>
+      <tr><td>Рынки и мелкие лавки</td><td>Наличные юани</td></tr>
+      <tr><td>Брони заранее из России</td><td>Ostrovok, Aviasales, Яндекс</td></tr>
+      <tr><td>Чаевые</td><td>Не приняты вообще</td></tr>
+    </tbody></table></div>
+    <div class="note bad"><svg class="ic"><use href="#i-warning"/></svg><div><b>Если UnionPay откажет.</b> Наличные плюс просьба к продавцу «оплачу тебе наличкой, проведи мне QR» работает в ста процентах мелких мест. Держи ¥500 неприкосновенных в разных карманах.</div></div>
+  </div>
+</section>
+
+<section id="connect">
+  <div class="wrap">
+    <div class="shead"><h2>Связь и приложения</h2><p>Google, Instagram и WhatsApp в Китае заблокированы. Решается одним действием до вылета.</p></div>
+    <div class="note hot"><svg class="ic"><use href="#i-wifi-high"/></svg><div><b>eSIM с гонконгским трафиком</b> — Airalo, Nomad или Yesim. Весь интернет работает без VPN, 10–20 ГБ обойдутся в 12–25 долларов. Установить строго до вылета. Местная SIM дешевле, но сидит за файрволом: для первой поездки не советую.</div></div>
+    <div class="apps" id="apps"></div>
+    <div class="note"><svg class="ic"><use href="#i-map-pin"/></svg><div>Сохрани скрины адресов отелей иероглифами — показывать таксистам. Английский вне отелей почти не работает, переводчик решает всё. Евровилка входит в китайские розетки почти везде.</div></div>
+  </div>
 </section>
 
 <section id="traps">
-  <div class="sec-head"><div class="bar" style="background:var(--lacquer)"></div><h2>Ловушки для туристов</h2></div>
-  <p class="lead">Китай безопасен, но разводы отточены веками. Пять классических.</p>
-  <div class="trap"><b>«Чайная церемония»</b> — «студенты» зовут попрактиковать английский за чаем, счёт ¥2000–5000. Незнакомцы в Китае не зовут туристов в конкретное заведение. «Бу яо» (不要) — и дальше.</div>
-  <div class="trap"><b>«Выставка художников»</b> — тот же сценарий у музеев с покупкой «картин».</div>
-  <div class="trap"><b>Рикши в хутунах</b> — «50» превращается в «50 с человека за 10 минут». Пешком или официальный тур.</div>
-  <div class="trap"><b>«Taxi? Taxi?»</b> у аэропортов — тройной тариф. Только официальная стойка или DiDi.</div>
-  <div class="trap"><b>«Дешёвый тур на Стену»</b> — Бадалин + 2 часа «нефритовой фабрики». Мутяньюй своим ходом.</div>
-  <div class="note">На рынках торг ×3–5 ожидаем. «Монах» с браслетом-«подарком» потребует пожертвование. Билеты у катков и фестивалей — только кассы и QR, не с рук.</div>
+  <div class="wrap">
+    <div class="shead"><h2>Ловушки</h2><p>Китай безопасен, но разводы отточены веками. Пять классических.</p></div>
+    <div class="traps">
+      <div class="trap"><b>Чайная церемония</b>Милые «студенты» зовут попрактиковать английский за чаем, счёт окажется ¥2000–5000. Незнакомцы в Китае не зовут туристов в конкретное заведение. Улыбка, «бу яо», идём дальше.</div>
+      <div class="trap"><b>Выставка молодых художников</b>Тот же сценарий у музеев: заманивают в бесплатную галерею, выйти без купленной за бешеные деньги мазни морально тяжело.</div>
+      <div class="trap"><b>Рикши в хутунах</b>Договорились за 50, в конце оказывается «50 с человека и за каждые десять минут». Только пешком или официальный тур с фиксированным чеком.</div>
+      <div class="trap"><b>Taxi? Taxi? у аэропортов</b>Зазывалы без счётчика возят по тройному тарифу. Только стойка официального такси или DiDi из Alipay, где цена видна до посадки.</div>
+      <div class="trap"><b>Дешёвый тур на Великую стену</b>За ¥100 это Бадалин с обязательными двумя часами на «нефритовой фабрике». Мутяньюй своим ходом дороже, зато день остаётся ваш.</div>
+    </div>
+    <div class="note"><svg class="ic"><use href="#i-shopping-bag"/></svg><div>На рынках торг в три-пять раз ожидаем, доставай калькулятор. «Монах», надевающий браслет-подарок, потребует пожертвование. Билеты у катков и фестивалей бери только в кассах и по QR, никогда с рук.</div></div>
+  </div>
 </section>
 
 <section id="pack">
-  <div class="sec-head"><div class="bar" style="background:var(--jade)"></div><h2>Чек-лист сборов: зимняя версия</h2></div>
-  <p class="lead">Отмечай — прогресс сохраняется в браузере. Со звёздочкой — критичное для этой поездки.</p>
-  <div class="card">
-    <div class="progress"><i id="pbar"></i></div>
-    <div class="mono" id="ptext" style="font-size:12.5px;color:var(--dim)">0 из 0</div>
+  <div class="wrap">
+    <div class="shead"><h2>Сборы</h2><p>Отмечай — прогресс сохраняется в браузере. Звёздочка значит «критично именно для этой поездки».</p></div>
+    <div class="prog"><i id="pbar"></i></div>
+    <div class="hint" id="ptext">0 из 0</div>
     <div id="checklist"></div>
-    <div class="link-row" style="margin-top:14px"><button class="btn" id="clReset" type="button">Сбросить отметки</button></div>
+    <div class="tools"><button class="btn ghost" id="clReset" type="button"><svg class="ic"><use href="#i-broom"/></svg>Сбросить отметки</button></div>
   </div>
 </section>
 
 <section id="book">
-  <div class="sec-head"><div class="bar" style="background:var(--amber)"></div><h2>Календарь бронирований</h2></div>
-  <p class="lead">Что и когда покупать. Даты ниже живые — пересчитываются под твой маршрут и старт.</p>
-  <div class="tbl-scroll"><table>
-    <tr><th>Когда</th><th>Что сделать</th></tr>
-    <tr><td class="num">Сейчас</td><td>Собрать маршрут в конструкторе. Открыть карту UnionPay. Завести Alipay и WeChat, привязать загранпаспорта</td></tr>
-    <tr><td class="num">За 3 месяца</td><td>Авиабилеты open-jaw в города прилёта/вылета из плана — новогодние рейсы дорожают быстрее всего</td></tr>
-    <tr><td class="num">За 1,5–2 месяца</td><td>Все отели (Chimelong — раньше прочих), внутренние перелёты, страховка</td></tr>
-    <tr><td class="num">За месяц</td><td>eSIM установить. Перепроверить статус UnionPay-карты в свежих ветках форумов</td></tr>
-    <tr><td class="num" id="bkParksWhen">за 2–3 недели</td><td id="bkParksWhat">Датированные билеты в выбранные парки</td></tr>
-    <tr><td class="num" id="bkTrainWhen">за 15 дней</td><td id="bkTrainWhat">Открываются продажи на поезда — брать сразу</td></tr>
-    <tr><td class="num" id="bkPalaceWhen">за 7 дней, 3:00 мск</td><td id="bkPalaceWhat">⏰ Билеты в Запретный город в WeChat-миниаппе — ловить в момент открытия. Будильник обязателен</td></tr>
-    <tr><td class="num">За 1–2 дня до вылета</td><td>Наличные юани. Офлайн-карты Amap и офлайн-переводчики. Скрины адресов отелей иероглифами. Распечатки броней</td></tr>
-  </table></div>
-  <div class="link-row" style="margin:18px 0 6px">
-    <a class="btn solid" href="https://www.aviasales.ru" target="_blank" rel="noopener">Aviasales</a>
-    <a class="btn" href="https://ostrovok.ru" target="_blank" rel="noopener">Ostrovok</a>
-    <a class="btn" href="https://ru.trip.com" target="_blank" rel="noopener">Trip.com</a>
-    <a class="btn" href="https://travel.yandex.ru" target="_blank" rel="noopener">Яндекс Путешествия</a>
-    <a class="btn" href="https://forum.awd.ru" target="_blank" rel="noopener">Форум Винского</a>
+  <div class="wrap">
+    <div class="shead"><h2>Календарь бронирований</h2><p>Даты живые: пересчитываются под выбранный маршрут и дату старта.</p></div>
+    <div class="tscroll"><table><thead><tr><th>Когда</th><th>Что сделать</th></tr></thead><tbody>
+      <tr><td class="num">Сейчас</td><td>Собрать маршрут. Открыть карту UnionPay, завести Alipay и WeChat, привязать загранпаспорта</td></tr>
+      <tr><td class="num">За 3 месяца</td><td>Авиабилеты open-jaw в города прилёта и вылета из плана: новогодние рейсы дорожают быстрее всего</td></tr>
+      <tr><td class="num">За 1,5–2 месяца</td><td>Все отели, Chimelong раньше прочих. Внутренние перелёты, страховка</td></tr>
+      <tr><td class="num">За месяц</td><td>Установить eSIM. Перепроверить статус карты UnionPay в свежих ветках форумов</td></tr>
+      <tr><td class="num" id="bkParksWhen">—</td><td id="bkParksWhat">—</td></tr>
+      <tr><td class="num" id="bkTrainWhen">—</td><td id="bkTrainWhat">—</td></tr>
+      <tr><td class="num" id="bkPalaceWhen">—</td><td id="bkPalaceWhat">—</td></tr>
+      <tr><td class="num">За 1–2 дня</td><td>Наличные юани. Офлайн-карты Amap и офлайн-переводчики. Скрины адресов иероглифами. Распечатки броней</td></tr>
+    </tbody></table></div>
+    <div class="tools">
+      <a class="btn primary" href="https://www.aviasales.ru" target="_blank" rel="noopener">Aviasales<svg class="ic"><use href="#i-arrow-up-right"/></svg></a>
+      <a class="btn" href="https://ostrovok.ru" target="_blank" rel="noopener">Ostrovok<svg class="ic"><use href="#i-arrow-up-right"/></svg></a>
+      <a class="btn" href="https://ru.trip.com" target="_blank" rel="noopener">Trip.com<svg class="ic"><use href="#i-arrow-up-right"/></svg></a>
+      <a class="btn ghost" href="https://forum.awd.ru" target="_blank" rel="noopener">Форум Винского<svg class="ic"><use href="#i-arrow-up-right"/></svg></a>
+    </div>
+    <div class="note"><svg class="ic"><use href="#i-warning"/></svg><div><b>Экстренные номера.</b> Полиция 110, скорая 120, пожарные 119. Посольство России в Пекине: +86 10 6532-1381. Вода из-под крана не питьевая.</div></div>
   </div>
-  <div class="note"><b>Экстренные:</b> полиция 110 · скорая 120 · пожарные 119. Посольство РФ в Пекине: +86 10 6532-1381. Вода из-под крана не питьевая.</div>
 </section>
-
-</div><!-- /wrap -->
+</main>
 
 <footer><div class="wrap">
-  <p>Гайд собран под конкретную пару; даты поездки: <span id="footDates">1–10 янв 2027</span>. Цены — ориентиры с запасом, перепроверяй при бронировании.</p>
-  <p class="updated" style="margin-top:8px">Обновлено: июль 2026 · v4 «движок» · сделано с заботой о двух туристах 🧣🧤</p>
+  <p>Гайд собран под конкретную пару, даты поездки: <span id="footDates">1–10 янв 2027</span>. Цены — ориентиры с запасом, перепроверяй при бронировании.</p>
+  <p>Шрифты и иконки лежат на этом же домене: <code>fonts.googleapis.com</code> из Китая не открывается, а гайд читают именно там.</p>
 </div></footer>
 
-<div class="modal" id="pmodal" hidden>
-  <div class="mback"></div>
+<div class="modal" id="modal" hidden>
+  <div class="mback" data-close></div>
   <div class="mcard" role="dialog" aria-modal="true" aria-labelledby="mname">
-    <button class="mclose" type="button" aria-label="Закрыть">✕</button>
-    <div class="mim"><img id="mimg" alt="" onerror="this.style.display='none'"></div>
+    <button class="mx" type="button" data-close aria-label="Закрыть"><svg class="ic"><use href="#i-x"/></svg></button>
+    <div class="mim"><img id="mimg" alt=""></div>
     <div class="mbody">
       <div class="mcity" id="mcity"></div>
       <h3 id="mname"></h3>
       <div class="mmeta" id="mmeta"></div>
       <p class="mtext" id="mtext"></p>
-      <div class="link-row mlinks" id="mlinks"></div>
-      <button class="btn solid msel" id="msel" type="button"></button>
+      <div class="mlinks" id="mlinks"></div>
+      <button class="btn primary msel" id="msel" type="button"></button>
     </div>
   </div>
 </div>
@@ -459,25 +687,43 @@ footer{margin-top:56px;padding:28px 0 44px;border-top:1px solid var(--line);colo
 (function(){
 "use strict";
 var store={get:function(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+var $=function(s){return document.querySelector(s)};
 var IMG="https://commons.wikimedia.org/wiki/Special:FilePath/";
 function im(f){return IMG+encodeURIComponent(f)+"?width=800"}
 function wikiURL(t){return "https://ru.wikipedia.org/w/index.php?search="+encodeURIComponent(t)}
 function ytURL(q){return "https://www.youtube.com/results?search_query="+encodeURIComponent(q)}
+function icon(n){return '<svg class="ic" aria-hidden="true"><use href="#i-'+n+'"/></svg>'}
+var IOS="https://apps.apple.com/app/",GP="https://play.google.com/store/apps/details?id=";
+var mq=function(q){try{return window.matchMedia?window.matchMedia(q):{matches:false}}catch(e){return {matches:false}}};
+var reduce=mq("(prefers-reduced-motion: reduce)").matches;
 
+/* Города отсортированы по январской температуре: маршрут — это градиент.
+   t = [минимум, максимум], tm = средняя, band = токен температурной шкалы. */
 var CITIES={
- beijing:{name:"Пекин",key:"ПЕК",color:"#B3271E",hotel:[500,850],daily:[500,750],ghead:"Пекин — империя, снег и Гарри Поттер"},
- harbin:{name:"Харбин",key:"ХАР",color:"#2E7FB8",hotel:[400,700],daily:[400,650],ghead:"Харбин — ледовая столица (−25°)"},
- xian:{name:"Сиань",key:"СИА",color:"#8A5A2B",hotel:[350,600],daily:[420,650],ghead:"Сиань — терракотовая армия и древняя столица"},
- chengdu:{name:"Чэнду",key:"ЧЭН",color:"#5B8C3E",hotel:[350,600],daily:[420,680],ghead:"Чэнду — панды, чай и острая кухня"},
- zhangjiajie:{name:"Чжанцзяцзе",key:"ЧЖЦ",color:"#556B7D",hotel:[350,600],daily:[380,600],ghead:"Чжанцзяцзе — горы «Аватара»"},
- shanghai:{name:"Шанхай",key:"ШАН",color:"#2F4FBF",hotel:[550,900],daily:[500,800],ghead:"Шанхай — неон, Дисней и распродажи"},
- suzhou:{name:"Сучжоу",key:"СУЧ",color:"#7E5FA0",hotel:[400,650],daily:[420,680],ghead:"Сучжоу — сады и каналы (30 мин от Шанхая)"},
- hangzhou:{name:"Ханчжоу",key:"ХАН",color:"#2E7D6B",hotel:[450,750],daily:[450,720],ghead:"Ханчжоу — Западное озеро и чай лунцзин"},
- guilin:{name:"Гуйлинь · Яншо",key:"ГУЙ",color:"#2E8C5A",hotel:[350,650],daily:[380,620],ghead:"Гуйлинь и Яншо — карст с купюры ¥20"},
- guangzhou:{name:"Гуанчжоу",key:"ГУА",color:"#C07A1D",hotel:[750,1200],daily:[450,700],ghead:"Гуанчжоу — жирафы и +18° на финал"}
+ harbin:{name:"Харбин",key:"ХАР",band:"--t-frozen",t:[-24,-12],tm:-18,hotel:[400,700],daily:[400,650],
+   head:"Харбин — ледовая столица",why:"Крупнейший ледовый фестиваль планеты. Поезд-пуля из Пекина 4 ч 40 мин"},
+ beijing:{name:"Пекин",key:"ПЕК",band:"--t-cold",t:[-9,2],tm:-3,hotel:[500,850],daily:[500,750],
+   head:"Пекин — империя, снег и Гарри Поттер",why:"Стена без толп, Запретный город в снегу, Хогсмид в Universal. Прямой из Москвы 7,5 ч"},
+ xian:{name:"Сиань",key:"СИА",band:"--t-cold",t:[-4,5],tm:0,hotel:[350,600],daily:[420,650],
+   head:"Сиань — терракотовая армия",why:"Восемь тысяч глиняных воинов и стена XIV века. Поезд из Пекина 4,5 ч"},
+ zhangjiajie:{name:"Чжанцзяцзе",key:"ЧЖЦ",band:"--t-cool",t:[0,8],tm:4,hotel:[350,600],daily:[380,600],
+   head:"Чжанцзяцзе — горы «Аватара»",why:"Три тысячи столбов и стеклянный мост. Зимой пики в снегу и без толп"},
+ shanghai:{name:"Шанхай",key:"ШАН",band:"--t-cool",t:[2,9],tm:5,hotel:[550,900],daily:[500,800],
+   head:"Шанхай — неон, Дисней и распродажи",why:"Лучший Дисней года и сезон скидок. Прямой из Москвы 9 ч"},
+ suzhou:{name:"Сучжоу",key:"СУЧ",band:"--t-cool",t:[2,8],tm:5,hotel:[400,650],daily:[420,680],
+   head:"Сучжоу — сады и каналы",why:"Классические сады ЮНЕСКО. Полчаса поездом от Шанхая"},
+ hangzhou:{name:"Ханчжоу",key:"ХАН",band:"--t-cool",t:[2,9],tm:5,hotel:[450,750],daily:[450,720],
+   head:"Ханчжоу — Западное озеро",why:"Сломанный мост в снегу и чай лунцзин. Час поездом от Шанхая"},
+ chengdu:{name:"Чэнду",key:"ЧЭН",band:"--t-cool",t:[3,10],tm:6,hotel:[350,600],daily:[420,680],
+   head:"Чэнду — панды, чай и хого",why:"В прохладу панды активнее. Поезд из Сианя 3,5 ч сквозь Циньлин"},
+ guilin:{name:"Гуйлинь",key:"ГУЙ",band:"--t-mild",t:[8,14],tm:11,hotel:[350,650],daily:[380,620],
+   head:"Гуйлинь и Яншо — карст с купюры ¥20",why:"Круиз по реке Ли среди карстовых пиков. Поезд из Гуанчжоу 2,5 ч"},
+ guangzhou:{name:"Гуанчжоу",key:"ГУА",band:"--t-warm",t:[11,18],tm:14,hotel:[750,1200],daily:[450,700],
+   head:"Гуанчжоу — жирафы и тёплый финал",why:"Кормление жирафов в Chimelong и +18°. Прямой домой 10,5 ч"}
 };
-var ORDER=["beijing","harbin","xian","chengdu","zhangjiajie","shanghai","suzhou","hangzhou","guilin","guangzhou"];
-
+var ORDER=["harbin","beijing","xian","zhangjiajie","shanghai","suzhou","hangzhou","chengdu","guilin","guangzhou"];
+function tcol(c){return "var("+CITIES[c].band+")"}
+function tsign(n){return (n>0?"+":(n<0?"\u2212":""))+Math.abs(n)+"\u00b0"}
 var MSK={
  beijing:{h:7.5,label:"прямой ~7,5 ч",direct:true},
  shanghai:{h:9,label:"прямой ~9 ч",direct:true},
@@ -529,13 +775,13 @@ var LEGMAP={
  "suzhou-guangzhou":{t:"✈️",h:2.5,cost:[1500,2800],txt:"Сучжоу → Гуанчжоу: 30 мин поездом до Шанхая + перелёт 2 ч 15 мин"},
  "hangzhou-guangzhou":{t:"✈️",h:2.2,cost:[1400,2600],txt:"Перелёт Ханчжоу → Гуанчжоу · ~2 ч 10 мин"}
 };
+
 function legFor(a,b){
  var L=LEGMAP[a+"-"+b]||LEGMAP[b+"-"+a];
  if(L)return L;
  return {t:"✈️",h:3.6,cost:[1900,3400],txt:"Перелёт "+CITIES[a].name+" → "+CITIES[b].name+" · ~3–4 ч (скорее всего, с пересадкой)"};
 }
 
-/* tod: full — весь день; day — полдня; evening — вечер */
 var PLACES=[
 {id:"forbidden",city:"beijing",name:"Запретный город + холм Цзиншань",img:im("Forbidden City after snow (20200106114845).jpg"),why:"Сердце империи: 9 000 залов, а под снегом — открытка.",hrs:"утро, 3–4 ч",tod:"day",cost:[140,190],def:true,cons:"not_monday",warn:"⚠ Понедельник — Запретный город закрыт. Конструктор не нашёл другой день: подвигай карточки",
  more:"Резиденция 24 императоров династий Мин и Цин — крупнейший дворцовый комплекс мира, 72 гектара симметрии, киновари и золота. Зимой сюда приходят ловить редчайший кадр: красные стены под снегом. Идите с юга на север 3–4 часа, затем поднимитесь в парк Цзиншань напротив (¥2) — весь дворец как на ладони, особенно на закате. Билет ¥60 строго по брони за 7 дней, аудиогид на русском ¥40, понедельник — выходной.",wiki:"Запретный город",yt:"Запретный город Пекин зимой"},
@@ -619,404 +865,6 @@ var PLACES=[
  more:"Beijing Road — 1500 лет торговли на одном месте: под стеклом в мостовой видны дороги династий Сун и Мин, над ними — неон и флагманы. Серьёзный шопинг — в кластере Tianhe: люксовый Taikoo Hui, гигантский Grandview, электроника в Teemall. Те же предновогодние скидки, что и в Шанхае, плюс tax free. Если чемодан ещё закрывается — это последний шанс перед вылетом домой.",wiki:"Гуанчжоу",yt:"Beijing road Guangzhou shopping"}
 ];
 
-var DEF={sel:{},start:"2027-01-01",rate:13,len:{mode:"auto",days:10}};
-PLACES.forEach(function(p){DEF.sel[p.id]=!!p.def});
-var state=store.get("cn_places_v4");
-if(!state||!state.sel||!state.start){state=JSON.parse(JSON.stringify(DEF));}
-if(!state.len||!state.len.mode)state.len={mode:"auto",days:10};
-PLACES.forEach(function(p){if(typeof state.sel[p.id]!=="boolean")state.sel[p.id]=!!p.def});
-
-var $=function(s){return document.querySelector(s)};
-function addDays(iso,n){var d=new Date(iso+"T12:00:00");d.setDate(d.getDate()+n);return d}
-function shiftD(d,n){var x=new Date(d);x.setDate(x.getDate()+n);return x}
-function fmtDate(d){var m=["янв","фев","мар","апр","мая","июн","июл","авг","сен","окт","ноя","дек"];return d.getDate()+" "+m[d.getMonth()]}
-var WD=["вс","пн","вт","ср","чт","пт","сб"];
-function plural(n,a,b,c){n=Math.abs(n);var t=n%100;if(t>=11&&t<=14)return c;t=n%10;return t===1?a:(t>=2&&t<=4?b:c)}
-function fmtRange(lo,hi){return Math.round(lo/1000)+"–"+Math.round(hi/1000)+" тыс ₽"}
-function consOK(p,date){
- if(!p.cons)return true;
- if(p.cons==="not_monday")return date.getDay()!==1;
- if(p.cons==="park_weekday"){var wd=date.getDay(),hol=(date.getMonth()===0&&date.getDate()<=3);return wd>=1&&wd<=5&&!hol}
- return true;
-}
-function mskCost(c){return MSK[c].h+(MSK[c].direct?0:2.5)}
-
-/* ---------- оптимальный порядок городов ---------- */
-function pathCost(arr){
- var s=mskCost(arr[0])+mskCost(arr[arr.length-1]);
- for(var i=1;i<arr.length;i++)s+=legFor(arr[i-1],arr[i]).h;
- return s;
-}
-function bestOrder(cities){
- var n=cities.length;
- if(n<=1)return cities.slice();
- if(n<=8){
-  var best=null,bc=1e9,a=cities.slice();
-  var c=new Array(n).fill(0),i=0;
-  var check=function(){var cost=pathCost(a);if(cost<bc-1e-9){bc=cost;best=a.slice()}};
-  check();
-  while(i<n){
-   if(c[i]<i){
-    var k=(i%2===0)?0:c[i],t=a[k];a[k]=a[i];a[i]=t;
-    check();c[i]++;i=0;
-   }else{c[i]=0;i++}
-  }
-  return best;
- }
- /* NN + 2-opt для >8 городов */
- var start=cities.indexOf("beijing")>=0?"beijing":cities[0];
- var rest=cities.filter(function(x){return x!==start}),path=[start];
- while(rest.length){
-  var cur=path[path.length-1],bi=0,bd=1e9;
-  rest.forEach(function(r,ix){var d=legFor(cur,r).h;if(d<bd){bd=d;bi=ix}});
-  path.push(rest.splice(bi,1)[0]);
- }
- var improved=true;
- while(improved){improved=false;
-  for(var x=0;x<path.length-1;x++)for(var y=x+1;y<path.length;y++){
-   var np=path.slice(0,x).concat(path.slice(x,y+1).reverse(),path.slice(y+1));
-   if(pathCost(np)<pathCost(path)-1e-9){path=np;improved=true}
-  }}
- return path;
-}
-
-/* ---------- планировщик дней ---------- */
-function schedule(){
- var sel=PLACES.filter(function(p){return state.sel[p.id]});
- var cset=ORDER.filter(function(c){return sel.some(function(p){return p.city===c})});
- var order=bestOrder(cset);
- var res={cities:order,perCity:{},days:[],needed:0,unplaced:[],limit:0};
- if(!order.length)return res;
- order.forEach(function(c,ci){
-  var items=sel.filter(function(p){return p.city===c});
-  var fulls=items.filter(function(p){return p.tod==="full"});
-  var halves=items.filter(function(p){return p.tod==="day"});
-  var eves=items.filter(function(p){return p.tod==="evening"});
-  var load=fulls.length+halves.length*0.5;
-  var isLast=ci===order.length-1;
-  var d=1;
-  while(d<12){
-   var cap=d-0.5-(isLast?0.5:0);
-   var evCap=d-fulls.filter(function(f){return f.alsoEvening}).length;
-   if(cap>=load&&evCap>=eves.length)break;
-   d++;
-  }
-  res.perCity[c]=d;
- });
- res.needed=order.reduce(function(s,c){return s+res.perCity[c]},0);
- res.limit=state.len.mode==="fix"?state.len.days:res.needed;
- if(state.len.mode==="fix"){
-  var extra=state.len.days-res.needed;
-  if(extra>0)res.perCity[order[order.length-1]]+=extra;
- }
- var dayNo=1;
- order.forEach(function(c,ci){
-  var items=sel.filter(function(p){return p.city===c});
-  var fulls=items.filter(function(p){return p.tod==="full"}).sort(function(a,b){return (b.cons?1:0)-(a.cons?1:0)});
-  var halves=items.filter(function(p){return p.tod==="day"}).sort(function(a,b){return (b.cons?1:0)-(a.cons?1:0)});
-  var eves=items.filter(function(p){return p.tod==="evening"});
-  var n=res.perCity[c],isLast=ci===order.length-1;
-  var days=[];
-  for(var i=0;i<n;i++){
-   var cap=1;
-   if(i===0)cap=0.5;
-   if(isLast&&i===n-1)cap-=0.5;
-   days.push({no:dayNo+i,city:c,cap:Math.max(cap,0),arrive:i===0,depart:isLast&&i===n-1,parts:[],evening:null,evBlock:false,notes:[]});
-  }
-  fulls.forEach(function(f){
-   var day=days.find(function(dd){return dd.cap>=1&&consOK(f,addDays(state.start,dd.no-1))})
-        ||days.find(function(dd){return dd.cap>=1});
-   if(!day){res.unplaced.push(f);return}
-   if(f.cons&&!consOK(f,addDays(state.start,day.no-1)))day.notes.push(f.warn);
-   day.parts.push(f);day.cap-=1;
-   if(f.alsoEvening)day.evBlock=true;
-  });
-  halves.forEach(function(h){
-   var cand=days.filter(function(dd){return dd.cap>=0.5&&consOK(h,addDays(state.start,dd.no-1))});
-   if(!cand.length)cand=days.filter(function(dd){return dd.cap>=0.5});
-   if(!cand.length){res.unplaced.push(h);return}
-   cand.sort(function(a,b){return (a.arrive?1:0)-(b.arrive?1:0)||a.cap-b.cap||a.no-b.no});
-   var day=cand[0];
-   if(h.cons&&!consOK(h,addDays(state.start,day.no-1)))day.notes.push(h.warn);
-   day.parts.push(h);day.cap-=0.5;
-  });
-  eves.forEach(function(e){
-   var day=null;
-   if(e.after)day=days.find(function(dd){return !dd.evening&&!dd.evBlock&&dd.parts.some(function(p){return p.id===e.after})});
-   if(!day)day=days.find(function(dd){return !dd.evening&&!dd.evBlock});
-   if(!day){res.unplaced.push(e);return}
-   day.evening=e;
-  });
-  res.days=res.days.concat(days);
-  dayNo+=n;
- });
- return res;
-}
-
-/* ---------- карточки ---------- */
-function renderPlaces(){
- var host=$("#placeGrid");host.innerHTML="";
- ORDER.forEach(function(c){
-  var items=PLACES.filter(function(p){return p.city===c});
-  if(!items.length)return;
-  var selN=items.filter(function(p){return state.sel[p.id]}).length;
-  var g=document.createElement("div");g.className="pgroup";
-  g.innerHTML='<div class="gh"><div class="bar" style="background:'+CITIES[c].color+'"></div><h3>'+CITIES[c].ghead+'</h3><span class="cnt">'+selN+' / '+items.length+'</span></div>';
-  var grid=document.createElement("div");grid.className="pgrid";
-  items.forEach(function(p){
-   var b=document.createElement("div");
-   b.className="pcard"+(state.sel[p.id]?" sel":"");
-   b.style.setProperty("--pc",CITIES[c].color);
-   b.setAttribute("role","button");b.tabIndex=0;
-   b.setAttribute("aria-pressed",state.sel[p.id]?"true":"false");
-   b.dataset.pid=p.id;
-   var rib=p.tag==="winter"?'<span class="ribbon">только зимой</span>':"";
-   var costTxt=p.cost[1]===0?"бесплатно":"¥"+p.cost[0]+(p.cost[1]>p.cost[0]?"–"+p.cost[1]:"")+" на двоих";
-   b.innerHTML='<div class="im"><img loading="lazy" alt="" src="'+p.img+'" onerror="this.style.display=\'none\'"></div>'+rib+
-    '<span class="chk" aria-hidden="true">✓</span>'+
-    '<div class="bd"><div class="nm">'+p.name+'</div><div class="meta"><span>'+p.hrs+'</span><span>'+costTxt+'</span></div><div class="why">'+p.why+'</div>'+
-    '<div class="pfoot"><button type="button" class="pmore" data-more="'+p.id+'">Подробнее ↗</button></div></div>';
-   grid.appendChild(b);
-  });
-  g.appendChild(grid);host.appendChild(g);
- });
-}
-
-/* ---------- маршрут ---------- */
-function renderItin(sch){
- var itin=$("#itin");itin.innerHTML="";
- if(!sch.cities.length){itin.innerHTML='<p style="color:var(--dim)">Отметь хотя бы одну карточку — и маршрут соберётся.</p>';return}
- var first=sch.cities[0],last=sch.cities[sch.cities.length-1];
- var startD=addDays(state.start,0),eveD=addDays(state.start,-1);
- var isNY=startD.getMonth()===0&&startD.getDate()===1;
- var homeNY=startD.getMonth()===0&&startD.getDate()>=2&&startD.getDate()<=5;
- var arrTxt;
- if(isNY)arrTxt="Вылет из Москвы вечером "+fmtDate(eveD)+" ("+MSK[first].label+") — Новый год встречаете в небе 🥂, прилёт в "+CITIES[first].name+" утром "+fmtDate(startD);
- else if(homeNY)arrTxt="Новый год — дома с родными 🎄. Вечером "+fmtDate(eveD)+" — в самолёт ("+MSK[first].label+"), прилёт в "+CITIES[first].name+" "+fmtDate(startD);
- else arrTxt="Вылет из Москвы "+fmtDate(eveD)+" ("+MSK[first].label+"), прилёт в "+CITIES[first].name+" "+fmtDate(startD);
- var arr=document.createElement("div");arr.className="leg";
- arr.innerHTML='<div class="ic">✈️</div><div>'+arrTxt+'</div>';
- itin.appendChild(arr);
- var prev=null;
- sch.days.forEach(function(day){
-  if(day.city!==prev){
-   if(prev){var leg=legFor(prev,day.city);
-    var lg=document.createElement("div");lg.className="leg";lg.innerHTML='<div class="ic">'+leg.t+'</div><div>'+leg.txt+'</div>';itin.appendChild(lg);}
-   prev=day.city;
-  }
-  var d=addDays(state.start,day.no-1);
-  var pieces=[];
-  if(day.arrive&&day.parts.length===0)pieces.push(day.no===1?"Прилёт и заселение — день на адаптацию":"Переезд, заселение — полдня в запасе");
-  day.parts.forEach(function(p){pieces.push(p.name)});
-  var what=pieces.join(" → ");
-  if(day.evening)what+=(what?" · ":"")+'<span class="eve">вечер: '+day.evening.name+"</span>";
-  if(!what&&!day.evening)what=day.depart?"Утро на сборы и сувениры → вылет домой":"Свободный день: спонтанность, догулять любимое, кофейни";
-  else if(day.depart)what+=' <span class="eve">→ вылет домой</span>';
-  var el=document.createElement("div");
-  el.className="day"+(day.no>sch.limit?" over":"");
-  el.style.setProperty("--dc",CITIES[day.city].color);
-  el.innerHTML='<div class="stamp"><b>'+(day.no<10?"0":"")+day.no+'</b><span>'+CITIES[day.city].key+'</span></div>'+
-   '<div class="body"><div class="city">'+CITIES[day.city].name+' · <span class="date mono" style="font-weight:400">'+fmtDate(d)+", "+WD[d.getDay()]+'</span></div><div class="what">'+what+'</div>'+
-   (day.notes.length?'<div class="warn">'+day.notes.join("<br>")+'</div>':"")+'</div>';
-  itin.appendChild(el);
- });
- var dep=document.createElement("div");dep.className="leg";
- dep.innerHTML='<div class="ic">✈️</div><div>Вылет домой: '+CITIES[last].name+' → Москва ('+MSK[last].label+')</div>';
- itin.appendChild(dep);
- if(sch.unplaced.length){
-  var w=document.createElement("div");w.className="note danger";
-  w.innerHTML="<b>Не влезло в дни:</b> "+sch.unplaced.map(function(p){return p.name}).join(", ")+". Добавь дней (фикс) или сними карточки этого города.";
-  itin.appendChild(w);
- }
-}
-
-function renderMeter(sch){
- var m=$("#meter");
- var end=addDays(state.start,(sch.limit||state.len.days)-1);
- $("#endDateOut").textContent=sch.cities.length?("→ финиш "+fmtDate(end)+" ("+WD[end.getDay()]+"), "+sch.limit+" "+plural(sch.limit,"день","дня","дней")):"";
- var n=sch.needed;
- if(!sch.cities.length){m.className="meter";m.innerHTML='<div class="mtop"><span>Пока пусто — отмечай карточки выше.</span></div><div class="mbar"><i style="width:0%"></i></div>';return}
- if(state.len.mode==="auto"){
-  m.className="meter";
-  m.innerHTML='<div class="mtop"><span>🧭 Авто-длительность: под выбранные карточки нужно <b>'+n+' '+plural(n,"день","дня","дней")+'</b> — маршрут построен ровно. Хочешь жёсткие рамки — переключись на «Фикс».</span><span class="mono">'+n+' дн.</span></div><div class="mbar"><i style="width:100%"></i></div>';
-  return;
- }
- var L=state.len.days,over=n>L,msg;
- if(over)msg="⚠️ Выбранного — на <b>"+n+" "+plural(n,"день","дня","дней")+"</b> при "+L+" по фиксу. Дни после "+L+"-го помечены пунктиром: сними "+(n-L)+" "+plural(n-L,"день","дня","дней")+" карточек, добавь дней — или переключись на «Авто».";
- else if(n===L)msg="✅ Идеально: выбранного ровно на <b>"+L+" "+plural(L,"день","дня","дней")+"</b>.";
- else msg="🧩 Выбранного — на <b>"+n+"</b>, свободные "+(L-n)+" "+plural(L-n,"день","дня","дней")+" отданы финальному городу как «дни спонтанности».";
- m.className="meter"+(over?" err":"");
- m.innerHTML='<div class="mtop"><span>'+msg+'</span><span class="mono">'+Math.min(n,L)+' / '+L+'</span></div><div class="mbar"><i style="width:'+Math.min(n/L*100,100)+'%"></i></div>';
-}
-
-function renderBudget(sch){
- var rate=state.rate||13;
- var lo=0,hi=0;
- PLACES.forEach(function(p){if(state.sel[p.id]){lo+=p.cost[0];hi+=p.cost[1]}});
- sch.cities.forEach(function(c,ci){
-  var d=sch.perCity[c];
-  var nights=(ci===sch.cities.length-1)?Math.max(d-1,1):d;
-  lo+=CITIES[c].hotel[0]*nights+CITIES[c].daily[0]*d;
-  hi+=CITIES[c].hotel[1]*nights+CITIES[c].daily[1]*d;
- });
- for(var i=1;i<sch.cities.length;i++){var leg=legFor(sch.cities[i-1],sch.cities[i]);lo+=leg.cost[0];hi+=leg.cost[1]}
- var fLo=100000,fHi=150000,transfer=false;
- if(sch.cities.length){
-  if(!MSK[sch.cities[0]].direct){fLo+=8000;fHi+=20000;transfer=true}
-  if(!MSK[sch.cities[sch.cities.length-1]].direct){fLo+=8000;fHi+=20000;transfer=true}
- }
- var rubLo=lo*rate+fLo+6000,rubHi=hi*rate+fHi+12000;
- $("#budgetOut").textContent=sch.cities.length?"≈ "+fmtRange(rubLo,rubHi):"—";
- $("#budgetDetail").textContent=sch.cities.length?("Внутри Китая: ¥"+lo.toLocaleString("ru-RU")+"–"+hi.toLocaleString("ru-RU")+" (билеты + отели + еда + переезды) + перелёты из Москвы "+Math.round(fLo/1000)+"–"+Math.round(fHi/1000)+" т.₽"+(transfer?" (город прилёта/вылета без прямых — учтена пересадка)":"")+" + eSIM и страховка. Без шопинга."):"";
-}
-
-function tripRange(lim){
- var a=addDays(state.start,0),b=addDays(state.start,(lim||10)-1);
- var s=(a.getMonth()===b.getMonth())?(a.getDate()+"–"+fmtDate(b)):(fmtDate(a)+" – "+fmtDate(b));
- return s+" "+b.getFullYear();
-}
-function updateDatesUI(sch){
- var lim=sch.limit||state.len.days||10;
- var r=tripRange(lim),el;
- if((el=$("#heroDates")))el.textContent=r;
- if((el=$("#whenRange")))el.textContent=r;
- if((el=$("#footDates")))el.textContent=r;
- document.title="Китай на двоих — конструктор · "+r;
- var pb=document.querySelectorAll("[data-setstart]");
- for(var k=0;k<pb.length;k++)pb[k].classList.toggle("on",pb[k].dataset.setstart===state.start);
- $("#lenAuto").classList.toggle("on",state.len.mode==="auto");
- $("#lenFix").classList.toggle("on",state.len.mode==="fix");
- $("#lenInput").value=state.len.days;
- var touches=false,inJan=false;
- for(var i=0;i<lim;i++){var dd=addDays(state.start,i);if(dd.getMonth()===0){inJan=true;if(dd.getDate()<=3)touches=true}}
- var hn=$("#holidayNote");
- if(hn){
-  if(touches)hn.innerHTML="<b>1–3 января — государственные выходные в Китае.</b> Парки и главные музеи в эти дни штурмует вся страна. Конструктор это знает: Universal и Дисней он сам ставит на будни после 3 января, а на праздники — прогулки, стену и коньки. Если из-за твоего выбора парк всё же попадёт на плохой день — увидишь красное предупреждение в плане.";
-  else if(inJan)hn.innerHTML="<b>Вы стартуете после госвыходных 1–3 января</b> — новогодняя толпа схлынула, парки и музеи в будничном режиме, конструктору даже не приходится хитрить. Железное правило остаётся одно: понедельник — выходной Запретного города, планировщик его обходит.";
-  else hn.innerHTML="<b>Сверь китайские праздники со своими датами.</b> Госвыходные (1–3 января, китайский Новый год, Золотая неделя 1–8 октября) превращают парки в человеческое море. Планировщик автоматически учитывает январские; остальное проверь по календарю праздников КНР.";
- }
- var dayOf=function(id){return sch.days.find(function(dd){return dd.parts.some(function(p){return p.id===id})||(dd.evening&&dd.evening.id===id)})};
- var dOf=function(day){return addDays(state.start,day.no-1)};
- var uni=dayOf("universal"),dis=dayOf("disney"),forb=dayOf("forbidden");
- var trains=[];
- for(var j=1;j<sch.cities.length;j++){
-  var lg=legFor(sch.cities[j-1],sch.cities[j]);
-  if(lg.t==="🚄"){
-   var fd=sch.days.find(function(dd){return dd.city===sch.cities[j]&&dd.arrive});
-   if(fd)trains.push({route:CITIES[sch.cities[j-1]].name+" → "+CITIES[sch.cities[j]].name,date:dOf(fd)});
-  }
- }
- var pw=$("#bkParksWhen"),pt=$("#bkParksWhat");
- if(pw&&pt){
-  var bits=[];
-  if(uni){var ud=dOf(uni);bits.push("Universal на "+fmtDate(ud)+" ("+WD[ud.getDay()]+")")}
-  if(dis){var dd2=dOf(dis);bits.push("Disney на "+fmtDate(dd2)+" ("+WD[dd2.getDay()]+")")}
-  if(state.sel.safari)bits.push("Chimelong Safari и цирк");
-  if(state.sel.avatar||state.sel.tianmen)bits.push("Чжанцзяцзе (билеты на месте или Trip.com)");
-  if(bits.length){
-   var pd=[uni,dis].filter(Boolean).map(function(x){return dOf(x).getTime()});
-   pw.textContent=pd.length?("к "+fmtDate(shiftD(new Date(Math.min.apply(null,pd)),-14))+" (за 2 недели)"):"за 2–3 недели";
-   pt.textContent="Датированные билеты: "+bits.join(", ");
-  }else{pw.textContent="—";pt.textContent="Парки не выбраны — этот шаг можно пропустить";}
- }
- var tw=$("#bkTrainWhen"),tt=$("#bkTrainWhat");
- if(tw&&tt){
-  if(trains.length){
-   var minT=new Date(Math.min.apply(null,trains.map(function(t){return t.date.getTime()})));
-   tw.textContent=fmtDate(shiftD(minT,-15))+" (за 15 дней)";
-   tt.textContent="Открываются продажи на поезда — брать сразу: "+trains.map(function(t){return t.route+" на "+fmtDate(t.date)}).join("; ");
-  }else{tw.textContent="—";tt.textContent="Поездных участков в текущем маршруте нет — шаг можно пропустить (но загляни в раздел «Поезда»)";}
- }
- var qw=$("#bkPalaceWhen"),qt=$("#bkPalaceWhat");
- if(qw&&qt){
-  if(forb){var fdd=dOf(forb);
-   qw.textContent=fmtDate(shiftD(fdd,-7))+", 3:00 мск";
-   qt.innerHTML="⏰ Билеты в Запретный город на "+fmtDate(fdd)+" ("+WD[fdd.getDay()]+") в WeChat-миниаппе — ловить в момент открытия продаж. Будильник обязателен";
-  }else{qw.textContent="—";qt.textContent="Запретный город сейчас не выбран — добавь карточку, и здесь появится дата охоты за билетами";}
- }
-}
-
-function renderAll(){
- renderPlaces();
- var sch=schedule();
- renderMeter(sch);renderItin(sch);renderBudget(sch);updateDatesUI(sch);
- store.set("cn_places_v4",state);
-}
-
-/* ---------- модалка ---------- */
-var modalId=null;
-function openModal(id){
- var p=PLACES.find(function(x){return x.id===id});if(!p)return;
- modalId=id;
- var M=$("#pmodal");
- M.querySelector(".mcard").style.setProperty("--mc",CITIES[p.city].color);
- $("#mimg").style.display="";$("#mimg").src=p.img.replace("width=800","width=1200");
- $("#mcity").textContent=CITIES[p.city].name+" · "+p.hrs;
- $("#mname").textContent=p.name;
- var costTxt=p.cost[1]===0?"бесплатно":"¥"+p.cost[0]+(p.cost[1]>p.cost[0]?"–"+p.cost[1]:"")+" на двоих";
- $("#mmeta").innerHTML="<span>"+costTxt+"</span>"+(p.tag==="winter"?"<span>только зимой ❄</span>":"");
- $("#mtext").textContent=p.more;
- var links='<a class="btn" target="_blank" rel="noopener" href="'+wikiURL(p.wiki)+'">Википедия</a>'+
-  '<a class="btn" target="_blank" rel="noopener" href="'+ytURL(p.yt)+'">Видео на YouTube</a>'+
-  (p.site?'<a class="btn" target="_blank" rel="noopener" href="'+p.site+'">Официальный сайт</a>':"");
- $("#mlinks").innerHTML=links;
- syncMsel();
- M.hidden=false;
- document.body.style.overflow="hidden";
-}
-function syncMsel(){
- if(modalId===null)return;
- var on=!!state.sel[modalId];
- var b=$("#msel");
- b.textContent=on?"✓ В маршруте — убрать":"Добавить в маршрут";
- b.className="btn "+(on?"":"solid")+" msel";
-}
-function closeModal(){$("#pmodal").hidden=true;modalId=null;document.body.style.overflow=""}
-
-/* ---------- события ---------- */
-document.addEventListener("click",function(e){
- var t=e.target;
- var more=t.closest?t.closest(".pmore"):null;
- if(more){openModal(more.dataset.more);return}
- if(t.dataset&&t.dataset.setstart){state.start=t.dataset.setstart;var si=$("#startDate");if(si)si.value=state.start;renderAll();return}
- if(t.dataset&&t.dataset.lenmode){state.len.mode=t.dataset.lenmode;renderAll();return}
- if(t.id==="selReset"){state.sel={};PLACES.forEach(function(p){state.sel[p.id]=!!p.def});renderAll();return}
- if(t.id==="selClear"){state.sel={};PLACES.forEach(function(p){state.sel[p.id]=false});renderAll();return}
- if(t.id==="clReset"){clState={};store.set("cn_check_v2",clState);renderChecklist();return}
- if(t.id==="msel"&&modalId){state.sel[modalId]=!state.sel[modalId];renderAll();syncMsel();return}
- if(t.classList&&t.classList.contains("mclose")){closeModal();return}
- if(t.classList&&t.classList.contains("mback")){closeModal();return}
- var card=t.closest?t.closest(".pcard"):null;
- if(card&&card.dataset.pid){state.sel[card.dataset.pid]=!state.sel[card.dataset.pid];renderAll();return}
-});
-document.addEventListener("keydown",function(e){
- if(e.key==="Escape"&&!$("#pmodal").hidden){closeModal();return}
- if((e.key==="Enter"||e.key===" ")&&e.target.classList&&e.target.classList.contains("pcard")){
-  e.preventDefault();var id=e.target.dataset.pid;state.sel[id]=!state.sel[id];renderAll();
-  var nc=document.querySelector('.pcard[data-pid="'+id+'"]');if(nc)nc.focus();
- }
-});
-document.addEventListener("change",function(e){
- var t=e.target;
- if(t.id==="startDate"){state.start=t.value||"2027-01-01";renderAll();}
- if(t.id==="lenInput"){var v=parseInt(t.value,10);if(v>=4&&v<=21){state.len.days=v;state.len.mode="fix";renderAll();}}
- if(t.id==="rateInput"){var r=parseFloat(t.value);if(r>0){state.rate=r;renderBudget(schedule());store.set("cn_places_v4",state);}}
- if(t.dataset&&t.dataset.cl!==undefined){clState[t.dataset.cl]=t.checked;store.set("cn_check_v2",clState);updateProgress();
-  t.closest(".cl-item").classList.toggle("done",t.checked);}
-});
-$("#startDate").value=state.start;
-$("#rateInput").value=state.rate||13;
-
-/* ---------- приложения: прямые ссылки на магазины ---------- */
-var IOS="https://apps.apple.com/app/",GP="https://play.google.com/store/apps/details?id=";
-var SVG_A='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.04c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.88 2.65 3.22 2.6 1.29-.05 1.78-.83 3.34-.83 1.56 0 2 .83 3.37.81 1.39-.03 2.27-1.27 3.12-2.53.98-1.45 1.39-2.85 1.41-2.92-.03-.01-2.7-1.04-2.73-4.13-.02-.01.03-.29.01-.47zM14.6 4.7c.71-.86 1.19-2.06 1.06-3.25-1.02.04-2.26.68-3 1.54-.66.76-1.24 1.98-1.08 3.15 1.14.09 2.3-.58 3.02-1.44z"/></svg>';
-var SVG_G='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 2.3c-.2.2-.3.6-.3 1v17.4c0 .4.1.8.4 1l.1.1L13 12.9v-.2L3.6 2.3zm12.9 7.3l-3-1.7-2.4 2.4 2.4 2.4 3-1.7c.9-.5.9-1.4 0-1.4zM4.5 21.9c.3.3.8.3 1.3 0l10.7-6.1-2.4-2.4-9.6 8.5zM5.8 2.1c-.5-.3-1-.3-1.3 0l9.6 8.5 2.4-2.4L5.8 2.1z"/></svg>';
-function stores(ios,gp){
- var out='<div class="stores">';
- out+=ios?'<a href="'+ios+'" target="_blank" rel="noopener">'+SVG_A+' App Store</a>':'';
- out+=gp?'<a href="'+gp+'" target="_blank" rel="noopener">'+SVG_G+' Google Play</a>':'';
- return out+'</div>';
-}
 var APPS=[
  {n:"Alipay",w:"Платежи QR, такси DiDi внутри, метро. Регистрация по загранпаспорту до вылета",ios:IOS+"id333206289",gp:GP+"com.eg.android.AlipayGphone"},
  {n:"WeChat",w:"Мессенджер страны + миниапп для билетов в Запретный город",ios:IOS+"id414478124",gp:GP+"com.tencent.mm"},
@@ -1028,16 +876,7 @@ var APPS=[
  {n:"Ostrovok",w:"Отели с оплатой российской картой",ios:IOS+"id564204730",gp:GP+"ru.ostrovok.android"},
  {n:"Яндекс Путешествия",w:"Отели и авиа с оплатой российской картой",ios:IOS+"id1632443454",gp:GP+"ru.yandex.travel"}
 ];
-function renderApps(){
- var host=$("#appsGrid");if(!host)return;host.innerHTML="";
- APPS.forEach(function(a){
-  var el=document.createElement("div");el.className="app";
-  el.innerHTML="<b>"+a.n+"</b><div class=\"why\">"+a.w+"</div>"+stores(a.ios,a.gp);
-  host.appendChild(el);
- });
-}
 
-/* ---------- чек-лист ---------- */
 var CHECK=[
  {cat:"Документы",items:[
   ["Загранпаспорта — срок действия 6+ месяцев от даты въезда*",""],
@@ -1076,16 +915,403 @@ var CHECK=[
   ["Термос-кружка","кипяток бесплатно везде: вокзалы, парки, поезда"],
   ["Ручка — заполнить прибытие в самолёте",""]]}
 ];
+
+/* ================= state ================= */
+var DEF={sel:{},start:"2027-01-01",rate:13,len:{mode:"auto",days:10}};
+PLACES.forEach(function(p){DEF.sel[p.id]=!!p.def});
+var state=store.get("cn_places_v4");
+if(!state||!state.sel||!state.start)state=JSON.parse(JSON.stringify(DEF));
+if(!state.len||!state.len.mode)state.len={mode:"auto",days:10};
+PLACES.forEach(function(p){if(typeof state.sel[p.id]!=="boolean")state.sel[p.id]=!!p.def});
+
+function addDays(iso,n){var d=new Date(iso+"T12:00:00");d.setDate(d.getDate()+n);return d}
+function shiftD(d,n){var x=new Date(d);x.setDate(x.getDate()+n);return x}
+var MON=["янв","фев","мар","апр","мая","июн","июл","авг","сен","окт","ноя","дек"];
+var WD=["вс","пн","вт","ср","чт","пт","сб"];
+function fmtDate(d){return d.getDate()+" "+MON[d.getMonth()]}
+function plural(n,a,b,c){n=Math.abs(n);var t=n%100;if(t>=11&&t<=14)return c;t=n%10;return t===1?a:(t>=2&&t<=4?b:c)}
+function dayWord(n){return plural(n,"день","дня","дней")}
+function consOK(p,date){
+ if(!p.cons)return true;
+ if(p.cons==="not_monday")return date.getDay()!==1;
+ if(p.cons==="park_weekday"){var wd=date.getDay(),hol=(date.getMonth()===0&&date.getDate()<=3);return wd>=1&&wd<=5&&!hol}
+ return true;
+}
+function mskCost(c){return MSK[c].h+(MSK[c].direct?0:2.5)}
+function legIcon(t){return t==="🚄"?"train-simple":(t==="🚌"?"bus":"airplane-takeoff")}
+function clean(s){return String(s||"").replace(/^[⚠️\s]+/,"")}
+
+/* ================= движок порядка городов ================= */
+function pathCost(arr){
+ var s=mskCost(arr[0])+mskCost(arr[arr.length-1]);
+ for(var i=1;i<arr.length;i++)s+=legFor(arr[i-1],arr[i]).h;
+ return s;
+}
+function bestOrder(cities){
+ var n=cities.length;
+ if(n<=1)return cities.slice();
+ if(n<=8){
+  var best=null,bc=1e9,a=cities.slice(),c=new Array(n).fill(0),i=0;
+  var check=function(){var cost=pathCost(a);if(cost<bc-1e-9){bc=cost;best=a.slice()}};
+  check();
+  while(i<n){
+   if(c[i]<i){var k=(i%2===0)?0:c[i],t=a[k];a[k]=a[i];a[i]=t;check();c[i]++;i=0}
+   else{c[i]=0;i++}
+  }
+  return best;
+ }
+ var start=cities.indexOf("beijing")>=0?"beijing":cities[0];
+ var rest=cities.filter(function(x){return x!==start}),path=[start];
+ while(rest.length){
+  var cur=path[path.length-1],bi=0,bd=1e9;
+  rest.forEach(function(r,ix){var d=legFor(cur,r).h;if(d<bd){bd=d;bi=ix}});
+  path.push(rest.splice(bi,1)[0]);
+ }
+ var improved=true;
+ while(improved){improved=false;
+  for(var x=0;x<path.length-1;x++)for(var y=x+1;y<path.length;y++){
+   var np=path.slice(0,x).concat(path.slice(x,y+1).reverse(),path.slice(y+1));
+   if(pathCost(np)<pathCost(path)-1e-9){path=np;improved=true}
+  }}
+ return path;
+}
+
+/* ================= планировщик дней ================= */
+function schedule(){
+ var sel=PLACES.filter(function(p){return state.sel[p.id]});
+ var cset=ORDER.filter(function(c){return sel.some(function(p){return p.city===c})});
+ var order=bestOrder(cset);
+ var res={cities:order,perCity:{},days:[],needed:0,unplaced:[],limit:0};
+ if(!order.length)return res;
+ order.forEach(function(c,ci){
+  var items=sel.filter(function(p){return p.city===c});
+  var fulls=items.filter(function(p){return p.tod==="full"});
+  var halves=items.filter(function(p){return p.tod==="day"});
+  var eves=items.filter(function(p){return p.tod==="evening"});
+  var load=fulls.length+halves.length*0.5,isLast=ci===order.length-1,d=1;
+  while(d<12){
+   var cap=d-0.5-(isLast?0.5:0);
+   var evCap=d-fulls.filter(function(f){return f.alsoEvening}).length;
+   if(cap>=load&&evCap>=eves.length)break;
+   d++;
+  }
+  res.perCity[c]=d;
+ });
+ res.needed=order.reduce(function(s,c){return s+res.perCity[c]},0);
+ res.limit=state.len.mode==="fix"?state.len.days:res.needed;
+ if(state.len.mode==="fix"){
+  var extra=state.len.days-res.needed;
+  if(extra>0)res.perCity[order[order.length-1]]+=extra;
+ }
+ var dayNo=1;
+ order.forEach(function(c,ci){
+  var items=sel.filter(function(p){return p.city===c});
+  var fulls=items.filter(function(p){return p.tod==="full"}).sort(function(a,b){return (b.cons?1:0)-(a.cons?1:0)});
+  var halves=items.filter(function(p){return p.tod==="day"}).sort(function(a,b){return (b.cons?1:0)-(a.cons?1:0)});
+  var eves=items.filter(function(p){return p.tod==="evening"});
+  var n=res.perCity[c],isLast=ci===order.length-1,days=[];
+  for(var i=0;i<n;i++){
+   var cap=1;
+   if(i===0)cap=0.5;
+   if(isLast&&i===n-1)cap-=0.5;
+   days.push({no:dayNo+i,city:c,cap:Math.max(cap,0),arrive:i===0,depart:isLast&&i===n-1,parts:[],evening:null,evBlock:false,notes:[]});
+  }
+  fulls.forEach(function(f){
+   var day=days.find(function(dd){return dd.cap>=1&&consOK(f,addDays(state.start,dd.no-1))})||days.find(function(dd){return dd.cap>=1});
+   if(!day){res.unplaced.push(f);return}
+   if(f.cons&&!consOK(f,addDays(state.start,day.no-1)))day.notes.push(clean(f.warn));
+   day.parts.push(f);day.cap-=1;
+   if(f.alsoEvening)day.evBlock=true;
+  });
+  halves.forEach(function(h){
+   var cand=days.filter(function(dd){return dd.cap>=0.5&&consOK(h,addDays(state.start,dd.no-1))});
+   if(!cand.length)cand=days.filter(function(dd){return dd.cap>=0.5});
+   if(!cand.length){res.unplaced.push(h);return}
+   cand.sort(function(a,b){return (a.arrive?1:0)-(b.arrive?1:0)||a.cap-b.cap||a.no-b.no});
+   var day=cand[0];
+   if(h.cons&&!consOK(h,addDays(state.start,day.no-1)))day.notes.push(clean(h.warn));
+   day.parts.push(h);day.cap-=0.5;
+  });
+  eves.forEach(function(e){
+   var day=null;
+   if(e.after)day=days.find(function(dd){return !dd.evening&&!dd.evBlock&&dd.parts.some(function(p){return p.id===e.after})});
+   if(!day)day=days.find(function(dd){return !dd.evening&&!dd.evBlock});
+   if(!day){res.unplaced.push(e);return}
+   day.evening=e;
+  });
+  res.days=res.days.concat(days);
+  dayNo+=n;
+ });
+ return res;
+}
+
+/* ================= карточки ================= */
+var firstCards=true;
+function renderCards(){
+ var host=$("#grid");host.innerHTML="";
+ ORDER.forEach(function(c){
+  var items=PLACES.filter(function(p){return p.city===c});
+  if(!items.length)return;
+  var C=CITIES[c],selN=items.filter(function(p){return state.sel[p.id]}).length;
+  var g=document.createElement("div");g.className="citygroup";
+  g.innerHTML='<div class="cghead"><h3>'+C.head+'</h3>'+
+    '<span class="temp" style="--tc:'+tcol(c)+'">'+tsign(C.t[0])+" … "+tsign(C.t[1])+'</span>'+
+    '<span class="cnt">'+selN+" из "+items.length+'</span></div>';
+  var grid=document.createElement("div");grid.className="pgrid";
+  items.forEach(function(p,i){
+   var b=document.createElement("div");
+   b.className="pcard"+(state.sel[p.id]?" sel":"")+(firstCards&&i<10?" stag":"");
+   b.style.setProperty("--i",i);
+   b.dataset.pid=p.id;b.tabIndex=0;b.setAttribute("role","button");
+   b.setAttribute("aria-pressed",state.sel[p.id]?"true":"false");
+   var cost=p.cost[1]===0?"бесплатно":"¥"+p.cost[0]+(p.cost[1]>p.cost[0]?"–"+p.cost[1]:"");
+   b.innerHTML='<div class="im"><img loading="lazy" alt="" src="'+p.img+'" onerror="this.style.opacity=0">'+
+     '<span class="tstrip" style="--tc:'+tcol(c)+'"></span></div>'+
+     (p.tag==="winter"?'<span class="season">'+icon("snowflake")+'только зимой</span>':"")+
+     '<span class="chk">'+icon("check")+'</span>'+
+     '<div class="pbd"><div class="nm">'+p.name+'</div>'+
+     '<div class="pmeta"><span>'+p.hrs+'</span><span>'+cost+'</span></div>'+
+     '<div class="why">'+p.why+'</div>'+
+     '<div class="pfoot"><button type="button" class="more" data-more="'+p.id+'">Подробнее'+icon("arrow-up-right")+'</button></div></div>';
+   grid.appendChild(b);
+  });
+  g.appendChild(grid);host.appendChild(g);
+ });
+ firstCards=false;
+}
+
+/* ================= термометр маршрута ================= */
+var lastSig="";
+function renderPlan(sch){
+ var tl=$("#tl");tl.innerHTML="";
+ if(!sch.cities.length){tl.innerHTML='<p class="prose">Отметь хотя бы одну карточку — маршрут соберётся сам.</p>';lastSig="";return}
+ var sig=sch.cities.join(">")+":"+sch.days.length+":"+state.start;
+ var anim=(sig!==lastSig)&&!reduce;lastSig=sig;
+ var first=sch.cities[0],last=sch.cities[sch.cities.length-1];
+ var startD=addDays(state.start,0),eveD=addDays(state.start,-1);
+ var isNY=startD.getMonth()===0&&startD.getDate()===1;
+ var homeNY=startD.getMonth()===0&&startD.getDate()>=2&&startD.getDate()<=5;
+ var arrTxt;
+ if(isNY)arrTxt="Вылет из Москвы вечером "+fmtDate(eveD)+" ("+MSK[first].label+"). Новый год встречаете в небе, прилёт в "+CITIES[first].name+" утром "+fmtDate(startD);
+ else if(homeNY)arrTxt="Новый год дома с родными. Вечером "+fmtDate(eveD)+" в самолёт ("+MSK[first].label+"), прилёт в "+CITIES[first].name+" "+fmtDate(startD);
+ else arrTxt="Вылет из Москвы "+fmtDate(eveD)+" ("+MSK[first].label+"), прилёт в "+CITIES[first].name+" "+fmtDate(startD);
+ var mk=function(ic,txt){var e=document.createElement("div");e.className="leg";e.innerHTML='<span class="lic">'+icon(ic)+'</span><div>'+txt+'</div>';return e};
+ tl.appendChild(mk("airplane-takeoff",arrTxt));
+ var prev=null,ai=0;
+ sch.days.forEach(function(day,idx){
+  if(day.city!==prev){
+   if(prev){var lg=legFor(prev,day.city);tl.appendChild(mk(legIcon(lg.t),lg.txt))}
+   prev=day.city;
+  }
+  var C=CITIES[day.city],d=addDays(state.start,day.no-1);
+  var nxt=sch.days[idx+1];
+  var pieces=[];
+  if(day.arrive&&day.parts.length===0)pieces.push(day.no===1?"Прилёт и заселение, день на адаптацию":"Переезд и заселение, полдня в запасе");
+  day.parts.forEach(function(p){pieces.push(p.name)});
+  var what=pieces.join(" → ");
+  if(day.evening)what+=(what?" ":"")+'<span class="eve">вечером '+day.evening.name+"</span>";
+  if(!what&&!day.evening)what=day.depart?"Утро на сборы и сувениры, вылет домой":"Свободный день: догулять любимое, кофейни, спонтанность";
+  else if(day.depart)what+=' <span class="eve">— и вылет домой</span>';
+  var el=document.createElement("div");
+  el.className="day"+(day.no>sch.limit?" over":"")+(anim&&idx<14?" dayin":"");
+  el.style.setProperty("--tc",tcol(day.city));
+  el.style.setProperty("--tc-next",tcol(nxt?nxt.city:day.city));
+  el.style.setProperty("--i",ai++);
+  el.innerHTML='<div class="node"><b>'+(day.no<10?"0":"")+day.no+'</b><span class="nt">'+tsign(C.tm)+'</span></div>'+
+   '<div class="dbody"><div class="dtop"><span class="dcity">'+C.name+'</span><span class="ddate">'+fmtDate(d)+", "+WD[d.getDay()]+'</span></div>'+
+   '<div class="dwhat">'+what+'</div>'+
+   (day.notes.length?'<div class="dwarn">'+icon("warning")+"<div>"+day.notes.join("<br>")+"</div></div>":"")+'</div>';
+  tl.appendChild(el);
+ });
+ tl.appendChild(mk("airplane-takeoff","Вылет домой: "+CITIES[last].name+" → Москва ("+MSK[last].label+")"));
+ if(sch.unplaced.length){
+  var w=document.createElement("div");w.className="note bad";
+  w.innerHTML=icon("warning")+"<div><b>Не влезло в дни:</b> "+sch.unplaced.map(function(p){return p.name}).join(", ")+". Добавь дней через «Фикс» или сними карточки этого города.</div>";
+  tl.appendChild(w);
+ }
+}
+
+/* ================= дуга температур (подпись проекта) ================= */
+var firstArc=true;
+function renderArc(sch){
+ var arc=$("#arc"),axis=$("#plotAxis"),nodes=$("#plotNodes"),labs=$("#plotLabels"),trace=$("#trace");
+ axis.innerHTML="";nodes.innerHTML="";labs.innerHTML="";
+ if(!sch.cities.length){trace.setAttribute("d","");$("#arcNum").textContent="—";$("#arcFrom").textContent="—";$("#arcTo").textContent="—";return}
+ var L=34,R=16,TOP=28,H=142,W=440,TMIN=-26,TMAX=20;
+ var y=function(t){return TOP+(TMAX-t)/(TMAX-TMIN)*H};
+ [-25,0,18].forEach(function(t){
+  axis.insertAdjacentHTML("beforeend",'<line class="axis" x1="'+L+'" y1="'+y(t).toFixed(1)+'" x2="'+(W-R)+'" y2="'+y(t).toFixed(1)+'"/>'+
+    '<text class="axlab" x="4" y="'+(y(t)+3).toFixed(1)+'">'+tsign(t)+'</text>');
+ });
+ var n=sch.cities.length;
+ var xs=sch.cities.map(function(_,i){return n===1?(L+W-R)/2:L+i*(W-L-R)/(n-1)});
+ var pts=sch.cities.map(function(c,i){return [xs[i],y(CITIES[c].tm)]});
+ trace.setAttribute("d",pts.map(function(p,i){return (i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)}).join(" "));
+ pts.forEach(function(p,i){
+  var c=sch.cities[i];
+  nodes.insertAdjacentHTML("beforeend",'<circle class="tnode" style="--i:'+i+'" cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="4.6" fill="'+tcol(c)+'"/>');
+  labs.insertAdjacentHTML("beforeend",'<text class="citylab" text-anchor="middle" x="'+p[0].toFixed(1)+'" y="'+(H+TOP+18)+'">'+CITIES[c].key+'</text>');
+ });
+ var lo=Math.min.apply(null,sch.cities.map(function(c){return CITIES[c].t[0]}));
+ var hi=Math.max.apply(null,sch.cities.map(function(c){return CITIES[c].t[1]}));
+ $("#arcNum").innerHTML=tsign(lo)+" … <b>"+tsign(hi)+"</b>";
+ $("#arcFrom").textContent=CITIES[sch.cities[0]].name;
+ $("#arcTo").textContent=CITIES[sch.cities[n-1]].name;
+ var len=900;
+ try{if(trace.getTotalLength)len=Math.ceil(trace.getTotalLength())+4}catch(e){}
+ trace.style.setProperty("--len",len);
+ if(firstArc&&!reduce){
+  trace.style.transition="none";arc.classList.remove("drawn");
+  requestAnimationFrame(function(){requestAnimationFrame(function(){trace.style.transition="";arc.classList.add("drawn")})});
+  firstArc=false;
+ }else{
+  trace.style.transition="none";arc.classList.add("drawn");
+  requestAnimationFrame(function(){trace.style.transition=""});
+ }
+}
+
+/* ================= метр и бюджет ================= */
+function renderMeter(sch){
+ var m=$("#meter"),lim=sch.limit||state.len.days;
+ var end=addDays(state.start,lim-1);
+ $("#endOut").textContent=sch.cities.length?("финиш "+fmtDate(end)+", "+WD[end.getDay()]):"";
+ if(!sch.cities.length){m.className="meter";m.innerHTML='<div class="mrow"><span>Пока пусто — отмечай карточки выше.</span></div><div class="mbar"><i></i></div>';return}
+ var n=sch.needed,msg,frac=1,warn=false;
+ if(state.len.mode==="auto"){
+  msg="Под выбранные места нужно <b>"+n+" "+dayWord(n)+"</b>. Маршрут построен ровно, без пустых окон.";
+ }else{
+  var Lm=state.len.days;frac=Math.min(n/Lm,1);
+  if(n>Lm){warn=true;msg="Выбранного на <b>"+n+" "+dayWord(n)+"</b> при "+Lm+" по фиксу. Дни сверху помечены пунктиром: сними "+(n-Lm)+" "+dayWord(n-Lm)+" карточек или добавь дней.";}
+  else if(n===Lm)msg="Ровно <b>"+Lm+" "+dayWord(Lm)+"</b>. Идеально.";
+  else msg="Выбранного на <b>"+n+"</b>, свободные "+(Lm-n)+" "+dayWord(Lm-n)+" отданы финальному городу как дни спонтанности.";
+ }
+ m.className="meter"+(warn?" warn":"");
+ m.innerHTML='<div class="mrow"><span>'+msg+'</span><span class="mval">'+n+" / "+lim+'</span></div><div class="mbar"><i></i></div>';
+ var bar=m.querySelector(".mbar i");
+ requestAnimationFrame(function(){bar.style.transform="scaleX("+frac+")"});
+}
+var prevLo=null,prevHi=null;
+function ticker(el,from,to,dur){
+ if(reduce||from===null||from===to){el.textContent=to;return}
+ var t0=performance.now();
+ function step(t){
+  var k=Math.min((t-t0)/dur,1),e=1-Math.pow(1-k,3);
+  el.textContent=Math.round(from+(to-from)*e);
+  if(k<1)requestAnimationFrame(step);
+ }
+ requestAnimationFrame(step);
+}
+function renderBudget(sch){
+ var rate=state.rate||13,lo=0,hi=0;
+ PLACES.forEach(function(p){if(state.sel[p.id]){lo+=p.cost[0];hi+=p.cost[1]}});
+ sch.cities.forEach(function(c,ci){
+  var d=sch.perCity[c],nights=(ci===sch.cities.length-1)?Math.max(d-1,1):d;
+  lo+=CITIES[c].hotel[0]*nights+CITIES[c].daily[0]*d;
+  hi+=CITIES[c].hotel[1]*nights+CITIES[c].daily[1]*d;
+ });
+ for(var i=1;i<sch.cities.length;i++){var lg=legFor(sch.cities[i-1],sch.cities[i]);lo+=lg.cost[0];hi+=lg.cost[1]}
+ var fLo=100000,fHi=150000,transfer=false;
+ if(sch.cities.length){
+  if(!MSK[sch.cities[0]].direct){fLo+=8000;fHi+=20000;transfer=true}
+  if(!MSK[sch.cities[sch.cities.length-1]].direct){fLo+=8000;fHi+=20000;transfer=true}
+ }
+ var sum=$("#sum");
+ if(!sch.cities.length){sum.textContent="—";$("#sumDet").textContent="";prevLo=prevHi=null;return}
+ var rLo=Math.round((lo*rate+fLo+6000)/1000),rHi=Math.round((hi*rate+fHi+12000)/1000);
+ if(!sum.querySelector("#sumLo"))sum.innerHTML='<span id="sumLo">0</span>–<span id="sumHi">0</span><span class="cur">тыс ₽</span>';
+ ticker(sum.querySelector("#sumLo"),prevLo,rLo,520);
+ ticker(sum.querySelector("#sumHi"),prevHi,rHi,520);
+ prevLo=rLo;prevHi=rHi;
+ $("#sumDet").textContent="Внутри Китая ¥"+lo.toLocaleString("ru-RU")+"–"+hi.toLocaleString("ru-RU")+
+  " на билеты, отели, еду и переезды. Плюс перелёты из Москвы "+Math.round(fLo/1000)+"–"+Math.round(fHi/1000)+" т.₽"+
+  (transfer?" (город прилёта или вылета без прямых рейсов, пересадка учтена)":"")+", eSIM и страховка.";
+}
+
+/* ================= даты и календарь броней ================= */
+function tripRange(lim){
+ var a=addDays(state.start,0),b=addDays(state.start,(lim||10)-1);
+ var s=(a.getMonth()===b.getMonth())?(a.getDate()+"–"+fmtDate(b)):(fmtDate(a)+" – "+fmtDate(b));
+ return s+" "+b.getFullYear();
+}
+function updateDatesUI(sch){
+ var lim=sch.limit||state.len.days||10,r=tripRange(lim);
+ $("#heroDates").textContent=r;$("#footDates").textContent=r;
+ document.title="Китай на двоих — "+r;
+ document.querySelectorAll("[data-start]").forEach(function(b){b.classList.toggle("on",b.dataset.start===state.start)});
+ $("#lenAuto").classList.toggle("on",state.len.mode==="auto");
+ $("#lenFix").classList.toggle("on",state.len.mode==="fix");
+ $("#lenInput").value=state.len.days;
+ var touches=false,inJan=false;
+ for(var i=0;i<lim;i++){var dd=addDays(state.start,i);if(dd.getMonth()===0){inJan=true;if(dd.getDate()<=3)touches=true}}
+ var hn=$("#holidayNote"),body=hn.querySelector("div");
+ if(touches)body.innerHTML="<b>1–3 января — государственные выходные в Китае.</b> Парки и главные музеи в эти дни штурмует вся страна. Планировщик это знает: Universal и Дисней он сам ставит на будни после третьего, а на праздники оставляет прогулки, стену и коньки. Если из-за твоего выбора парк всё же попадёт на плохой день, увидишь предупреждение прямо в плане.";
+ else if(inJan)body.innerHTML="<b>Старт после госвыходных.</b> Новогодняя толпа схлынула, парки и музеи работают в будничном режиме, планировщику даже не приходится хитрить. Железное правило остаётся одно: понедельник — выходной Запретного города, и он его обходит.";
+ else body.innerHTML="<b>Сверь китайские праздники со своими датами.</b> Госвыходные 1–3 января, китайский Новый год и Золотая неделя в октябре превращают парки в человеческое море. Январские планировщик учитывает сам, остальное проверь по календарю КНР.";
+
+ var dayOf=function(id){return sch.days.find(function(dd){return dd.parts.some(function(p){return p.id===id})||(dd.evening&&dd.evening.id===id)})};
+ var dOf=function(day){return addDays(state.start,day.no-1)};
+ var uni=dayOf("universal"),dis=dayOf("disney"),forb=dayOf("forbidden"),trains=[];
+ for(var j=1;j<sch.cities.length;j++){
+  var lg=legFor(sch.cities[j-1],sch.cities[j]);
+  if(lg.t==="🚄"){
+   var fd=sch.days.find(function(dd){return dd.city===sch.cities[j]&&dd.arrive});
+   if(fd)trains.push({route:CITIES[sch.cities[j-1]].name+" → "+CITIES[sch.cities[j]].name,date:dOf(fd)});
+  }
+ }
+ var bits=[];
+ if(uni){var ud=dOf(uni);bits.push("Universal на "+fmtDate(ud)+" ("+WD[ud.getDay()]+")")}
+ if(dis){var dd2=dOf(dis);bits.push("Disney на "+fmtDate(dd2)+" ("+WD[dd2.getDay()]+")")}
+ if(state.sel.safari)bits.push("Chimelong Safari и цирк");
+ if(bits.length){
+  var pd=[uni,dis].filter(Boolean).map(function(x){return dOf(x).getTime()});
+  $("#bkParksWhen").textContent=pd.length?("к "+fmtDate(shiftD(new Date(Math.min.apply(null,pd)),-14))):"за 2–3 недели";
+  $("#bkParksWhat").textContent="Датированные билеты: "+bits.join(", ");
+ }else{$("#bkParksWhen").textContent="—";$("#bkParksWhat").textContent="Парки не выбраны, этот шаг можно пропустить";}
+ if(trains.length){
+  var minT=new Date(Math.min.apply(null,trains.map(function(t){return t.date.getTime()})));
+  $("#bkTrainWhen").textContent=fmtDate(shiftD(minT,-15))+", за 15 дней";
+  $("#bkTrainWhat").textContent="Открываются продажи на поезда, брать сразу: "+trains.map(function(t){return t.route+" на "+fmtDate(t.date)}).join("; ");
+ }else{$("#bkTrainWhen").textContent="—";$("#bkTrainWhat").textContent="Поездных участков в маршруте нет, шаг можно пропустить";}
+ if(forb){var fdd=dOf(forb);
+  $("#bkPalaceWhen").textContent=fmtDate(shiftD(fdd,-7))+", 3:00 мск";
+  $("#bkPalaceWhat").textContent="Билеты в Запретный город на "+fmtDate(fdd)+" ("+WD[fdd.getDay()]+") в WeChat-миниаппе, ловить в момент открытия продаж. Ставь будильник";
+ }else{$("#bkPalaceWhen").textContent="—";$("#bkPalaceWhat").textContent="Запретный город не выбран — добавь карточку, и здесь появится дата охоты за билетами";}
+}
+
+/* ================= таблица городов ================= */
+function renderCityTable(){
+ var tb=$("#cityRows");tb.innerHTML="";
+ ORDER.forEach(function(c){
+  var C=CITIES[c];
+  tb.insertAdjacentHTML("beforeend","<tr><td><b>"+C.name+"</b></td>"+
+   '<td class="num"><span class="temp" style="--tc:'+tcol(c)+'">'+tsign(C.t[0])+" … "+tsign(C.t[1])+"</span></td>"+
+   '<td class="num">¥'+C.hotel[0]+"–"+C.hotel[1]+"</td><td>"+C.why+"</td></tr>");
+ });
+}
+
+/* ================= приложения ================= */
+function renderApps(){
+ var host=$("#apps");host.innerHTML="";
+ APPS.forEach(function(a){
+  var el=document.createElement("div");el.className="app";
+  el.innerHTML='<div class="an">'+a.n+'</div><div class="aw">'+a.w+'</div>'+
+   '<div class="stores"><a href="'+a.ios+'" target="_blank" rel="noopener">'+icon("apple-logo")+'App Store</a>'+
+   '<a href="'+a.gp+'" target="_blank" rel="noopener">'+icon("google-play-logo")+'Google Play</a></div>';
+  host.appendChild(el);
+ });
+}
+
+/* ================= чек-лист ================= */
 var clState=store.get("cn_check_v2")||{};
 function renderChecklist(){
  var host=$("#checklist");host.innerHTML="";
  CHECK.forEach(function(c,ci){
-  var cat=document.createElement("div");cat.className="cl-cat";
+  var cat=document.createElement("div");cat.className="clcat";
   cat.innerHTML="<h3>"+c.cat+"</h3>";
   c.items.forEach(function(it,ii){
    var key=ci+"-"+ii,done=!!clState[key];
-   var l=document.createElement("label");l.className="cl-item"+(done?" done":"");
-   l.innerHTML='<input type="checkbox" data-cl="'+key+'"'+(done?" checked":"")+'><span class="tx">'+it[0]+(it[1]?'<small>'+it[1]+'</small>':"")+'</span>';
+   var l=document.createElement("label");l.className="cli"+(done?" done":"");
+   l.innerHTML='<input type="checkbox" data-cl="'+key+'"'+(done?" checked":"")+'><span class="tx">'+it[0]+(it[1]?"<small>"+it[1]+"</small>":"")+"</span>";
    cat.appendChild(l);
   });
   host.appendChild(cat);
@@ -1094,12 +1320,99 @@ function renderChecklist(){
 }
 function updateProgress(){
  var total=0,done=0;
- CHECK.forEach(function(c,ci){c.items.forEach(function(_,ii){total++;if(clState[ci+"-"+ii])done++;})});
- $("#pbar").style.width=(total?Math.round(done/total*100):0)+"%";
+ CHECK.forEach(function(c,ci){c.items.forEach(function(_,ii){total++;if(clState[ci+"-"+ii])done++})});
+ var f=total?done/total:0;
+ requestAnimationFrame(function(){$("#pbar").style.transform="scaleX("+f+")"});
  $("#ptext").textContent=done+" из "+total+" собрано";
 }
 
-renderAll();renderChecklist();renderApps();
+/* ================= модалка ================= */
+var modalId=null,closeT=null;
+function openModal(id){
+ var p=PLACES.find(function(x){return x.id===id});if(!p)return;
+ modalId=id;clearTimeout(closeT);
+ var M=$("#modal");
+ M.querySelector(".mcard").style.setProperty("--tc",tcol(p.city));
+ var img=$("#mimg");img.src=p.img.replace("width=800","width=1200");img.alt="";
+ $("#mcity").textContent=CITIES[p.city].name+", "+p.hrs;
+ $("#mname").textContent=p.name;
+ var cost=p.cost[1]===0?"бесплатно":"¥"+p.cost[0]+(p.cost[1]>p.cost[0]?"–"+p.cost[1]:"")+" на двоих";
+ $("#mmeta").innerHTML="<span>"+cost+"</span>"+(p.tag==="winter"?"<span>только зимой</span>":"");
+ $("#mtext").textContent=p.more;
+ $("#mlinks").innerHTML='<a class="btn" target="_blank" rel="noopener" href="'+wikiURL(p.wiki)+'">'+icon("book-open-text")+'Википедия</a>'+
+  '<a class="btn" target="_blank" rel="noopener" href="'+ytURL(p.yt)+'">'+icon("youtube-logo")+'Видео</a>'+
+  (p.site?'<a class="btn ghost" target="_blank" rel="noopener" href="'+p.site+'">'+icon("arrow-up-right")+'Официальный сайт</a>':"");
+ syncMsel();
+ M.hidden=false;
+ requestAnimationFrame(function(){M.classList.add("in")});
+ document.body.style.overflow="hidden";
+ $(".mx").focus();
+}
+function syncMsel(){
+ if(!modalId)return;
+ var on=!!state.sel[modalId],b=$("#msel");
+ b.innerHTML=on?icon("check")+"В маршруте — убрать":icon("path")+"Добавить в маршрут";
+ b.className="btn msel"+(on?" ghost":" primary");
+}
+function closeModal(){
+ var M=$("#modal");M.classList.remove("in");modalId=null;document.body.style.overflow="";
+ closeT=setTimeout(function(){M.hidden=true},reduce?0:230);
+}
+
+/* ================= перерисовка ================= */
+function renderAll(){
+ renderCards();
+ var sch=schedule();
+ renderMeter(sch);renderPlan(sch);renderBudget(sch);renderArc(sch);updateDatesUI(sch);
+ store.set("cn_places_v4",state);
+}
+
+/* ================= события ================= */
+document.addEventListener("click",function(e){
+ var t=e.target;
+ var more=t.closest&&t.closest(".more");
+ if(more){openModal(more.dataset.more);return}
+ if(t.closest&&t.closest("[data-close]")){closeModal();return}
+ var sb=t.closest&&t.closest("[data-start]");
+ if(sb){state.start=sb.dataset.start;$("#startDate").value=state.start;renderAll();return}
+ var lb=t.closest&&t.closest("[data-len]");
+ if(lb){state.len.mode=lb.dataset.len;renderAll();return}
+ if(t.closest&&t.closest("#reset")){state.sel={};PLACES.forEach(function(p){state.sel[p.id]=!!p.def});renderAll();return}
+ if(t.closest&&t.closest("#clear")){state.sel={};PLACES.forEach(function(p){state.sel[p.id]=false});renderAll();return}
+ if(t.closest&&t.closest("#clReset")){clState={};store.set("cn_check_v2",clState);renderChecklist();return}
+ if(t.closest&&t.closest("#msel")&&modalId){state.sel[modalId]=!state.sel[modalId];renderAll();syncMsel();return}
+ if(t.closest&&t.closest("#themeBtn")){
+  var cur=document.documentElement.getAttribute("data-theme")==="light"?"dark":"light";
+  document.documentElement.setAttribute("data-theme",cur);store.set("cn_theme",cur);
+  try{localStorage.setItem("cn_theme",cur)}catch(err){}
+  return;
+ }
+ var card=t.closest&&t.closest(".pcard");
+ if(card&&card.dataset.pid){state.sel[card.dataset.pid]=!state.sel[card.dataset.pid];renderAll();return}
+});
+document.addEventListener("keydown",function(e){
+ if(e.key==="Escape"&&!$("#modal").hidden){closeModal();return}
+ if((e.key==="Enter"||e.key===" ")&&e.target.classList&&e.target.classList.contains("pcard")){
+  e.preventDefault();var id=e.target.dataset.pid;state.sel[id]=!state.sel[id];renderAll();
+  var nc=document.querySelector('.pcard[data-pid="'+id+'"]');if(nc)nc.focus();
+ }
+});
+document.addEventListener("change",function(e){
+ var t=e.target;
+ if(t.id==="startDate"){state.start=t.value||"2027-01-01";renderAll()}
+ if(t.id==="lenInput"){var v=parseInt(t.value,10);if(v>=4&&v<=21){state.len.days=v;state.len.mode="fix";renderAll()}}
+ if(t.id==="rate"){var r=parseFloat(t.value);if(r>0){state.rate=r;renderBudget(schedule());store.set("cn_places_v4",state)}}
+ if(t.dataset&&t.dataset.cl!==undefined){
+  clState[t.dataset.cl]=t.checked;store.set("cn_check_v2",clState);updateProgress();
+  t.closest(".cli").classList.toggle("done",t.checked);
+ }
+});
+
+/* localStorage может хранить строку без кавычек — читаем аккуратно */
+try{var th=localStorage.getItem("cn_theme");if(th){th=th.replace(/"/g,"");document.documentElement.setAttribute("data-theme",th)}}catch(e){}
+$("#startDate").value=state.start;
+$("#rate").value=state.rate||13;
+renderCityTable();renderApps();renderChecklist();renderAll();
 })();
 </script>
 </body>
